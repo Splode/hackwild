@@ -1,0 +1,14 @@
+{
+  "name": "hack-wild",
+  "version": "1.0.0",
+  "description": "Exploring the wild west of development and design.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Christopher Murphy",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap-nucleus": "^1.2.0"
+  }
+}
