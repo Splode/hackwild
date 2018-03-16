@@ -9,6 +9,6 @@
   "author": "Christopher Murphy",
   "license": "ISC",
   "dependencies": {
-    "bootstrap-nucleus": "^1.2.0"
+    "bootstrap-nucleus": "^1.3.0"
   }
 }

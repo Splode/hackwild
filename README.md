@@ -1,7 +1,24 @@
-# Hack Wild
+# HackWild
 
-> Exploring the wild world of development and design.
+> Hacking through the Dense Jungle of Modern Development
 
-## Install
+## Technical
+### Install
 
-`bundle install`
+```
+bundle install
+```
+
+### Development
+
+```
+bundle exec jekyll s
+```
+
+### Production
+
+HackWild is continuously deployed using Netlify, but can be manually built using:
+
+```
+bundle exec jekyll build
+```

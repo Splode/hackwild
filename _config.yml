@@ -13,7 +13,8 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: Hack Wild
+title: HackWild
+tagline: Hacking through the Dense Jungle of Modern Development
 email: trainstationblues@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
   Write an awesome description for your new site here. You can edit this
@@ -31,7 +32,7 @@ plugins:
   - jekyll-feed
 paginate: 7
 paginate_path: 'article/page:num'
-permalink: /:year/:month/:title/
+permalink: /:title/
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list

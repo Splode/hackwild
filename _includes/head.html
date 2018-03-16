@@ -6,5 +6,5 @@
   <!-- css -->
   <link rel="stylesheet" href="/css/main.css">
 
-  <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <title>{% if page.title %}{{ site.title }} - {{ page.title }}{% else %}{{ site.title }} - {{ site.tagline }}{% endif %}</title>
 </head>
