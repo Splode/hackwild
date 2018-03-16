@@ -31,6 +31,7 @@ highlighter: rouge
 #theme: minima
 plugins:
   - jekyll-feed
+  - jemoji
 paginate: 7
 paginate_path: 'article/page:num'
 permalink: /articles/:title/
