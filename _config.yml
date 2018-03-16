@@ -33,7 +33,7 @@ plugins:
   - jekyll-feed
 paginate: 7
 paginate_path: 'article/page:num'
-permalink: /:title/
+permalink: /articles/:title/
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
