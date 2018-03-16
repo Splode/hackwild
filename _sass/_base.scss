@@ -1,1 +1,16 @@
-@import "/node_modules/bootstrap-nucleus/dist/bootstrap-nucleus.css";
+@import '/node_modules/bootstrap-nucleus/dist/bootstrap-nucleus.css';
+@import '/css/dracula.css';
+
+html {
+  height: 100%;
+}
+
+body {
+  background-color: $colorDarkBlue;
+  color: $colorWhite;
+  position: relative;
+}
+
+.ContentWrapper {
+  padding-top: $navbarHeight;
+}

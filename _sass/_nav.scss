@@ -1,0 +1,19 @@
+.Navbar {
+  background-color: $colorDarkBlue;
+  position: fixed;
+  height: $navbarHeight;
+  z-index: 10;
+}
+
+.Navbar-wrapper {
+  border-bottom: 4px solid $colorBlueGrey;
+  height: 100%;
+}
+
+.Navlist {
+  display: flex;
+  list-style-type: none;
+  justify-content: flex-end;
+  margin: 0;
+  padding: 0;
+}

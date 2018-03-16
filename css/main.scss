@@ -1,7 +1,11 @@
 ---
 ---
 
-@charset "utf-8";
+@charset 'utf-8';
 
-@import "variables";
-@import "base";
+@import 'variables';
+@import 'base';
+@import 'fonts';
+@import 'footer';
+@import 'nav';
+@import 'post';
