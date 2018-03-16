@@ -1,0 +1,61 @@
+article {
+  & blockquote {
+    background-color: $colorBlueGrey;
+    border-left: 4px solid $colorGreen;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    margin: auto;
+    padding: 1rem 1rem 1rem 2rem;
+    & p {
+      font-style: italic;
+      margin-bottom: 0;
+    }
+  }
+  & em {
+    font-style: italic;
+  }
+  & p {
+    font-family: 'IBMPlexSans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+      Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+      sans-serif;
+    font-size: 1.25rem;
+    font-weight: 300;
+    letter-spacing: 0.025rem;
+    line-height: 2rem;
+    margin-bottom: 2rem;
+  }
+  & strong {
+    font-weight: 500;
+  }
+}
+
+hr {
+  background-color: $colorBlueGrey;
+  border: 0;
+  height: 4px;
+}
+
+code,
+pre {
+  font-family: 'FiraCode', 'Courier New', Courier, monospace;
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+pre {
+  line-height: 2rem;
+}
+
+// dracula syntax highlight hook
+.highlight {
+  border-radius: 4px;
+  padding: 1rem;
+}
+
+// inline code manually styled
+code.highlighter-rouge {
+  background: #282a36;
+  border-radius: 4px;
+  color: #f8f8f2;
+  padding: 0.075rem 0.75rem;
+}
