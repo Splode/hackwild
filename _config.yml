@@ -54,3 +54,6 @@ exclude:
   - webpack.config.js
   - src/
   - .babelrc
+  - .eslintignore
+  - .eslintrc.js
+  - .editorconfig

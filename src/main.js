@@ -6,6 +6,7 @@ import Logo from './components/Logo.vue'
 
 Vue.component('logo', Logo)
 
-const app = new Vue({
+/* eslint-disable no-new */
+new Vue({
   el: '#app'
 })
