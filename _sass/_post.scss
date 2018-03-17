@@ -8,11 +8,41 @@ article {
     padding: 1rem 1rem 1rem 2rem;
     & p {
       font-style: italic;
-      margin-bottom: 0;
+      margin: 0;
     }
   }
   & em {
     font-style: italic;
+  }
+  & h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Lato', Cambria, Cochin, Georgia, Times, 'Times New Roman',
+      serif;
+    font-weight: 400;
+  }
+  & h1 {
+    color: $colorGreen;
+    font-size: 3rem;
+    margin: 4rem 0;
+  }
+  & h2 {
+    color: $colorPink;
+    font-size: 1.66rem;
+    margin-top: 3rem;
+  }
+  & h3 {
+    font-size: 1rem;
+    text-transform: uppercase;
+  }
+  & h3,
+  h4,
+  h5,
+  h6 {
+    color: $colorLightBlue;
   }
   & p {
     font-family: 'IBMPlexSans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
@@ -22,7 +52,7 @@ article {
     font-weight: 300;
     letter-spacing: 0.025rem;
     line-height: 2rem;
-    margin-bottom: 2rem;
+    margin: 2rem 0;
   }
   & strong {
     font-weight: 500;
@@ -57,5 +87,5 @@ code.highlighter-rouge {
   background: #282a36;
   border-radius: 4px;
   color: #f8f8f2;
-  padding: 0.075rem 0.75rem;
+  padding: 0.075rem 0.5rem;
 }
