@@ -67,7 +67,7 @@ Temporary Items
 
 # =============== General ==================
 node_modules
-dist
+dist/
 
 # ================ Logs =====================
 logs
