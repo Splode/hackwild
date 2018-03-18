@@ -17,6 +17,8 @@ To add new posts, simply add a file in the `_posts` directory that follows the c
 
 ### Heading 3
 
+⚠️🌟 👻
+
 Jekyll also offers powerful support for code snippets:
 
 {% highlight ruby %}
