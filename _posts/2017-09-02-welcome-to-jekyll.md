@@ -1,6 +1,7 @@
 ---
 layout: post
-title:  "Welcome to Jekyll!"
+title:  Welcome to Jekyll
+excerpt: A brief sentence or two on what the article is about. What if there was way more text here than could fit on a single line? How about that?
 date:   2017-09-02 13:03:56 -0600
 categories: jekyll update
 ---

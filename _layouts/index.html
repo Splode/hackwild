@@ -1,3 +1,29 @@
 ---
 layout: default
 ---
+
+<div class="row" style="padding-bottom: 4rem">
+  <div class="col-md-8 d-flex align-items-center mx-auto">
+    <logo
+      color="green--outline"
+      :stroke-width="8"
+      :width="100"
+    ></logo>
+    <h2 class="Intro-title ml-5">Hacking through the dense jungle of the modern web.</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8 mx-auto">
+  {% for post in paginator.posts %}
+    <a href="{{ post.url }}">
+      <div class="row PostPreview">
+        <div class="col">
+          <h2 class="PostPreview-title">{{ post.title }}</h2>
+          <p class="PostPreview-body">{{ post.excerpt }}</p>
+        </div>
+      </div>
+    </a>
+  {% endfor %}
+  </div>
+</div>

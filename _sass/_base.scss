@@ -9,17 +9,42 @@ html {
 body {
   background-color: $colorDarkBlue;
   color: $colorWhite;
+  font-family: 'IBMPlexSans';
+  min-height: 100vh;
   position: relative;
 }
 
+.BodyCopy {
+  font-family: $fontBody;
+  font-weight: 300;
+  letter-spacing: 0.025rem;
+  line-height: 2rem;
+}
+
+a {
+  color: inherit;
+  transition: $transitionDefault;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
 .ContentWrapper {
-  padding-top: $navbarHeight;
+  padding-top: 8rem;
+  padding-bottom: 16rem;
+}
+
+.Intro-title {
+  font-family: 'Lato';
+  font-size: 2.5rem;
+  font-weight: 400;
 }
 
 .Logo-text {
   display: inline-block;
+  font-family: $fontHeading;
   font-size: 1.25rem;
-  letter-spacing: .05rem;
-  margin: 0 0 .5rem .5rem;
-  text-transform: uppercase;
+  font-weight: 400;
+  letter-spacing: 0.05rem;
+  margin: 0 0 0.5rem 0.5rem;
 }
