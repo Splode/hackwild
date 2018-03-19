@@ -7,6 +7,7 @@ author: Christopher Murphy
 description: A CSS snippet for independently styling text and underline color.
 excerpt: If you've ever wanted to set the color of the underline for underlined text separately from the text color, you may have come across the CSS property `text-decoration-color`. Unfortunately, this property is not yet fully supported by all browser vendors.
 categories: CSS snippet typography
+tags: CSS
 ---
 # Underlining Text
 ## Styling Underline Color

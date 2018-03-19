@@ -14,6 +14,14 @@ body {
   position: relative;
 }
 
+a {
+  color: inherit;
+  transition: $transitionDefault;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
 .BodyCopy {
   font-family: $fontBody;
   font-weight: 300;
@@ -21,12 +29,20 @@ body {
   line-height: 2rem;
 }
 
-a {
-  color: inherit;
-  transition: $transitionDefault;
-  &:hover {
-    text-decoration: none;
-  }
+.Button {
+  border: 0;
+  border-radius: $borderRadius;
+  cursor: pointer;
+  display: block;
+  font-family: $fontHeading;
+  font-size: 1.15rem;
+  margin: 0 auto;
+  padding: 1rem 8rem;
+}
+
+.Button--blueGrey {
+  background-color: $colorBlueGrey;
+  color: $colorGreen
 }
 
 .ContentWrapper {

@@ -32,8 +32,8 @@ highlighter: rouge
 plugins:
   - jekyll-feed
 paginate: 7
-paginate_path: 'article/page:num'
-permalink: /articles/:title/
+paginate_path: 'blog/page:num'
+permalink: /article/:title/
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list

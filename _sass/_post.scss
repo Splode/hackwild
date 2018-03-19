@@ -1,5 +1,5 @@
 article {
-  border-bottom: 4px solid $colorBlueGrey;
+  border-bottom: $borderRadius solid $colorBlueGrey;
   padding-bottom: 2rem;
   & a {
     position: relative;
@@ -19,9 +19,9 @@ article {
   }
   & blockquote {
     background-color: $colorBlueGrey;
-    border-left: 4px solid $colorGreen;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
+    border-left: $borderRadius solid $colorGreen;
+    border-top-right-radius: $borderRadius;
+    border-bottom-right-radius: $borderRadius;
     margin: auto;
     padding: 1rem 1rem 1rem 2rem;
     & p {
@@ -90,14 +90,14 @@ pre {
 
 // dracula syntax highlight hook
 .highlight {
-  border-radius: 4px;
+  border-radius: $borderRadius;
   padding: 1rem;
 }
 
 // inline code manually styled
 code.highlighter-rouge {
   background: #282a36;
-  border-radius: 4px;
+  border-radius: $borderRadius;
   color: #f8f8f2;
   padding: 0.075rem 0.5rem;
 }

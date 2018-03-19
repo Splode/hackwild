@@ -1,8 +1,8 @@
 .PostPreview {
   background-color: $colorBlueGrey;
-  border-left: 4px solid $colorPink;
-  border-bottom-right-radius: 4px;
-  border-top-right-radius: 4px;
+  border-left: $borderRadius solid $colorPink;
+  border-bottom-right-radius: $borderRadius;
+  border-top-right-radius: $borderRadius;
   margin-bottom: 1.5rem;
   padding: 1rem 1rem 1.5rem 1rem;
 }
@@ -20,4 +20,14 @@
   color: $colorWhite;
   font-size: 1.15rem;
   margin: 0;
+  padding-right: 2rem;
+}
+
+.PostPreview-tag {
+  background-color: $colorDarkBlue;
+  border-radius: $borderRadius;
+  color: $colorPink;
+  font-family: $fontHeading;
+  margin: 0;
+  padding: .075rem 1rem;
 }

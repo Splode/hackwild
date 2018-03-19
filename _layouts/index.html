@@ -20,10 +20,17 @@ layout: default
       <div class="row PostPreview">
         <div class="col">
           <h2 class="PostPreview-title">{{ post.title }}</h2>
-          <p class="PostPreview-body">{{ post.excerpt }}</p>
+          <div class="d-flex align-items-end">
+            <p class="PostPreview-body">{{ post.excerpt }}</p>
+            <p class="PostPreview-tag">{{ post.tags | first }}</p>
+          </div>
         </div>
       </div>
     </a>
   {% endfor %}
+
+    <a href="#">
+      <button class="Button Button--blueGrey">More</button>
+    </a>
   </div>
 </div>
