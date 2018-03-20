@@ -8,7 +8,19 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist', // needed to appropriately reference build.js in html
-    filename: 'build.js'
+    filename: '[name].[chunkhash].js'
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          chunks: 'initial',
+          test: path.resolve(__dirname, 'node_modules'),
+          name: 'vendor',
+          enforce: true
+        }
+      }
+    }
   },
   plugins: [
     new CleanWebpackPlugin(['dist']),
@@ -17,7 +29,6 @@ module.exports = {
       template: '_layouts/_default.html' // _default is master due to redundant script tags
     })
   ],
-  mode: 'development',
   module: {
     rules: [
       {
@@ -69,8 +80,4 @@ module.exports = {
     },
     extensions: ['*', '.js', '.vue', '.json']
   }
-}
-
-if (process.env.NODE_ENV === 'production') {
-  module.exports.mode = 'production'
 }
