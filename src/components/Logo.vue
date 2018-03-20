@@ -1,13 +1,7 @@
 <template>
-  <div :class="classes">
-  <svg version="1.2" baseProfile="tiny" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-    x="0px" y="0px" viewBox="0 0 422.1 329.5" xml:space="preserve" :width="width" :height="width">
-    <g :class="color">
-      <path :stroke-width="strokeWidth" stroke-miterlimit="10" d="M108.2,262.6L220,39h0c-44.1,0-84.5,24.9-104.2,64.4L4,327h0
-		C48.2,327,88.5,302.1,108.2,262.6z" />
-      <path :stroke-width="strokeWidth" stroke-miterlimit="10" d="M306.2,226.1L418,2.5h0c-44.1,0-84.5,24.9-104.2,64.4L202,290.5
-		h0C246.2,290.5,286.5,265.6,306.2,226.1z" />
-    </g>
+<div :class="classes">
+  <svg xmlns="http://www.w3.org/2000/svg" baseProfile="tiny" version="1.2" :width="width" :height="width" viewBox="0 0 422.1 329.5">
+    <path :class="color" :stroke-width="strokeWidth" stroke-miterlimit="10" d="M108.2 262.6L220 39c-44.1 0-84.5 24.9-104.2 64.4L4 327c44.2 0 84.5-24.9 104.2-64.4zM306.2 226.1L418 2.5c-44.1 0-84.5 24.9-104.2 64.4L202 290.5c44.2 0 84.5-24.9 104.2-64.4z"/>
   </svg>
 </div>
 </template>
@@ -41,17 +35,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.green path {
+.green {
   fill: #61ffab;
   stroke: none;
 }
 
-.green--outline path {
+.green--outline {
   fill: #354258;
   stroke: #61ffab;
 }
 
-.white path {
+.white {
   fill: mintcream;
   stroke: none;
 }
