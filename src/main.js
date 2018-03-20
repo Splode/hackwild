@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Logo from './components/Logo.vue'
 
-// require('./../css/main.scss')
-// require('bootstrap-nucleus')
+require('bootstrap-nucleus')
+require('./../static/dracula.css')
+require('./assets/stylesheets/main.scss')
 
 Vue.component('logo', Logo)
 
