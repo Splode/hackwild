@@ -15,12 +15,26 @@
   letter-spacing: .025rem;
 }
 
+.PostPreview-title--condensed {
+  font-size: 1rem;
+}
+
 .PostPreview-body {
   @extend .BodyCopy;
   color: $colorWhite;
   font-size: 1.15rem;
   margin: 0;
   padding-right: 2rem;
+}
+
+.PostPreview-body--condensed {
+  font-size: 1rem;
+}
+
+.PostPreview-footer {
+  align-items: flex-end;
+  display: flex;
+  justify-content: space-between;
 }
 
 .PostPreview-tag {

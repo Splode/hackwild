@@ -10,13 +10,13 @@
 ### Install
 
 ```
-bundle install
+npm i && bundle install
 ```
 
 ### Development
 
 ```
-bundle exec jekyll s
+npm run watch && bundle exec jekyll s
 ```
 
 ### Production
@@ -24,5 +24,5 @@ bundle exec jekyll s
 HackWild is continuously deployed using Netlify, but can be manually built using:
 
 ```
-bundle exec jekyll build
+npm run build && bundle exec jekyll build
 ```
