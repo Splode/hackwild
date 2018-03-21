@@ -10,7 +10,7 @@
 
     {% include navbar-search-results.html %}
 
-    <main class="container ContentWrapper">
+    <main class="container ContentWrapper" v-if="!searchOpen">
 
       {{ content }}
 

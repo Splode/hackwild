@@ -45,6 +45,18 @@ a {
   color: $colorGreen
 }
 
+.Button--inline {
+  cursor: pointer;
+  transition: $transitionDefault;
+}
+
+.Button--inline--blue {
+  color: $colorLightBlue;
+  &:hover {
+    color: $colorGreen;
+  }
+}
+
 .ContentWrapper {
   padding-top: 8rem;
   padding-bottom: 16rem;
