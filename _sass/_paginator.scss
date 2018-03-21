@@ -7,6 +7,11 @@
   padding: 1rem 1rem 1.5rem 1rem;
 }
 
+.PostPreview--condensed {
+  margin-bottom: .5rem;
+  padding: .5rem .75rem;
+}
+
 .PostPreview-title {
   color: $colorGreen;
   font-family: $fontHeading;
@@ -17,6 +22,7 @@
 
 .PostPreview-title--condensed {
   font-size: 1rem;
+  margin: 0;
 }
 
 .PostPreview-body {
@@ -28,13 +34,17 @@
 }
 
 .PostPreview-body--condensed {
-  font-size: 1rem;
+  font-size: .9rem;
 }
 
 .PostPreview-footer {
   align-items: flex-end;
   display: flex;
   justify-content: space-between;
+}
+
+.PostPreview-footer--condensed {
+  align-items: center;
 }
 
 .PostPreview-tag {
@@ -44,4 +54,8 @@
   font-family: $fontHeading;
   margin: 0;
   padding: .075rem 1rem;
+}
+
+.PostPreview-tag--condensed {
+  padding: .005rem .75rem;
 }

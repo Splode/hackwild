@@ -9,9 +9,9 @@
     </div>
     <div class="col-12 PostPreview" v-for="(post, i) in filteredPosts" :key="i">
       <a :href="post.url">
-        <h2 class="PostPreview-title PostPreview-title--condensed">{{ post.title }}</h2>
+        <h2 class="PostPreview-title">{{ post.title }}</h2>
         <div class="PostPreview-footer">
-          <p class="PostPreview-body PostPreview-body--condensed">{{ post.excerpt }}</p>
+          <p class="PostPreview-body">{{ post.excerpt }}</p>
           <p class="PostPreview-tag">{{ post.tag }}</p>
         </div>
       </a>
