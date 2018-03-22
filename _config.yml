@@ -35,6 +35,11 @@ paginate: 7
 paginate_path: 'blog/page:num'
 permalink: /article/:title/
 
+collections:
+  topics:
+    output: true
+    permalink: /topic/:topic
+
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
 # to override the default setting.
