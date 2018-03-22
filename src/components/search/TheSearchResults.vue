@@ -79,14 +79,12 @@ export default {
 
 <style lang="scss" scoped>
 .Search-title {
-  font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-weight: 400;
   letter-spacing: .015rem;
 }
 
 .Search-query {
   color: #ee78bf;
-  font-family: 'IBMPlexSans' -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-weight: 300;
 }
 
@@ -100,7 +98,6 @@ export default {
 }
 
 .Search-empty-title {
-  font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-weight: 400;
   letter-spacing: .025rem;
 }

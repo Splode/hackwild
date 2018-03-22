@@ -1,4 +1,3 @@
-// @import '/node_modules/bootstrap-nucleus/dist/bootstrap-nucleus.css';
 @import '/css/bootstrap-nucleus.css';
 @import '/css/dracula.css';
 
@@ -9,7 +8,6 @@ html {
 body {
   background-color: $colorDarkBlue;
   color: $colorWhite;
-  font-family: 'IBMPlexSans';
   min-height: 100vh;
   position: relative;
 }
@@ -23,7 +21,6 @@ a {
 }
 
 .BodyCopy {
-  font-family: $fontBody;
   font-weight: 300;
   letter-spacing: 0.025rem;
   line-height: 2rem;
@@ -34,7 +31,6 @@ a {
   border-radius: $borderRadius;
   cursor: pointer;
   display: block;
-  font-family: $fontHeading;
   font-size: 1.15rem;
   margin: 0 auto;
   padding: 1rem 8rem;
@@ -63,16 +59,14 @@ a {
 }
 
 .Intro-title {
-  font-family: 'Lato';
   font-size: 2.5rem;
   font-weight: 400;
 }
 
 .Logo-text {
   display: inline-block;
-  font-family: $fontHeading;
   font-size: 1.25rem;
   font-weight: 400;
-  letter-spacing: 0.05rem;
+  letter-spacing: 0.025rem;
   margin: 0 0 0.5rem 0.5rem;
 }
