@@ -1,0 +1,26 @@
+---
+layout: default
+---
+
+{% for tag in site.tags %}
+<div class="row">
+  <div class="col-md-8 mx-auto">
+    <h2>{{ tag[0] }}</h2>
+    {% for post in tag[1] limit:3 %}
+      <a href="{{ post.url }}">
+        <div class="PostPreview">
+          <h2 class="PostPreview-title">{{ post.title }}</h2>
+          <div class="PostPreview-footer">
+            <p class="PostPreview-body">{{ post.excerpt }}</p>
+            <p class="PostPreview-tag">{{ post.tags | first }}</p>
+          </div>
+        </div>
+      </a>
+    {% endfor %}
+    <a href="/topic/{{ tag[0] | downcase }}">
+      <button class="Button Button--blueGrey">More</button>
+    </a>
+  </div>
+</div>
+{% endfor %}
+

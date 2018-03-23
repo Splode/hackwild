@@ -4,30 +4,24 @@ layout: default
 
 <div class="row" style="padding-bottom: 4rem">
   <div class="col-md-8 d-flex align-items-center mx-auto">
-    <logo
-      color="green--outline"
-      :stroke-width="8"
-      :width="100"
-    ></logo>
+    <logo color="green--outline" :stroke-width="8" :width="100"></logo>
     <h2 class="Intro-title ml-5">Hacking through the dense jungle of the modern web.</h2>
   </div>
 </div>
 
 <div class="row">
   <div class="col-md-8 mx-auto">
-  {% for post in paginator.posts %}
+    {% for post in paginator.posts %}
     <a href="{{ post.url }}">
-      <!-- <div class="row PostPreview"> -->
-        <div class="col PostPreview">
-          <h2 class="PostPreview-title">{{ post.title }}</h2>
-          <div class="PostPreview-footer">
-            <p class="PostPreview-body">{{ post.excerpt }}</p>
-            <p class="PostPreview-tag">{{ post.tags | first }}</p>
-          </div>
+      <div class="PostPreview">
+        <h2 class="PostPreview-title">{{ post.title }}</h2>
+        <div class="PostPreview-footer">
+          <p class="PostPreview-body">{{ post.excerpt }}</p>
+          <p class="PostPreview-tag">{{ post.tags | first }}</p>
         </div>
-      <!-- </div> -->
+      </div>
     </a>
-  {% endfor %}
+    {% endfor %}
 
     <a href="/articles">
       <button class="Button Button--blueGrey">More</button>
