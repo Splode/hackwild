@@ -2,24 +2,29 @@
 layout: default
 ---
 
+<div class="row">
+  <div class="col-md-8 mx-auto text-center">
+    <h1 class="Intro-title Intro-title--green">Topics</h1>
+    <p class="Intro-subtitle">Explore topics and stacks related to modern web development.</p>
+  </div>
+</div>
+
 {% for tag in site.tags %}
 <div class="row">
   <div class="col-md-8 mx-auto">
     <h2>{{ tag[0] }}</h2>
     {% for post in tag[1] limit:3 %}
-      <a href="{{ post.url }}">
-        <div class="PostPreview">
-          <h2 class="PostPreview-title">{{ post.title }}</h2>
-          <div class="PostPreview-footer">
-            <p class="PostPreview-body">{{ post.excerpt }}</p>
-            <p class="PostPreview-tag">{{ post.tags | first }}</p>
-          </div>
-        </div>
-      </a>
+
+      {% include post-preview.html %}
+
     {% endfor %}
-    <a href="/topic/{{ tag[0] | downcase }}">
-      <button class="Button Button--blueGrey">More</button>
-    </a>
+
+    {% if tag[1].size > 3 %}
+      <a href="/topic/{{ tag[0] | downcase }}">
+        <button class="Button Button--blueGrey">More</button>
+      </a>
+    {% endif %}
+
   </div>
 </div>
 {% endfor %}

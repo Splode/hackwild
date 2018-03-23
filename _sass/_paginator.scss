@@ -4,7 +4,7 @@
   border-bottom-right-radius: $borderRadius;
   border-top-right-radius: $borderRadius;
   margin-bottom: 1.5rem;
-  padding: 1rem 1rem 1.5rem 1rem;
+  padding: 1rem 1.5rem 1.5rem 1.5rem;
 }
 
 .PostPreview--condensed {
@@ -27,12 +27,13 @@
 .PostPreview-body {
   @extend .BodyCopy;
   color: $colorWhite;
-  font-size: 1.15rem;
+  font-size: 1rem;
   margin: 0;
   padding-right: 2rem;
 }
 
 .PostPreview-body--condensed {
+  color: $colorLightBlue;
   font-size: .9rem;
 }
 

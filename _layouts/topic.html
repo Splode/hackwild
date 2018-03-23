@@ -2,9 +2,15 @@
 layout: default
 ---
 
-<div class="row" style="padding-bottom: 4rem">
-  <div class="col-md-8 d-flex align-items-center mx-auto text-center">
-    <h2 class="Intro-title ml-5">{{ page.title }}</h2>
+<div class="row" style="padding-bottom: 2rem">
+  <div class="col-md-12 d-flex justify-content-center mx-auto">
+    <div class="Logo-brand">
+      {{ content }}
+    </div>
+  </div>
+  <div class="col-md-6 mx-auto text-center">
+    <h2 class="Intro-title Intro-title--borderBottom Intro-title--green">{{ page.title }}</h2>
+    <p class="Intro-subtitle">{{ page.tagline }}</p>
   </div>
 </div>
 
@@ -27,4 +33,3 @@ layout: default
     {% endfor %}
   </div>
 </div>
-

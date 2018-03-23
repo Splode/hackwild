@@ -24,7 +24,7 @@ a {
 .BodyCopy {
   font-weight: 300;
   letter-spacing: 0.025rem;
-  line-height: 2rem;
+  line-height: 1.75rem;
 }
 
 .Button {
@@ -64,10 +64,43 @@ a {
   font-weight: 400;
 }
 
+.Intro-title--borderBottom {
+  position: relative;
+  margin-bottom: 3rem;
+  &::after {
+    background-color: $colorBlueGrey;
+    content: '';
+    margin: 0 auto;
+    position: absolute;
+    right: 0;
+    bottom: -1rem;
+    left: 0;
+    width: 33%;
+    height: $borderRadius;
+  }
+}
+
+.Intro-title--green {
+  color: $colorGreen;
+}
+
+.Intro-subtitle {
+  @extend .BodyCopy;
+}
+
 .Logo-text {
   display: inline-block;
   font-size: 1.25rem;
   font-weight: 400;
   letter-spacing: 0.025rem;
-  margin: 0 0 0.5rem 0.5rem;
+  margin: 0 0 0 0.5rem;
+}
+
+.Logo-brand {
+  & img {
+    max-height: 200px;
+  }
+  & p {
+    margin: 0;
+  }
 }

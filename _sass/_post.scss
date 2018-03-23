@@ -63,6 +63,7 @@ article {
   & p {
     @extend .BodyCopy;
     font-size: 1.25rem;
+    line-height: 2rem;
     margin: 2rem 0;
   }
   & strong {
