@@ -12,7 +12,7 @@
         <h2 class="PostPreview-title">{{ post.title }}</h2>
         <div class="PostPreview-footer">
           <p class="PostPreview-body">{{ post.excerpt }}</p>
-          <p class="PostPreview-tag">{{ post.tag }}</p>
+          <a :href="'/topic/' + post.tag.toLowerCase()"><p class="PostPreview-tag">{{ post.tag }}</p></a>
         </div>
       </a>
     </div>

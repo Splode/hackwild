@@ -2,20 +2,7 @@ article {
   border-bottom: $borderRadius solid $colorBlueGrey;
   padding-bottom: 2rem;
   & a {
-    position: relative;
-    &:hover {
-      color: $colorGreen;
-    }
-    &::before {
-      background-color: $colorGreen;
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      z-index: -1;
-    }
+    @extend .Link--inline;
   }
   & blockquote {
     background-color: $colorBlueGrey;
