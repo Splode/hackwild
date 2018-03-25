@@ -3,14 +3,14 @@ layout: default
 ---
 
 <div class="row Intro-wrapper">
-  <div class="col-md-8 d-flex align-items-center mx-auto">
+  <div class="col-lg-8 d-flex align-items-center mx-auto">
     <logo color="green--outline" :stroke-width="8" :width="100"></logo>
-    <h2 class="Intro-title ml-5">Hacking through the dense jungle of the modern web.</h2>
+    <h2 class="Intro-title ml-3 ml-md-4 ml-lg-5">Hacking through the dense jungle of the modern web.</h2>
   </div>
 </div>
 
 <div class="row">
-  <div class="col-md-8 mx-auto">
+  <div class="col-lg-8 mx-auto">
     {% for post in site.posts limit:7 %}
       {% include post-preview.html %}
     {% endfor %}

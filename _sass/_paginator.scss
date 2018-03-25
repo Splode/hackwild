@@ -29,7 +29,9 @@
   color: $colorWhite;
   font-size: 1rem;
   margin: 0;
-  padding-right: 2rem;
+  @media screen and (min-width: $grid-md) {
+    padding-right: 2rem;
+  }
 }
 
 .PostPreview-body--condensed {
@@ -40,11 +42,17 @@
 .PostPreview-footer {
   align-items: flex-end;
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  @media screen and (min-width: $grid-md) {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
 }
 
 .PostPreview-footer--condensed {
   align-items: center;
+  justify-content: space-between;
 }
 
 .PostPreview-tag {

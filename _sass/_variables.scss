@@ -6,6 +6,13 @@ $colorPink: #ee78bf;
 $colorWhite: mintcream;
 
 $borderRadius: 4px;
+
+$grid-sm: 576px;
+$grid-md: 768px;
+$grid-lg: 992px;
+$grid-xl: 1200px;
+
 $navbarHeight: 50px;
+
 $transitionDefault: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
 $transitionSnappy: all .3s cubic-bezier(.07,.95,0,1);

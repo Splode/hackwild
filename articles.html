@@ -3,14 +3,14 @@ layout: default
 ---
 
 <div class="row Intro-wrapper--sm">
-  <div class="col-md-8 mx-auto text-center">
+  <div class="col-lg-8 mx-auto text-center">
     <h2 class="Intro-title Intro-title--pink">All the Articles</h2>
     <p class="Intro-subtitle">The complete list of articles from newest to oldest. Alternatively, browse by <a href="/topics" class="Link--inline">topic</a>.</p>
   </div>
 </div>
 
 <div class="row">
-  <div class="col-md-8 mx-auto">
+  <div class="col-lg-8 mx-auto">
     {% for post in site.posts %}
     {% assign topic = post.tags | first %}
       <a href="{{ post.url }}">

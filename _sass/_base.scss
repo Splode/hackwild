@@ -69,8 +69,17 @@ a {
 }
 
 .Intro-title {
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   font-weight: 400;
+  @media screen and (min-width: $grid-md) {
+    font-size: 1.75rem;
+  }
+  @media screen and (min-width: $grid-lg) {
+    font-size: 2rem;
+  }
+  @media screen and (min-width: $grid-xl) {
+    font-size: 2.5rem;
+  }
 }
 
 .Intro-title--borderBottom {

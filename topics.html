@@ -3,7 +3,7 @@ layout: default
 ---
 
 <div class="row Intro-wrapper--sm">
-  <div class="col-md-8 mx-auto text-center">
+  <div class="col-lg-8 mx-auto text-center">
     <h1 class="Intro-title Intro-title--pink">Topics</h1>
     <p class="Intro-subtitle">Explore topics and technologies related to modern web development.</p>
   </div>
@@ -11,7 +11,7 @@ layout: default
 
 {% for tag in site.tags %}
 <div class="row">
-  <div class="col-md-8 mx-auto">
+  <div class="col-lg-8 mx-auto">
     <h2 class="Topic-title"><a href="/topic/{{ tag[0] | downcase }}">{{ tag[0] }}</a></h2>
     {% for post in tag[1] limit:3 %}
 

@@ -1,13 +1,13 @@
 <template>
   <div class="row">
-    <div class="col-md-8 mx-auto text-center">
+    <div class="col-lg-8 mx-auto text-center">
       <h2 class="Search-title">Search Results for: <span class="Search-query">{{ query }}</span></h2>
       <p class="Button--inline Button--inline--blue" @click="emitQueryClear">Clear</p>
     </div>
-    <div class="col-md-8 mx-auto Search-empty" v-if="filteredPosts.length === 0 && query !== ''">
+    <div class="col-lg-8 mx-auto Search-empty" v-if="filteredPosts.length === 0 && query !== ''">
       <h3 class="Search-empty-title">Nothing Found</h3>
     </div>
-    <div class="col-12 PostPreview" v-for="(post, i) in filteredPosts" :key="i">
+    <div class="col-lg-8 mx-auto PostPreview" v-for="(post, i) in filteredPosts" :key="i">
       <a :href="post.url">
         <h2 class="PostPreview-title">{{ post.title }}</h2>
         <div class="PostPreview-footer">

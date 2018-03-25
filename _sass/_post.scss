@@ -1,9 +1,6 @@
 article {
   border-bottom: $borderRadius solid $colorBlueGrey;
   padding-bottom: 2rem;
-  // & a {
-  //   @extend .Link--inline;
-  // }
   & blockquote {
     background-color: $colorBlueGrey;
     border-left: $borderRadius solid $colorGreen;
@@ -29,8 +26,12 @@ article {
   }
   & h1 {
     color: $colorGreen;
-    font-size: 3rem;
-    margin-bottom: 4rem;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    @media screen and (min-width: $grid-md) {
+      font-size: 3rem;
+      margin-bottom: 4rem;
+    }
   }
   & h2 {
     color: $colorPink;
