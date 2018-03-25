@@ -25,5 +25,12 @@
 }
 
 .Navlist-item {
+  color: $colorLightBlue;
+  font-size: 0.9rem;
+  letter-spacing: 0.025rem;
   margin-left: 2rem;
+  text-transform: uppercase;
+  a:hover {
+    color: $colorGreen;
+  }
 }

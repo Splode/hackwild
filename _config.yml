@@ -24,6 +24,7 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://hackwild.com" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: splode
 github_username:  splode
+author: Christopher Murphy
 
 # Build settings
 markdown: kramdown

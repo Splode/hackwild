@@ -1,9 +1,9 @@
 article {
   border-bottom: $borderRadius solid $colorBlueGrey;
   padding-bottom: 2rem;
-  & a {
-    @extend .Link--inline;
-  }
+  // & a {
+  //   @extend .Link--inline;
+  // }
   & blockquote {
     background-color: $colorBlueGrey;
     border-left: $borderRadius solid $colorGreen;
@@ -52,6 +52,9 @@ article {
     font-size: 1.25rem;
     line-height: 2rem;
     margin: 2rem 0;
+    & a {
+      @extend .Link--inline;
+    }
   }
   & strong {
     font-weight: 500;
@@ -73,6 +76,12 @@ pre {
 
 pre {
   line-height: 2rem;
+}
+
+.Post-author {
+  color: $colorLightBlue;
+  font-size: 1rem;
+  margin: 0;
 }
 
 // dracula syntax highlight hook

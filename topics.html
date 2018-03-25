@@ -2,17 +2,17 @@
 layout: default
 ---
 
-<div class="row">
+<div class="row Intro-wrapper--sm">
   <div class="col-md-8 mx-auto text-center">
-    <h1 class="Intro-title Intro-title--green">Topics</h1>
-    <p class="Intro-subtitle">Explore topics and stacks related to modern web development.</p>
+    <h1 class="Intro-title Intro-title--pink">Topics</h1>
+    <p class="Intro-subtitle">Explore topics and technologies related to modern web development.</p>
   </div>
 </div>
 
 {% for tag in site.tags %}
 <div class="row">
   <div class="col-md-8 mx-auto">
-    <h2>{{ tag[0] }}</h2>
+    <h2 class="Topic-title"><a href="/topic/{{ tag[0] | downcase }}">{{ tag[0] }}</a></h2>
     {% for post in tag[1] limit:3 %}
 
       {% include post-preview.html %}

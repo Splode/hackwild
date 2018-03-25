@@ -4,12 +4,13 @@
       <div class="col-2 offset-1">
         <a href="/" class="d-flex align-items-center Navbar-logo-wrapper">
           <logo :classes="['d-flex']" color="green" :width="30"></logo>
-          <h1 class="Logo-text">HackWild</h1>
+          <h1 class="Logo-text Logo-text--nav">HackWild</h1>
         </a>
       </div>
       <div class="col-8 d-flex align-items-center justify-content-end mr-auto">
         <ul class="Navlist">
-          <li class="Navlist-item">Topics</li>
+          <li class="Navlist-item"><a href="/topics">Topics</a></li>
+          <li class="Navlist-item"><a href="/articles">Articles</a></li>
         </ul>
         <the-search-input></the-search-input>
       </div>

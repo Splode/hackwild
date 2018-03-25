@@ -60,6 +60,14 @@ a {
   padding-bottom: 16rem;
 }
 
+.Intro-wrapper {
+  padding-bottom: 4rem;
+}
+
+.Intro-wrapper--sm {
+  padding-bottom: 2rem;
+}
+
 .Intro-title {
   font-size: 2.5rem;
   font-weight: 400;
@@ -81,8 +89,8 @@ a {
   }
 }
 
-.Intro-title--green {
-  color: $colorGreen;
+.Intro-title--pink {
+  color: $colorPink;
 }
 
 .Intro-subtitle {
@@ -108,10 +116,18 @@ a {
 
 .Logo-text {
   display: inline-block;
-  font-size: 1.25rem;
   font-weight: 400;
   letter-spacing: 0.025rem;
+}
+
+.Logo-text--nav {
+  font-size: 1.25rem;
   margin: 0 0 0 0.5rem;
+}
+
+.Logo-text--footer {
+  font-size: 1.5rem;
+  margin-left: .75rem;
 }
 
 .Logo-brand {
@@ -120,5 +136,26 @@ a {
   }
   & p {
     margin: 0;
+  }
+}
+
+.Topic-title {
+  font-weight: 400;
+  position: relative;
+  margin-bottom: 4rem;
+  text-align: center;
+  a:hover {
+    color: $colorGreen;
+  }
+  &::after {
+    background-color: $colorBlueGrey;
+    content: '';
+    margin: 0 auto;
+    position: absolute;
+    right: 0;
+    bottom: -1.5rem;
+    left: 0;
+    width: 20%;
+    height: $borderRadius;
   }
 }

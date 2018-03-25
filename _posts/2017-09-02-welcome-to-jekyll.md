@@ -7,8 +7,6 @@ categories: jekyll update
 tags: Vue
 ---
 
-# Test Post
-
 You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the **site to see your changes**. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and _auto-regenerates_ your site when a file is updated.
 
 :star: Lorem ipsum :star: dolor sit amet, consectetur adipiscing elit. Morbi diam nisl, vehicula vel nunc maximus, faucibus pellentesque nibh. Sed sed pharetra erat, ut laoreet diam. Praesent volutpat egestas nulla in pharetra. In eu rhoncus ante. Vivamus sit amet eleifend velit. Praesent eu varius urna. Praesent finibus ac urna commodo lobortis.
