@@ -6,7 +6,7 @@ article {
     border-left: $borderRadius solid $colorGreen;
     border-top-right-radius: $borderRadius;
     border-bottom-right-radius: $borderRadius;
-    margin: auto;
+    margin: 2rem 0;
     padding: 1rem 1rem 1rem 2rem;
     & p {
       font-style: italic;
@@ -42,10 +42,13 @@ article {
     text-transform: uppercase;
   }
   & h3,
-  h4,
   h5,
   h6 {
     color: $colorLightBlue;
+  }
+  h4 {
+    color: $colorGreen;
+    font-family: $fontStackMono;
   }
   & p {
     @extend .BodyCopy;
@@ -69,13 +72,14 @@ hr {
 
 code,
 pre {
-  font-family: 'Fira Code', 'Monaco', 'Consolas', 'Courier New', Courier, monospace, monospace;
+  font-family: $fontStackMono;
   font-size: .9rem;
   font-weight: 300;
 }
 
 pre {
   line-height: 2rem;
+  white-space: pre-wrap;
 }
 
 .Post-author {
