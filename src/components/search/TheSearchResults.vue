@@ -7,14 +7,16 @@
     <div class="col-lg-8 mx-auto Search-empty" v-if="filteredPosts.length === 0 && query !== ''">
       <h3 class="Search-empty-title">Nothing Found</h3>
     </div>
-    <div class="col-lg-8 mx-auto PostPreview" v-for="(post, i) in filteredPosts" :key="i">
-      <a :href="post.url">
-        <h2 class="PostPreview-title">{{ post.title }}</h2>
-        <div class="PostPreview-footer">
-          <p class="PostPreview-body">{{ post.excerpt }}</p>
-          <a :href="'/topic/' + post.tag.toLowerCase()"><p class="PostPreview-tag">{{ post.tag }}</p></a>
-        </div>
-      </a>
+    <div class="col-lg-8 mx-auto">
+      <div class="PostPreview" v-for="(post, i) in filteredPosts" :key="i">
+        <a :href="post.url">
+          <h2 class="PostPreview-title">{{ post.title }}</h2>
+          <div class="PostPreview-footer">
+            <p class="PostPreview-body">{{ post.excerpt }}</p>
+            <a :href="'/topic/' + post.tag.toLowerCase()"><p class="PostPreview-tag">{{ post.tag }}</p></a>
+          </div>
+        </a>
+      </div>
     </div>
   </div>
 </template>

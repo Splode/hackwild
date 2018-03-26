@@ -38,6 +38,7 @@ export default {
 .SearchInput-wrapper {
   align-items: center;
   display: flex;
+  justify-content: flex-end;
 }
 
 .SearchInput-icon {
@@ -51,5 +52,16 @@ export default {
   color: #61ffab;
   margin-left: 1rem;
   padding: .25rem .5rem;
+  transition: all 0.3s cubic-bezier(0.07, 0.95, 0, 1);
+  width: 25%;
+  &:focus {
+    width: 75%;
+  }
+  @media screen and (min-width: 768px) {
+    width: 100%;
+    &:focus {
+      width: 100%;
+    }
+  }
 }
 </style>

@@ -1,13 +1,12 @@
 import Vue from 'vue'
 import { Bus } from './lib/bus'
 import Logo from './components/Logo.vue'
+import TheMobileMenu from './components/TheMobileMenu'
 import TheSearchInput from './components/search/TheSearchInput.vue'
 import TheSearchResults from './components/search/TheSearchResults.vue'
 
-// require('./../css/main.scss')
-// require('bootstrap-nucleus')
-
 Vue.component('logo', Logo)
+Vue.component('theMobileMenu', TheMobileMenu)
 Vue.component('theSearchInput', TheSearchInput)
 Vue.component('theSearchResults', TheSearchResults)
 
@@ -19,11 +18,15 @@ new Vue({
 
   data () {
     return {
+      menuOpen: false,
       searchOpen: false
     }
   },
 
   mounted () {
+    Bus.$on('menu-toggled', () => {
+      this.menuOpen = !this.menuOpen
+    })
     Bus.$on('query-cleared', () => {
       this.searchOpen = false
     })
