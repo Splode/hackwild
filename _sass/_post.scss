@@ -1,5 +1,5 @@
 article {
-  border-bottom: $borderRadius solid $colorBlueGrey;
+  // border-bottom: $borderRadius solid $colorBlueGrey;
   padding-bottom: 2rem;
   & blockquote {
     background-color: $colorBlueGrey;
@@ -64,7 +64,7 @@ article {
 hr {
   background-color: $colorBlueGrey;
   border: 0;
-  height: 4px;
+  height: $borderRadius;
 }
 
 code,

@@ -1,9 +1,35 @@
 <head>
-  <meta charset="UTF-8">
+  {% capture title %} 
+    {% if page.title %}
+      {{ site.title }} - {{ page.title }}
+    {% else %}
+      {{ site.title }} - {{ site.tagline }}
+    {% endif %}
+  {% endcapture %}
+
+  {% capture description %}
+    {% if page.description %}
+      {{ page.description }}
+    {% else %}
+      {{ site.description }}
+    {% endif %}
+  {% endcapture %}
+
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="{{ description }}">
 
+  <title>{{ title }}</title>
+
+  <link rel="stylesheet" href="/css/main.css">
   <link rel="canonical" href="{{ site.url }}{{ page.url | replace:'index.html',''}}">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:creator" content="@splode">
+  <meta name="twitter:url" content="{{ site.url }}">
+  <meta name="twitter:title" content="{{ title }}">
+  <meta name="twitter:description" content="{{ description }}">
 
   <link rel="apple-touch-icon" sizes="57x57" href="/static/images/icons/apple-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="/static/images/icons/apple-icon-60x60.png">
@@ -23,8 +49,14 @@
   <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
   <meta name="theme-color" content="#2d3748">
 
-  <!-- css -->
-  <link rel="stylesheet" href="/css/main.css">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-43190793-5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-  <title>{% if page.title %}{{ site.title }} - {{ page.title }}{% else %}{{ site.title }} - {{ site.tagline }}{% endif %}</title>
+    gtag('config', 'UA-43190793-5');
+  </script>
+
 </head>
