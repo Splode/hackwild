@@ -1,7 +1,7 @@
 <template>
   <div class="SearchInput-wrapper">
-    <input type="text" class="SearchInput-input" v-model="query" @keyup="emitQuerySearch">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6BA7B4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="SearchInput-icon">
+    <input aria-label="Search articles by key term" type="text" class="SearchInput-input" v-model="query" @keyup="emitQuerySearch">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#accdd2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="SearchInput-icon">
       <circle cx="11" cy="11" r="8"></circle>
       <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
     </svg>
