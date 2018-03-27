@@ -12,7 +12,7 @@
         <a :href="post.url">
           <h2 class="PostPreview-title">{{ post.title }}</h2>
           <div class="PostPreview-footer">
-            <p class="PostPreview-body">{{ post.excerpt }}</p>
+            <p class="PostPreview-body">{{ post.description }}</p>
             <a :href="'/topic/' + post.tag.toLowerCase()"><p class="PostPreview-tag">{{ post.tag }}</p></a>
           </div>
         </a>
@@ -45,7 +45,7 @@ export default {
       return this.posts.filter(post => {
         return (
           post.title.toLowerCase().includes(query) ||
-          post.excerpt.toLowerCase().includes(query) ||
+          post.description.toLowerCase().includes(query) ||
           post.tag.toLowerCase().includes(query)
         )
       })

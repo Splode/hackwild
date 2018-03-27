@@ -18,9 +18,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="description" content="{{ description }}">
+  <meta name="description" content="{{ description | strip }}">
 
-  <title>{{ title }}</title>
+  <title>{{ title | strip }}</title>
 
   <link rel="stylesheet" href="/css/main.css">
   <link rel="canonical" href="{{ site.url }}{{ page.url | replace:'index.html',''}}">
@@ -28,8 +28,8 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:creator" content="@splode">
   <meta name="twitter:url" content="{{ site.url }}">
-  <meta name="twitter:title" content="{{ title }}">
-  <meta name="twitter:description" content="{{ description }}">
+  <meta name="twitter:title" content="{{ title | strip }}">
+  <meta name="twitter:description" content="{{ description | strip }}">
   <meta name="twitter:image" content="{{ site.url }}/static/images/hackwild-logo.png">
 
   <link rel="apple-touch-icon" sizes="57x57" href="/static/images/icons/apple-icon-57x57.png">

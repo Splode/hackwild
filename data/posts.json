@@ -6,7 +6,7 @@
     {
       "title": "{{ post.title }}",
       "url": "{{ post.url }}",
-      "excerpt": "{{ post.excerpt }}",
+      "description": "{{ post.description }}",
       "date": "{{ post.date | date: "%B %d, %Y" }}",
       "tag": "{{ post.tags | first }}"
     }{% unless forloop.last %},{% endunless %}

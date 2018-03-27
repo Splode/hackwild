@@ -40,6 +40,9 @@ article {
   & h3 {
     font-size: 1rem;
     text-transform: uppercase;
+    & + p {
+      margin-top: 1rem;
+    }
   }
   & h3,
   h5,
@@ -49,6 +52,7 @@ article {
   h4 {
     color: $colorGreen;
     font-family: $fontStackMono;
+    letter-spacing: .025rem;
   }
   & p {
     @extend .BodyCopy;
@@ -79,6 +83,7 @@ pre {
 
 pre {
   line-height: 2rem;
+  margin-bottom: 2rem;
   white-space: pre-wrap;
 }
 
