@@ -60,3 +60,4 @@ exclude:
   - .eslintignore
   - .eslintrc.js
   - .editorconfig
+  - .github/

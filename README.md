@@ -1,12 +1,20 @@
+<div align="center">
+  <img alt="HackWild logo" src=".github/hackwild-logo.png" width="150px">
+</div>
+
 # HackWild
 
-> Hacking through the Dense Jungle of Modern Development
+
+Hacking through the Dense Jungle of Modern Development
 
 ## Overview
 
-:warning: WIP :warning: HackWild is still being developed, slowly but surely.
+HackWild explores the world of modern web development with useful tips, tutorials and articles.
 
 ## Technical
+
+HackWild is built with Jekyll and Vue.js. 
+
 ### Install
 
 ```
@@ -26,3 +34,7 @@ HackWild is continuously deployed using Netlify, but can be manually built using
 ```
 npm run build && bundle exec jekyll build
 ```
+
+### License
+
+MIT &copy; [Christopher Murphy](https://github.com/splode)
