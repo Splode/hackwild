@@ -50,6 +50,10 @@
   <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
   <meta name="theme-color" content="#2d3748">
 
+  {% if page.layout == 'post' %}
+    {% include structured-data-article.html %}
+  {% endif %}
+
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-43190793-5"></script>
   <script>
