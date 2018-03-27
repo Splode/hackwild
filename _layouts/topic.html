@@ -1,0 +1,35 @@
+---
+layout: default
+---
+
+<div class="row" style="padding-bottom: 2rem">
+  <div class="col-md-12 d-flex justify-content-center mx-auto">
+    <div class="Logo-brand">
+      {{ content }}
+    </div>
+  </div>
+  <div class="col-md-10 col-lg-6 mx-auto text-center">
+    <h2 class="Intro-title Intro-title--borderBottom Intro-title--pink">{{ page.title }}</h2>
+    <p class="Intro-subtitle">{{ page.tagline }}</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-8 mx-auto">
+    {% for tag in site.tags %}
+      {% if tag[0] == page.topic %}
+        {% for post in tag[1] %}
+          <a href="{{ post.url }}">
+            <div class="PostPreview">
+              <h2 class="PostPreview-title">{{ post.title }}</h2>
+              <div class="PostPreview-footer">
+                <p class="PostPreview-body">{{ post.description }}</p>
+                <p class="PostPreview-tag">{{ post.tags | first }}</p>
+              </div>
+            </div>
+          </a>
+        {% endfor %} 
+      {% endif %} 
+    {% endfor %}
+  </div>
+</div>

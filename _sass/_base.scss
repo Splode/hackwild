@@ -1,4 +1,3 @@
-// @import '/node_modules/bootstrap-nucleus/dist/bootstrap-nucleus.css';
 @import '/css/bootstrap-nucleus.css';
 @import '/css/dracula.css';
 
@@ -9,9 +8,166 @@ html {
 body {
   background-color: $colorDarkBlue;
   color: $colorWhite;
+  font-family: -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu,
+    Cantarell, “Fira Sans”, “Droid Sans”, “Helvetica Neue”, Arial, sans-serif;
+  min-height: 100vh;
   position: relative;
 }
 
+a {
+  color: inherit;
+  transition: $transitionDefault;
+  &:hover {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+.BodyCopy {
+  font-weight: 300;
+  letter-spacing: 0.025rem;
+  line-height: 1.75rem;
+}
+
+.Button {
+  border: 0;
+  border-radius: $borderRadius;
+  cursor: pointer;
+  display: block;
+  font-size: 1.15rem;
+  margin: 0 auto;
+  padding: 1rem 8rem;
+}
+
+.Button--blueGrey {
+  background-color: $colorBlueGrey;
+  color: $colorGreen;
+}
+
+.Button--inline {
+  cursor: pointer;
+  transition: $transitionDefault;
+}
+
+.Button--inline--blue {
+  color: $colorLightBlue;
+  &:hover {
+    color: $colorGreen;
+  }
+}
+
 .ContentWrapper {
-  padding-top: $navbarHeight;
+  padding-top: 7rem;
+  padding-bottom: 16rem;
+}
+
+.Intro-wrapper {
+  padding-bottom: 4rem;
+}
+
+.Intro-wrapper--sm {
+  padding-bottom: 2rem;
+}
+
+.Intro-title {
+  font-size: 1.5rem;
+  font-weight: 400;
+  @media screen and (min-width: $grid-md) {
+    font-size: 1.75rem;
+  }
+  @media screen and (min-width: $grid-lg) {
+    font-size: 2rem;
+  }
+  @media screen and (min-width: $grid-xl) {
+    font-size: 2.5rem;
+  }
+}
+
+.Intro-title--borderBottom {
+  position: relative;
+  margin-bottom: 3rem;
+  &::after {
+    background-color: $colorBlueGrey;
+    content: '';
+    margin: 0 auto;
+    position: absolute;
+    right: 0;
+    bottom: -1rem;
+    left: 0;
+    width: 33%;
+    height: $borderRadius;
+  }
+}
+
+.Intro-title--pink {
+  color: $colorPink;
+}
+
+.Intro-subtitle {
+  @extend .BodyCopy;
+}
+
+.Link--inline {
+  color: $colorGreen;
+  position: relative;
+  &:hover::before {
+    width: 100%;
+  }
+  &::before {
+    background-color: $colorGreen;
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: $transitionSnappy;
+    width: 0;
+    height: 2px;
+    z-index: 1;
+  }
+}
+
+.Logo-text {
+  display: inline-block;
+  font-weight: 400;
+  letter-spacing: 0.025rem;
+}
+
+.Logo-text--nav {
+  font-size: 1.25rem;
+  margin: 0 0 0 0.5rem;
+}
+
+.Logo-text--footer {
+  font-size: 1.5rem;
+  margin-left: .75rem;
+}
+
+.Logo-brand {
+  & img {
+    max-height: 200px;
+  }
+  & p {
+    margin: 0;
+  }
+}
+
+.Topic-title {
+  font-weight: 400;
+  position: relative;
+  margin-bottom: 4rem;
+  text-align: center;
+  a:hover {
+    color: $colorGreen;
+  }
+  &::after {
+    background-color: $colorBlueGrey;
+    content: '';
+    margin: 0 auto;
+    position: absolute;
+    right: 0;
+    bottom: -1.5rem;
+    left: 0;
+    width: 20%;
+    height: $borderRadius;
+  }
 }

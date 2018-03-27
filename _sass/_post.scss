@@ -1,10 +1,12 @@
 article {
+  // border-bottom: $borderRadius solid $colorBlueGrey;
+  padding-bottom: 2rem;
   & blockquote {
     background-color: $colorBlueGrey;
-    border-left: 4px solid $colorGreen;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
-    margin: auto;
+    border-left: $borderRadius solid $colorGreen;
+    border-top-right-radius: $borderRadius;
+    border-bottom-right-radius: $borderRadius;
+    margin: 2rem 0;
     padding: 1rem 1rem 1rem 2rem;
     & p {
       font-style: italic;
@@ -20,14 +22,15 @@ article {
   h4,
   h5,
   h6 {
-    font-family: 'Lato', Cambria, Cochin, Georgia, Times, 'Times New Roman',
-      serif;
     font-weight: 400;
   }
   & h1 {
     color: $colorGreen;
-    font-size: 3rem;
-    margin: 4rem 0;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    @media screen and (min-width: $grid-md) {
+      font-size: 3rem;
+    }
   }
   & h2 {
     color: $colorPink;
@@ -37,22 +40,28 @@ article {
   & h3 {
     font-size: 1rem;
     text-transform: uppercase;
+    & + p {
+      margin-top: 1rem;
+    }
   }
   & h3,
-  h4,
   h5,
   h6 {
     color: $colorLightBlue;
   }
+  h4 {
+    color: $colorGreen;
+    font-family: $fontStackMono;
+    letter-spacing: .025rem;
+  }
   & p {
-    font-family: 'IBMPlexSans', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-      Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
-      sans-serif;
+    @extend .BodyCopy;
     font-size: 1.25rem;
-    font-weight: 300;
-    letter-spacing: 0.025rem;
     line-height: 2rem;
     margin: 2rem 0;
+    & a {
+      @extend .Link--inline;
+    }
   }
   & strong {
     font-weight: 500;
@@ -62,30 +71,38 @@ article {
 hr {
   background-color: $colorBlueGrey;
   border: 0;
-  height: 4px;
+  height: $borderRadius;
 }
 
 code,
 pre {
-  font-family: 'FiraCode', 'Courier New', Courier, monospace;
-  font-size: 1rem;
+  font-family: $fontStackMono;
+  font-size: .9rem;
   font-weight: 300;
 }
 
 pre {
   line-height: 2rem;
+  margin-bottom: 2rem;
+  white-space: pre-wrap;
+}
+
+.Post-author {
+  color: $colorLightBlue;
+  font-size: 1rem;
+  margin: 0;
 }
 
 // dracula syntax highlight hook
 .highlight {
-  border-radius: 4px;
+  border-radius: $borderRadius;
   padding: 1rem;
 }
 
 // inline code manually styled
 code.highlighter-rouge {
   background: #282a36;
-  border-radius: 4px;
+  border-radius: $borderRadius;
   color: #f8f8f2;
   padding: 0.075rem 0.5rem;
 }

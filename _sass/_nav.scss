@@ -6,14 +6,65 @@
 }
 
 .Navbar-wrapper {
-  border-bottom: 4px solid $colorBlueGrey;
+  border-bottom: $borderRadius solid $colorBlueGrey;
   height: 100%;
 }
 
+.Navbar-logo-wrapper {
+  &:hover {
+    color: $colorPink;
+  }
+}
+
+.Navlist-wrapper--mobile {
+  &.is-open {
+    background-color: $colorDarkBlue;
+    border-bottom: $borderRadius solid $colorPink;
+  }
+}
+
 .Navlist {
-  display: flex;
   list-style-type: none;
-  justify-content: flex-end;
   margin: 0;
   padding: 0;
+}
+
+.Navlist--desktop {
+  display: none;
+  justify-content: flex-end;
+  @media screen and (min-width: $grid-md) {
+    display: flex;
+  }
+}
+
+.Navlist--mobile {
+  display: none;
+  justify-content: center;
+  opacity: 0;
+  transition: $transitionSnappy;
+  height: 0;
+  &.is-open {
+    display: flex;
+    margin-top: $borderRadius;
+    opacity: 1;
+    padding: 1.5rem 0;
+    height: auto;
+  }
+  @media screen and (min-width: $grid-md) {
+    display: none;
+  }
+}
+
+.Navlist-item {
+  color: $colorLightBlue;
+  font-size: 0.9rem;
+  letter-spacing: 0.025rem;
+  margin-left: 2rem;
+  text-transform: uppercase;
+  a:hover {
+    color: $colorGreen;
+  }
+  &:first-child {
+    margin: 0;
+  }
 }

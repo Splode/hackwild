@@ -1,0 +1,73 @@
+.PostPreview {
+  background-color: $colorBlueGrey;
+  border-left: $borderRadius solid $colorPink;
+  border-bottom-right-radius: $borderRadius;
+  border-top-right-radius: $borderRadius;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.5rem 1.5rem 1.5rem;
+}
+
+.PostPreview--condensed {
+  margin-bottom: .5rem;
+  padding: .5rem .75rem;
+}
+
+.PostPreview-title {
+  color: $colorGreen;
+  font-size: 1.66rem;
+  font-weight: 400;
+  letter-spacing: .025rem;
+}
+
+.PostPreview-title--condensed {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.PostPreview-body {
+  @extend .BodyCopy;
+  color: $colorWhite;
+  font-size: 1rem;
+  margin: 0;
+  @media screen and (min-width: $grid-md) {
+    padding-right: 2rem;
+  }
+}
+
+.PostPreview-body--condensed {
+  color: $colorLightBlue;
+  font-size: .9rem;
+}
+
+.PostPreview-footer {
+  align-items: flex-end;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  @media screen and (min-width: $grid-md) {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+}
+
+.PostPreview-footer--condensed {
+  align-items: center;
+  justify-content: space-between;
+}
+
+.PostPreview-tag {
+  background-color: $colorDarkBlue;
+  border-radius: $borderRadius;
+  color: $colorPink;
+  margin: 0;
+  padding: .075rem 1rem;
+}
+
+.PostPreview-tag--article {
+  background-color: #282a36;
+  font-size: 1rem;
+}
+
+.PostPreview-tag--condensed {
+  padding: .005rem .75rem;
+}

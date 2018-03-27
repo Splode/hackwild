@@ -4,8 +4,22 @@ page-type: post
 ---
 
 <div class="row">
-  <div class="col-md-8 mx-auto">
+  <div class="col-lg-8 mx-auto">
     <article>
+
+      <h1>{{ page.title }}</h1>
+
+      <div class="d-flex align-items-center justify-content-between">
+        {% if page.author %}
+          <p class="Post-author">{{ page.author }}</p>
+        {% else %}
+          <p class="Post-author">{{ site.author }}</p>
+        {% endif %}
+  
+        <a href="/topic/{{ page.tags | first | downcase }}"><p class="PostPreview-tag PostPreview-tag--article">{{ page.tags | first }}</p></a>
+      </div>
+
+      <hr>
     
       {{ content }}
     

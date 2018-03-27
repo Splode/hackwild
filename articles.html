@@ -1,0 +1,27 @@
+---
+layout: default
+---
+
+<div class="row Intro-wrapper--sm">
+  <div class="col-lg-8 mx-auto text-center">
+    <h2 class="Intro-title Intro-title--pink">All the Articles</h2>
+    <p class="Intro-subtitle">The complete list of articles from newest to oldest. Alternatively, browse by <a href="/topics" class="Link--inline">topic</a>.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-8 mx-auto">
+    {% for post in site.posts %}
+    {% assign topic = post.tags | first %}
+      <a href="{{ post.url }}">
+        <div class="PostPreview PostPreview--condensed">
+          <h2 class="PostPreview-title PostPreview-title--condensed">{{ post.title }}</h2>
+          <div class="PostPreview-footer PostPreview-footer--condensed">
+            <p class="PostPreview-body PostPreview-body--condensed">{{ post.date | date: "%B %d, %Y" }}</p>
+            <a href="/topic/{{ topic | downcase }}"><p class="PostPreview-tag PostPreview-tag--condensed">{{ topic }}</p></a>
+          </div>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+</div>

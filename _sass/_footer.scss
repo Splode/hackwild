@@ -4,3 +4,13 @@
   bottom: 0;
   left: 0;
 }
+
+.Footer-wrapper {
+  border-top: 4px solid $colorBlueGrey;
+}
+
+.Footer-legal {
+  color: $colorLightBlue;
+  font-size: .85rem;
+  letter-spacing: .025rem;
+}

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 {% include head.html %}
@@ -8,7 +8,9 @@
 
     {% include navbar.html %}
 
-    <main class="container ContentWrapper">
+    {% include navbar-search-results.html %}
+
+    <main class="container ContentWrapper" v-if="!searchOpen">
 
       {{ content }}
 
