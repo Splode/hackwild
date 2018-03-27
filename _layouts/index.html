@@ -14,7 +14,7 @@ layout: default
     {% for post in site.posts limit:7 %}
       {% include post-preview.html %}
     {% endfor %}
-    <a href="/articles">
+    <a href="/articles" aria-label="View list of all articles">
       <button class="Button Button--blueGrey">More</button>
     </a>
   </div>
