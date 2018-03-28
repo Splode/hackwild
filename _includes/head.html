@@ -25,6 +25,19 @@
   <link rel="stylesheet" href="/css/main.css">
   <link rel="canonical" href="{{ site.url }}{{ page.url | replace:'index.html',''}}">
 
+  <meta property="og:title" content="{{ title | strip }}">
+  <meta property="og:image" content="{{ site.url }}/static/images/hackwild-logo.png">
+  <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+  <meta property="og:description" content="{{ description | strip }}">
+  <meta property="og:site_name" content="{{ site.title }}">
+  
+  {% if page.layout == 'post' %}
+    {% include open-graph-article.html %}
+    {% include structured-data-article.html %}
+  {% else %}
+    <meta property="og:type" content="blog">
+  {% endif %}
+
   <meta name="twitter:card" content="summary">
   <meta name="twitter:creator" content="@splode">
   <meta name="twitter:url" content="{{ site.url }}">
@@ -49,10 +62,6 @@
   <meta name="msapplication-TileColor" content="#2d3748">
   <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
   <meta name="theme-color" content="#2d3748">
-
-  {% if page.layout == 'post' %}
-    {% include structured-data-article.html %}
-  {% endif %}
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-43190793-5"></script>
