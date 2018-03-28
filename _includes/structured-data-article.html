@@ -1,0 +1,37 @@
+{% capture author %}
+  {% if page.author %}
+    {{ page.author }}
+  {% else %}
+    {{ site.author }}
+  {% endif %}
+{% endcapture %}
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ site.url }}{{ page.url }}"
+  },
+  "headline": "{{ page.title }}",
+  "image": [
+    "{{ site.url }}/static/images/hackwild-logo.png"
+  ],
+  "datePublished": "{{ page.date }}",
+  "dateModified": "{{ page.date }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ author | strip }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "{{ site.title }}",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ site.url }}/static/images/hackwild-logo.png"
+    }
+  },
+  "description": "{{ page.description }}"
+}
+</script>

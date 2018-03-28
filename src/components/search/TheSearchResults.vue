@@ -9,7 +9,7 @@
     </div>
     <div class="col-lg-8 mx-auto">
       <div class="PostPreview" v-for="(post, i) in filteredPosts" :key="i">
-        <a :href="post.url">
+        <a :href="post.url" :aria-label="'View ' + post.title + ' article'">
           <h2 class="PostPreview-title">{{ post.title }}</h2>
           <div class="PostPreview-footer">
             <p class="PostPreview-body">{{ post.description }}</p>
