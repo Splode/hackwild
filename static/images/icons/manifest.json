@@ -1,5 +1,6 @@
 {
- "name": "App",
+ "name": "HackWild",
+ "short_name": "HackWild",
  "icons": [
   {
    "src": "\/android-icon-36x36.png",
