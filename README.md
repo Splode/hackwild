@@ -4,9 +4,6 @@
 
 # HackWild
 
-
-Hacking through the Dense Jungle of Modern Development
-
 ## Overview
 
 HackWild explores the world of modern web development with useful tips, tutorials and articles.

@@ -17,8 +17,6 @@ A solution for this is to use Vue components to wrap the SVG inline code. This a
 
 In this example, I'll use the HackWild SVG logo developed for this site, though any properly formatted SVG will work. We'll start by creating a Vue single-file component, `Logo.vue` and scaffold it with the basic structure:
 
-> It's a good idea to name this component in a way that makes sense for your application. Check out the [official Vue style guide](https://vuejs.org/v2/style-guide/) for best practices.
-
 #### Logo.vue
 
 ```html
@@ -45,6 +43,8 @@ export default {
 <style lang="css" scoped>
 </style>
 ```
+
+> It's a good idea to name this component in a way that makes sense for your application. Check out the [official Vue style guide](https://vuejs.org/v2/style-guide/) for best practices.
 
 ### Register and Mount
 
