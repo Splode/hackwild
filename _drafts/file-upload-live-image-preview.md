@@ -7,7 +7,7 @@ tags: JavaScript
 category: JavaScript
 ---
 
-By default, when a file is uploaded using the file input form element it's path is stored as a string. It's
+By default, when a file is uploaded using the file input form element its path is stored as a string. It's
 
 To do this, we'll make use of the `FileReader` object, which is part of the [File API](https://www.w3.org/TR/FileAPI/).
 
@@ -45,6 +45,8 @@ To ensure that our images fit within the confines of our layout, we'll use the `
 
 ### Accessing the Elements in JavaScript
 
+To handle when a user selects an image for upload, we'll attach an event listener to the `<input>` element with the `'change'` event. When a user selects a file, a reference to that file will be added to the `files` array on the `input` object. Each file element in this array holds information on the file, including filesize, MIME type, date modified, etc.
+
 For now, we'll log the files attached to the input element.
 
 ```js
@@ -53,14 +55,15 @@ const fileInput = document.querySelector('input[data-id=fileInput]')
 
 fileInput.addEventListener('change', handleFileUpload, false)
 
-function handleFileUpload (e) {
-  console.log(this.files)
+function handleFileUpload (inputEvent) {
+  const input = inputEvent.target
+  console.log(input.files[0])
 }
 ```
 
 ## Using the FileReader Object
 
-If we take a look at the log output after choosing an image file at this point, we'll see that `this.files` contains a `FileList` object with an array of `File` objects (in this case, we'll only have 1 `File`). To read the data that the `File` represents and serve a preview of it, we'll need to use the `FileReader` constructor.
+If we take a look at the log output after choosing an image file at this point, we'll see that `this.files` contains a `FileList` object with an array of `File` objects (in this case, we'll only have 1 `File`). To read the data that the `File` represents and serve a preview of it, we'll need to use the `FileReader` object.
 
 ### Loading the Image Preview
 
@@ -82,7 +85,12 @@ function handleFileUpload (inputEvent) {
 
 ### Image Type Validation
 
-## Previewing Multiple Images
+Setting the `accept` attribute on the file `<input>` element will limit the types of files that users can choose, but there are ways to circumvent this restriction. If the uploaded files are going to be sent to a database, we want to ensure that we are sending the right file type. To provide a second level of validation we can perform a MIME type check at the time the file is handled.
+
+The `File` object attached to the `<input>` element has a `type` property with a `String` value corresponding to the file's MIME type. When we handle the file, we can check this property against a list of valid MIME types and only continue processing the file if is in an accepted format. To do this, we'll define an array of MIME type strings and check if the `type` value matches an array element.
+
+```js
+```
 
 ## Wrapping Up
 
