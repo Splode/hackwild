@@ -143,12 +143,9 @@ a {
 }
 
 .Logo-brand {
-  & img {
-    max-height: 200px;
-  }
-  & p {
-    margin: 0;
-  }
+  margin-bottom: 2rem;
+  width: 200px;
+  max-height: 200px;
 }
 
 .Topic-title {
