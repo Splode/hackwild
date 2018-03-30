@@ -7,9 +7,10 @@ tags: JavaScript
 category: JavaScript
 ---
 
-It's a common practice today for users to contribute content by uploading images. A typical scenario is a user-submitted image for a profile photo selected using the `<input>` form element. Users have come to expect that when they select an image for uploading, they'll be able to preview the image before submitting it. 
+It's a common practice today for users to contribute content by uploading images. A typical scenario is a user-submitted image for a profile photo selected using the `<input>` form element. Users have come to expect that when they select an image for uploading, they'll be able to preview the image before submitting it.
 
 By default, when a user selects an image using the file `<input>` element, its reference is temporarily stored as a path; it needs to be read and processed before it can be shown onscreen.
+
 We want users to be able to preview the image that they've selected before it's sent to a database or API endpoint. To accomplish this, we'll make use of the `FileReader` object, which is part of the <a href="https://www.w3.org/TR/FileAPI/" target="_blank" rel="noopener">File API</a>.
 
 ## Basic Setup
@@ -56,7 +57,7 @@ const fileInput = document.querySelector('input[data-id=fileInput]')
 
 fileInput.addEventListener('change', handleFileUpload, false)
 
-function handleFileUpload (inputEvent) {
+function handleFileUpload(inputEvent) {
   const input = inputEvent.target
   console.log(this.files)
 }
@@ -64,16 +65,16 @@ function handleFileUpload (inputEvent) {
 
 ## Using the FileReader Object
 
-If we take a look at the log output after choosing an image file at this point, we'll see that `this.files` contains a `FileList` object with an array of `File` <a href="https://developer.mozilla.org/en-US/docs/Web/API/Blob" target="_blank" rel="noopener">Blob</a> objects (in this case, we'll only have one `File`). To read the data that the `File` represents and serve a preview of it, we'll need to use the `FileReader` object.
+If we take a look at the log output after choosing an image file at this point, we'll see that `this.files` contains a `FileList` object with an array of `File` `Blob` objects (in this case, we'll only have one `File`). To read the data that the `File` represents and serve a preview of it, we'll need to use the `FileReader` object.
 
 ### Loading the Image Preview
 
 The `FileReader` constructor returns a new `FileReader` object, which has several useful methods and events for handling file data. First, we'll use the `readAsDataURL()` method to read the content of the `File` object. The `readAsDataURL()` method will take in our `File` object as a `Blob` and return a result as a `DataURL`. Next, we'll hook into the `onload` event, which is fired when a read operation is successfully completed. When `onload` is fired, we'll set the `src` attribute of our `<img>` element to the FileReader result, which is the image `DataURL`.
 
-Voila! Now we can preview our image as soon as we select it.
+Voila! Now we can preview our image as soon as we select it. 🙌
 
 ```js
-function handleFileUpload (inputEvent) {
+function handleFileUpload(inputEvent) {
   const input = inputEvent.target
   const reader = new FileReader()
 
@@ -95,20 +96,18 @@ The `File` object attached to the `<input>` element has a `type` property with a
 ```js
 const filePreview = document.querySelector('img[data-id=filePreview]')
 const fileInput = document.querySelector('input[data-id=fileInput]')
-const validImgFormats = [
-  'image/jpeg',
-  'image/png',
-  'image/gif'
-]
+const validImgFormats = ['image/jpeg', 'image/png', 'image/gif']
 
 fileInput.addEventListener('change', handleFileUpload, false)
 
-function handleFileUpload (inputEvent) {
+function handleFileUpload(inputEvent) {
   const input = inputEvent.target
   const reader = new FileReader()
 
   if (validImgFormats.indexOf(input.files[0].type) === -1) {
-    return alert('Please provide a valid image file. Accepted formats include .png, .jpg, and .gif.')
+    return alert(
+      'Please provide a valid image file. Accepted formats include .png, .jpg, and .gif.'
+    )
   }
 
   reader.readAsDataURL(input.files[0])
