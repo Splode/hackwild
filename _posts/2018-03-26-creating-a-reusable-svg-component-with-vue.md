@@ -2,20 +2,20 @@
 layout: post
 title: Creating a Reusable SVG Component with Vue.js
 description: >
-  Learn how to create a resuable, configurable and lightweight SVG component using Vue Single File Components.
+  Learn how to create a reusable, configurable and lightweight SVG component using Vue Single File Components.
 tags: Vue
 category: Vue
 ---
 
 Using Scalable Vector Graphics (SVG) images for vector-based assets can help to significantly shed page weight. SVG images can be sized up and down without sacrificing image quality. Individual elements, such as fill and stroke properties, can even be programmatically controlled and animated.
 
-Inlining SVG elements is the most robust approach, but for complex images the code can be a messy tangle to work with. Using inline SVGs in multiple places might require copy and pasting lengthy chunks of code, which can quickly become difficult to manage and might pollute an otherwise tidy code base.
+SVG images can be referenced in `<img>` tags just like an other image format, but inlining SVG elements is the most robust approach because it allows the SVG properties to be dynamically edited and does not require an additional http request. However, for complex images inlining SVG code can be a messy tangle to work with and repeating this code for several images is not very DRY. Using inline SVGs in multiple places might require copy and pasting lengthy chunks of code, which can quickly become difficult to manage and might pollute an otherwise tidy code base.
 
-A solution for this is to use Vue components to wrap the SVG inline code. This allows you to separate the inline SVG code from the rest of your application templates. Even better, we can pass in props in order to extend and configure our SVG to suit our needs.
+A solution for this is to use Vue components to wrap the SVG inline code. This allows you to separate the inline SVG code from the rest of your application templates and have multiple instances of the same SVG image each with its own dynamic properties.
 
 ## Creating the SVG Component
 
-In this example, I'll use the HackWild SVG logo developed for this site, though any properly formatted SVG will work. We'll start by creating a Vue single-file component, `Logo.vue` and scaffold it with the basic structure:
+In this example, we'll develop a reusable SVG component using the HackWild SVG logo developed for this site, though any properly formatted SVG will work. We'll start by creating a Vue single-file component, `Logo.vue` and scaffold it with the basic structure:
 
 #### Logo.vue
 
@@ -48,7 +48,7 @@ export default {
 
 ### Register and Mount
 
-Now that we have our SVG component, we'll register it in our primary `App` component. We can then mount it anywhere in our application where we've declared it using `<Logo/>`.
+Now that we have our SVG component, we'll register it in our primary `App` component. We can then mount it anywhere in our application where we've registered it using `<Logo/>`.
 
 #### App.vue
 
@@ -84,7 +84,7 @@ We'll set the `width` and `strokeWidth` props to be of the type `Number` (the nu
 
 ### SVG Fill and Stroke Colors
 
-To control the fill and stroke colors of our SVG component, we'll define several classes in our `<style>` section: `.white`, `.green` and `.green--outline`. We can then bind the `:class` attribute on the `<path>` element to the `color` prop. The `color` prop will be of a type `String`, have a default value of `white` and a won't be required.
+To control the fill and stroke colors of our SVG component, we'll define several classes in our `<style>` section: `.white`, `.green` and `.green--outline`. We can then bind the `:class` attribute on the `<path>` element to the `color` prop. The `color` prop will be of a type `String`, have a default value of `white` and won't be required.
 
 #### Logo.vue
 
@@ -184,8 +184,10 @@ export default {
 </script>
 ```
 
-Because we've defined our SVG component as a Vue component with extendible and default values, we can declare another instance of our `<Logo/>` component with different options.
+## Wrapping Up
 
-## Interactive Demo
+Now that we've defined our SVG component as a Vue component with extendible and default values, we can declare another instance of our `<Logo/>` component with different options. We've also separated the logic of our SVG element into its own component. This is a great pattern when you need to use different instances of an SVG image throughout an application.
+
+### Interactive Demo
 
 You can edit and view the source for this project at <a href="https://codesandbox.io/s/p795vp4x7x" target="_blank" rel="noopener">CodeSandbox</a>.
