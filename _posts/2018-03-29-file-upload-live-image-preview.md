@@ -91,7 +91,7 @@ function handleFileUpload(inputEvent) {
 
 Setting the `accept` attribute on the file `<input>` element will limit the types of files that users can choose, but there are ways to circumvent this restriction. If the uploaded files are going to be sent to a database, we want to ensure that we are sending the right file type. To provide a second level of validation we can perform a MIME type check at the time the file is handled.
 
-The `File` object attached to the `<input>` element has a `type` property with a `String` value corresponding to the file's MIME type. When we handle the file, we can check this property against a list of valid MIME types and only continue processing the file if is in an accepted format. To do this, we'll define an array of MIME type strings and check if the `type` value matches an array element.
+The `File` object attached to the `<input>` element has a `type` property with a `String` value corresponding to the file's MIME type. When we handle the file, we can check this property against a list of valid MIME types and only continue processing the file if it is in an accepted format. To do this, we'll define an array of MIME type strings and check if the `type` value matches an array element.
 
 ```js
 const filePreview = document.querySelector('img[data-id=filePreview]')
