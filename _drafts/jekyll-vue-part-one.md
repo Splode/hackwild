@@ -13,6 +13,8 @@ This tutorial will assume a basic knowledge of [Jekyll](https://jekyllrb.com/) a
 
 ## Setting Up the Project
 
+Let's start off by scaffolding a new Jekyll project.
+
 ### New Jekyll Project
 
 ```bash
@@ -63,7 +65,7 @@ layout: default
 # jekyll-vue-template
 ```
 
-Let's test to ensure that our Jekyll app scaffolding was successful by spooling up a dev server by running the following command:
+Let's test to ensure that our Jekyll app scaffolding was successful by spooling up a dev server using the following command:
 
 ```
 $ bundle exec jekyll s
@@ -71,7 +73,7 @@ $ bundle exec jekyll s
 
 ### npm Initialization
 
-Next we'll initialize an npm workflow in the project root, allowing us to work with node modules, including Vue.js and webpack.
+After we've successfully setup Jekyll, we'll initialize an npm workflow in the project root allowing us to work with node modules, including Vue.js and webpack.
 
 ```bash
 $ npm init
@@ -91,7 +93,7 @@ First, we'll install Vue as a dependency:
 $ npm i -S vue
 ```
 
-Next, we'll create a directory in our project root, `src`, where all of our Vue application components will live and we'll also create an entry point for our Vue application, `main.js`. For now, we'll just import Vue.
+Next, we'll create a directory, `src`, in our project root where all of our Vue application components will live. We'll also create an entry point for our Vue application, `main.js`. For now, we'll just import Vue.
 
 #### main.js
 
@@ -111,18 +113,19 @@ We'll also install several modules and loaders that will assist in handling asse
 
 * `cross-env` smooths out the inconsistencies of using environment variables across platforms
 * `css-loader` allows webpack to resolve CSS `@import` and `url()` statements
-* `node-sass` is required for parsing SASS/SCSS stylesheets
-* `sass-loader` allows webpack to compile SASS/SCSS stylesheets into CSS
+* `node-sass` is required for compiling SASS/SCSS
+* `sass-loader` allows webpack to compile SASS/SCSS to CSS
 * `vue-loader` allows webpack to compile Vue Single File Components into JS modules
-* `vue-style-loader` allows webpack to resolve `<style>` blocks in Vue SFCs
+* `vue-style-loader` allows webpack to dynamically inject CSS into the DOM
+* `vue-template-compiler` used by `vue-loader` to precompile Vue templates to render functions
 
 ```bash
-$ npm i -D cross-env css-loader node-sass sass-loader vue-loader vue-style-loader
+$ npm i -D cross-env css-loader node-sass sass-loader vue-loader vue-style-loader vue-template-compiler
 ```
 
 ### Configuring webpack
 
-We'll begin configuring our webpack workflow by creating a config file, `webpack.config.js` in the project root. We'll set the entry point as the `main.js` file that we created earlier and set the output to `dist/build.js` (both the directory and the bundled script file will be created when we run webpack). We'll set the default environment `mode` to `development`.
+We'll begin configuring our webpack workflow by creating a config file, `webpack.config.js` in the project root. We'll set the entry point to the `main.js` file that we created earlier and set the output to `dist/build.js` (both the directory and the bundled script file will be created when we run webpack). We'll set the default environment `mode` to `development`.
 
 #### webpack.config.js
 
@@ -142,23 +145,11 @@ module.exports = {
 
 > Note: webpack 4 now requires the environment `mode` to be explicitly set. We set it to `development` by default and will programmitically set this with npm scripts later in the tutorial.
 
-Next, we'll add the rules for all of the module loaders that we intend to use.
+Next, we'll add a module rule for Vue SFCs. This rule uses a regular expression to parse any file with a `.vue` extension and loads it with `vue-loader`. We'll also pass in several loaders as options so that our SFC styles can be resolved.
 
 ```js
 module: {
   rules: [
-    {
-      test: /\.css$/,
-      use: ['vue-style-loader', 'css-loader']
-    },
-    {
-      test: /\.scss$/,
-      use: ['vue-style-loader', 'css-loader', 'sass-loader']
-    },
-    {
-      test: /\.sass$/,
-      use: ['vue-style-loader', 'css-loader', 'sass-loader?indentedSyntax']
-    },
     {
       test: /\.vue$/,
       loader: 'vue-loader',
@@ -172,6 +163,10 @@ module: {
 }
 ```
 
+We're going to define an alias for `vue`, which webpack will resolve to the runtime + compiler version of Vue. For more information on the Vue runtime and compiler, visit the <a href="https://vuejs.org/v2/guide/installation.html#Runtime-Compiler-vs-Runtime-only" target="_blank" rel="noopener">official Vue docs</a>.
+
+To make working with Vue components and other modules more convenient, we'll add an array of file extensions for webpack to resolve when using import statements. This allows us to call a module import using only the filename without the extension. For example, we can use `import vueComponent from 'components/vueComponent'` without the `.vue` extension.
+
 #### webpack.config.js
 
 ```js
@@ -182,6 +177,8 @@ resolve: {
   extensions: ['*', '.js', '.vue', '.json']
 }
 ```
+
+Lastly, we'll perform a check on our environment variable to control build settings. If the environment variable is set to `production`, we'll overwrite the default `development` mode that we defined earlier. Webpack will perform several useful optimizations if the mode is set to `production`.
 
 #### webpack.config.js
 
@@ -209,18 +206,6 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/,
-        use: ['vue-style-loader', 'css-loader']
-      },
-      {
-        test: /\.scss$/,
-        use: ['vue-style-loader', 'css-loader', 'sass-loader']
-      },
-      {
-        test: /\.sass$/,
-        use: ['vue-style-loader', 'css-loader', 'sass-loader?indentedSyntax']
-      },
-      {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
@@ -243,6 +228,8 @@ if (process.env.NODE_ENV === 'production') {
   module.exports.mode = 'production'
 }
 ```
+
+Once we've configured webpack, we'll create the scripts needed to run it. We'll use three separate scripts, `dev` for bundling unminified assets, `build` for bundling production-ready assets, and `watch` for automatic recompilation of assets during development.
 
 #### package.json
 
