@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import { Bus } from './lib/bus'
-import Logo from './components/Logo.vue'
+import Logo from './components/Logo'
 import TheMobileMenu from './components/TheMobileMenu'
-import TheSearchInput from './components/search/TheSearchInput.vue'
-import TheSearchResults from './components/search/TheSearchResults.vue'
+import TheSearchInput from './components/search/TheSearchInput'
+import TheSearchResults from './components/search/TheSearchResults'
 
 Vue.component('logo', Logo)
 Vue.component('theMobileMenu', TheMobileMenu)
