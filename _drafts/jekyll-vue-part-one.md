@@ -6,11 +6,11 @@ tags: Jekyll
 category: Jekyll
 ---
 
-Static Site Generators (SSG) are aweseome and Jekyll is certainly one of the most robust options. It's stable, well supported and straightforward. What makes it even better? The reactivity of Vue.js Single File Components (SFC) and webpack optimizations ⚡.
+Static Site Generators (SSG) are awesome and Jekyll is one of the most robust options available. It's stable, well supported and straightforward. What would make it even better? The reactivity of Vue.js Single File Components (SFC) and webpack optimizations, of course.
 
-In this two-part series we'll combine the configurability of Jekyll SSG with the reactivity of Vue. In part one, we'll cover starting a new Jekyll project, installing Vue, and configuring webpack. In part two, we'll integrate Vue SFCs into our Jekyll layouts, and implement cache-control with webpack.
+In this two-part series we'll combine the configurability of Jekyll SSG with the reactivity of Vue. In part one, we'll cover starting a new Jekyll project, installing Vue, and configuring webpack. In part two, we'll integrate Vue SFCs into our Jekyll layouts, and implement cache-control with webpack ⚡.
 
-This tutorial will assume a basic knowledge of [Jekyll](https://jekyllrb.com/) and [Vue.js](https://vuejs.org/).
+> This tutorial will assume a basic knowledge of [Jekyll](https://jekyllrb.com/) and [Vue.js](https://vuejs.org/).
 
 ## Setting Up the Project
 
