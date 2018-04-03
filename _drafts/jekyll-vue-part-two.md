@@ -6,6 +6,8 @@ tags: Jekyll
 category: Jekyll
 ---
 
+In the first part of this article we setup a Jekyll project and configured webpack to use Vue Single File Components (SFC). In this article, we'll finish integrating Jekyll with Vue and enhance our build process by implementing cache-control and 
+
 ## Vue Single File Components
 
 ### A Source for All Things Vue

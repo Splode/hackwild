@@ -1,19 +1,20 @@
 ---
 layout: post
 title: Jekyll Static Site Generation with Vue.js Single File Components - Part One
-# title: Jekyll with Vue.js and Single File Components Workflow - Part One
-description: test
+description: Create a statically generated site with Jekyll with Vue Single File Components and webpack optimizations.
 tags: Jekyll
 category: Jekyll
 ---
 
-webpack offers many benefits including the ability to compile Vue Single File Components (SFC) into standard JavaScript modules for use throughout our Jekyll site.
+Static Site Generators (SSG) are aweseome and Jekyll is certainly one of the most robust options. It's stable, well supported and straightforward. What makes it even better? The reactivity of Vue.js Single File Components (SFC) and webpack optimizations ⚡.
+
+In this two-part series we'll combine the configurability of Jekyll SSG with the reactivity of Vue. In part one, we'll cover starting a new Jekyll project, installing Vue, and configuring webpack. In part two, we'll integrate Vue SFCs into our Jekyll layouts, and implement cache-control with webpack.
 
 This tutorial will assume a basic knowledge of [Jekyll](https://jekyllrb.com/) and [Vue.js](https://vuejs.org/).
 
 ## Setting Up the Project
 
-Let's start off by scaffolding a new Jekyll project.
+We'll begin by scaffolding a new Jekyll project. If you don't have Jekyll installed, check out the [official installation guide](https://jekyllrb.com/).
 
 ### New Jekyll Project
 
