@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Jekyll Static Site Generation with Vue.js Single File Components
-description: Create a statically generated site with Jekyll with Vue Single File Components and webpack optimizations.
+description: Create a statically generated site with Jekyll, Vue Single File Components and webpack optimizations.
 tags: Jekyll
 category: Jekyll
 ---
@@ -30,7 +30,7 @@ We'll disable the default theme, _Minima_, that Jekyll ships with by commenting 
 # theme: minima
 ```
 
-Next, we'll create a `_layouts` directory to store our page layouts and create a default layout, `default.html`, within it. We'll create a top-level `<div>`, which will be used later as an entrypoint for Vue.
+Next, we'll create a `_layouts` directory to store our page layouts and create a default layout, `default.html`, within it. In our layout we'll create a top-level `<div>`, which will be used later as an entrypoint for Vue.
 
 #### default.html
 
@@ -66,7 +66,7 @@ layout: default
 # jekyll-vue-template
 ```
 
-Let's test to ensure that our Jekyll app scaffolding was successful by spooling up a dev server using the following command:
+Let's test to ensure that our Jekyll project scaffolding was successful by spooling up a dev server using the following command:
 
 ```
 $ bundle exec jekyll s
@@ -84,7 +84,7 @@ $ npm init
 
 ## Installing Vue & Configuring webpack
 
-Ok, take a deep breath. It's time to take a deep dive into installing and configuring webpack from scratch. This can be a daunting process, but we'll go through this process step-by-step. If you're comfortable with configuring webpack with Vue, feel free to skip to the [Integrating Vue and Jekyll](#integrating-vue-and-jekyll) section.
+Ok, take a deep breath. It's time to take a dive into installing and configuring webpack from scratch. This can be a daunting process, but we'll go through this process step-by-step. If you're comfortable with configuring webpack with Vue, feel free to skip to the [Integrating Vue and Jekyll](#integrating-vue-and-jekyll) section.
 
 ### Installing Vue
 
@@ -144,7 +144,7 @@ module.exports = {
 }
 ```
 
-> Note: webpack 4 now requires the environment `mode` to be explicitly set. We set it to `development` by default and will programmitically set this with npm scripts later in the tutorial.
+> Note: webpack 4 now requires the environment `mode` to be explicitly set. We set it to `development` by default in our config file and will programmitically set it with npm scripts later in the tutorial.
 
 Next, we'll add a module rule for Vue SFCs. This rule uses a regular expression to parse any file with a `.vue` extension and loads it with `vue-loader`. We'll also pass in several loaders as options so that our SFC styles can be resolved.
 
@@ -164,7 +164,7 @@ module: {
 }
 ```
 
-We're going to define an alias for `vue`, which webpack will resolve to the runtime + compiler version of Vue. For more information on the Vue runtime and compiler, visit the <a href="https://vuejs.org/v2/guide/installation.html#Runtime-Compiler-vs-Runtime-only" target="_blank" rel="noopener">official Vue docs</a>.
+The Vue package ships with several library versions. To make sure we use the correct one, we'll define an alias for `vue`, which webpack will resolve to the runtime + compiler (`vue.esm.js`) version of Vue. For more information on the Vue runtime and compiler, visit the <a href="https://vuejs.org/v2/guide/installation.html#Runtime-Compiler-vs-Runtime-only" target="_blank" rel="noopener">official Vue docs</a>.
 
 To make working with Vue components and other modules more convenient, we'll add an array of file extensions for webpack to resolve when using import statements. This allows us to call a module import using only the filename without the extension. For example, we can use `import vueComponent from 'components/vueComponent'` without the `.vue` extension.
 
@@ -244,7 +244,7 @@ Once we've configured webpack, we'll create the scripts needed to run it. We'll 
 
 ## Sanity Check - Testing our Current Progress
 
-Now that we have Jekyll running and Vue with webpack configured, it's time to test that our workflow is working as intended. We'll test our webpack build by running our `npm dev` script:
+Now that we have Jekyll running and Vue with webpack configured, it's time to test that our workflow is working as intended. We'll test our webpack build by running our `dev` script:
 
 ```bash
 $ npm run dev
@@ -252,7 +252,7 @@ $ npm run dev
 
 We should see no errors during the build process and we should now have a newly created `dist` directory in the project root containing a `build.js` file. If we take a look at `build.js`, we'll see that it includes the Vue.js module. You can further test the workflow by running the `build` and `watch` scripts as well. 
 
-> Note that when running `npm run build`, our `build.js` bundle is minified. webpack 4 now performs all sorts of optimizations, such as minifciation, by default when the environment mode is set to `production`.
+> Note that when running `npm run build`, our `build.js` bundle is minified. webpack 4 now performs all sorts of optimizations, such as minificiation, by default when the environment mode is set to `production`.
 
 ## Integrating Vue and Jekyll
 
@@ -283,7 +283,7 @@ h1 {
 
 ### Register Vue Components
 
-Now that we've created a Vue component, we'll need to register it with our primary Vue instance. We'll do this by importing the component in our `main.js` file. We also need to create a new Vue instance and give it an entry point. We'll use an id of `app` and update our Jekyll layout to reflect this shortly. Lastly, we'll attach the component to the Vue instance using the `component` method available on the Vue instance.
+Now that we've created a Vue component, we'll need to register it with our primary Vue instance. We'll do this by importing the component in our `main.js` file. We also need to create a new Vue instance and give it an element entry point. We'll use an id of `app` and update our Jekyll layout to reflect this shortly. Lastly, we'll attach the component to the Vue instance using the `component` method.
 
 #### main.js
 
@@ -325,9 +325,22 @@ Let's update our default layout, `default.html`, with the id of `app` (we define
 </html>
 ```
 
+or...
+
+#### index.md
+
+```md
+---
+layout: default
+---
+
+<hell-world></hello-world>
+```
+
 ## Wrapping Up
 
+Static Site Generators like Jekyll offer some unique benefits over Single-Page Applications, especially for sites with lots of static content (like blogs). They're fast, SEO-friendly, and offer site-wide variables, like post collections. Incorporating a reactive library like Vue.js can help to make a statically-generated site feel much more dynamic.
 
 ### jekyll-vue-template
 
-If you'd like to review the source for an example Jekyll-Vue project like the one that we've built in this article, check out the <a href="https://github.com/Splode/jekyll-vue-template" target="_blank" rel="noopener">jekyll-vue-template</a>. It's a boilerplate Jekyll project with support for Vue single file components complete with webpack 4 optimizations, including cache-control, code-splitting, and Babel transpiling.
+If you'd like to review the source for an example Jekyll-Vue project like the one that we've built in this article, check out the <a href="https://github.com/Splode/jekyll-vue-template" target="_blank" rel="noopener">jekyll-vue-template</a>. It's a boilerplate Jekyll project with support for Vue single file components complete with webpack 4 optimizations, including cache-control, code-splitting, and Babel transpiling, and linting with ESLint.
