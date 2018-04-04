@@ -25,8 +25,8 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
-      filename: './../_layouts/default.html',
-      template: '_layouts/_default.html' // _default is master due to redundant script tags
+      filename: './../_includes/scripts.html',
+      template: './_includes/_scripts.html' // _scripts is master due to redundant script tags
     })
   ],
   module: {
