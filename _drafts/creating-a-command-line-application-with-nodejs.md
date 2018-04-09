@@ -93,4 +93,62 @@ $ jin --version
 
 ## Creating Commands
 
+#### index.js
+
+```js
+#!/usr/bin/env node
+
+const pckg = require('./../package.json')
+const program = require('commander')
+
+program.version(pckg.version)
+
+program
+  .command()
+  .alias()
+  .description()
+  .action()
+
+program.parse(process.argv)
+```
+
+#### index.js
+
+```js
+#!/usr/bin/env node
+
+const pckg = require('./../package.json')
+const program = require('commander')
+
+program.version(pckg.version)
+
+program
+  .command('add <notebook> [note]')
+  .alias('a')
+  .description(
+    'Add a new note to a notebook. Creates the specified notebook if it does not already exist.'
+  )
+  .action((notebook, note) => {
+    console.log(notebook)
+    if (note) {
+      console.log(note)
+    }
+  })
+
+program
+  .command('list <notebook> [index]')
+  .alias('ls')
+  .description(
+    'List the notes for a give notebook. Show the note at the given index.'
+  )
+  .action((notebook, index) => {
+    console.log(notebook)
+    if (index) {
+      console.log(index)
+    }
+  })
+
+program.parse(process.argv)
+```
+
 ## Creating and Using Actions
