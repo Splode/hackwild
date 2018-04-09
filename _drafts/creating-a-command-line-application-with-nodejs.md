@@ -19,9 +19,13 @@ For this project we're going to be using <a href="https://github.com/tj/commande
 $ npm i -S commander
 ```
 
+Next, we'll make two directories, `bin` and `lib`, to house our application logic. It's customary for the applications executable files, or _binaries_, to be held in the `bin` directory and the _libraries_ essential to the application execution in the `lib` directory. So, we'll also create an entrypoint, `index.js`, for our application in the `bin` directory.
+
 ```bash
 $ mkdir bin lib && touch bin/index.js
 ```
+
+Let's start by just outputting the version number of our application. Instead of having to manually keep track of the application version in multiple places, we'll use the version field already defined in our `package.json` file (which allows us to take advantage of npm's semantic versioning tools):
 
 #### index.js
 
@@ -33,13 +37,15 @@ console.log(pckg.version)
 
 > Note that it might make sense to use `package` as the variable name for importing `package.json`, but `package` is a reserved word so it's best to use another name, like `pckg`.
 
+Now, when we run this file with `node` we should expect to see the version, `0.0.1`, output to the console. 
+
 ```bash
 $ node /bin/index.js
 ```
 
 ### Globally Registering our Application
 
-Having to prepend every command with `node`. We want our command to be accessible globally, not just in this particular project directory.
+Having to prepend every command with `node` and a path is clunky and laborious. We want our command to be accessible globally, not just in this particular project directory, so that we can call it just by typing `notes`.
 
 To register this command globally, we first need to give Node a hint about the
 
@@ -49,11 +55,13 @@ To register this command globally, we first need to give Node a hint about the
 #!/usr/bin/env node
 ```
 
+We're going to be using npm to create a symbolic link to our application entry point. To do this, we'll start by registering a `bin` object in our `package.json` file. We'll set the __key__ name to the command we'd like to call the application with, and set the __value__ to the relative path of the application entry point:
+
 #### package.json
 
 ```json
 "bin": {
-  "jin": "./bin/index.js"
+  "notes": "./bin/index.js"
 }
 ```
 
@@ -64,7 +72,7 @@ $ npm link
 We can now run our application using the command we specified in our `package.json` anywhere. To test this, let's run it both in the current project directory and outside the current directory:
 
 ```bash
-$ jin
+$ notes
 0.0.1
 ```
 
@@ -77,17 +85,17 @@ In both instances, the command should return the same version number.
 ```js
 #!/usr/bin/env node
 
-const pjson = require('./../package.json')
+const pckg = require('./../package.json')
 const program = require('commander')
 
-program.version(pjson.version)
+program.version(pckg.version)
 program.parse(process.argv)
 ```
 
 If we run the application again but add the `--version` option, we'll achieve the same effect as we did when we used `console.log` in the previous example:
 
 ```bash
-$ jin --version
+$ notes --version
 0.0.1
 ```
 
