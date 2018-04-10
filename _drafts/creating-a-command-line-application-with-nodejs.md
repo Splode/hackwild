@@ -47,7 +47,7 @@ $ node /bin/index.js
 
 Having to prepend every command with `node` and a path is clunky and laborious. We want our command to be accessible globally, not just in this particular project directory, so that we can call it just by typing `notes`.
 
-To register this command globally, we first need to give Node a hint about the
+To register this command globally, we first need to give Node a hint about the intended rutime environment for our application. We'll do this by setting the following special comment at the beginning of our application entrypoint:
 
 #### index.js
 
@@ -65,6 +65,10 @@ We're going to be using npm to create a symbolic link to our application entry p
 }
 ```
 
+> Note that we need to choose a command that isn't already used by your system.
+
+Next, we'll use the npm `link` command while in our project root to create a global link to our application entry point:
+
 ```bash
 $ npm link
 ```
@@ -80,6 +84,8 @@ In both instances, the command should return the same version number.
 
 ### Commander Basics
 
+Commander makes it quite easy to create CLI applications. It includes several useful methods, including automatically generated `help` and `version` flags. We can start using Commander in our application by simply requiring it and calling the `parse()` method at the end of our script and passing in the process arguments.
+
 #### index.js
 
 ```js
@@ -92,7 +98,7 @@ program.version(pckg.version)
 program.parse(process.argv)
 ```
 
-If we run the application again but add the `--version` option, we'll achieve the same effect as we did when we used `console.log` in the previous example:
+If we run the application again but add the `--version` flag set, we'll achieve the same effect as we did when we used `console.log` in the previous example:
 
 ```bash
 $ notes --version
@@ -100,6 +106,8 @@ $ notes --version
 ```
 
 ## Creating Commands
+
+There are three primary ways to 
 
 #### index.js
 
