@@ -3,7 +3,7 @@ layout: post
 title: Creating a Command Line Application with Node.js
 description: >
   Create live image previews for file uploads using the File API and the FileReader object in vanilla JavaScript.
-tags: JavaScript Node CLI terminal
+tags: JavaScript
 category: JavaScript
 ---
 
@@ -37,7 +37,7 @@ console.log(pckg.version)
 
 > Note that it might make sense to use `package` as the variable name for importing `package.json`, but `package` is a reserved word so it's best to use another name, like `pckg`.
 
-Now, when we run this file with `node` we should expect to see the version, `0.0.1`, output to the console. 
+Now, when we run this file with `node` we should expect to see the version, `0.0.1`, output to the console.
 
 ```bash
 $ node /bin/index.js
@@ -55,7 +55,7 @@ To register this command globally, we first need to give Node a hint about the i
 #!/usr/bin/env node
 ```
 
-We're going to be using npm to create a symbolic link to our application entry point. To do this, we'll start by registering a `bin` object in our `package.json` file. We'll set the __key__ name to the command we'd like to call the application with, and set the __value__ to the relative path of the application entry point:
+We're going to be using npm to create a symbolic link to our application entry point. To do this, we'll start by registering a `bin` object in our `package.json` file. We'll set the **key** name to the command we'd like to call the application with, and set the **value** to the relative path of the application entry point:
 
 #### package.json
 
@@ -107,7 +107,20 @@ $ notes --version
 
 ## Creating Commands
 
-There are three primary ways to 
+There are three primary ways to working with commands with Commander:
+
+1.  Use primary command with options
+2.  Use secondary commands with options
+3.  Use git-style sub-commands with options
+
+We'll use the second approach, using secondary commands with options. This approach allows us to define several different commands, each with the potential to have its own options and help output.
+
+We'll start by laying out the structure of a basic command, which chains several methods together on the Commander instance (in this case, `program`). The basic structure for this approach uses the following methods:
+
+- The `command()` method is used to define the phrase used to call the command.
+- The `alias()` method is used to set an optional alias to the command.
+- The `description()` method defines a description for the command to be displayed in the help output.
+- The `action()` method is where we will pass in command arguments to functions that we'd ultimately like to call for each command.
 
 #### index.js
 
@@ -128,6 +141,18 @@ program
 program.parse(process.argv)
 ```
 
+Once we have our command structure in place, we'll start populating each method with the appropriate arguments, starting with the `command()` method.
+
+The `command()` method takes a `String` argument with the following syntax: `'command <required> [optional]'`, where `command` is the sub-command name followed by arguments. The `<>` brackets indicate a required argument, while the `[]` brackets indicated an optional requirement.
+
+> The application will error-out if the `add` command is run without providing the required `note` argument.
+
+We're going to set the command to `add` and set the `note` argument as required. We'll also set a command alias, `a`. This allows us to call the `add` command with either `add` or `a`.
+
+Next, we provide a description of the command to be displayed when a user accesses the help output using the `--help` flag.
+
+Lastly, we'll specify the functions to be called when this command is run. The `action()` method accepts a callback that has the command arguments passed in. We'll pass in the `note` argument and simply log it for now.
+
 #### index.js
 
 ```js
@@ -139,32 +164,34 @@ const program = require('commander')
 program.version(pckg.version)
 
 program
-  .command('add <notebook> [note]')
+  .command('add <note>')
   .alias('a')
   .description(
-    'Add a new note to a notebook. Creates the specified notebook if it does not already exist.'
+    'Add a new note.'
   )
-  .action((notebook, note) => {
-    console.log(notebook)
-    if (note) {
-      console.log(note)
-    }
+  .action(note => {
+    console.log(note)
   })
 
 program
-  .command('list <notebook> [index]')
+  .command('list [index]')
   .alias('ls')
   .description(
-    'List the notes for a give notebook. Show the note at the given index.'
+    'List all notes. Show the note at the given index.'
   )
-  .action((notebook, index) => {
-    console.log(notebook)
-    if (index) {
-      console.log(index)
-    }
+  .action(index => {
+    console.log(index)
   })
 
 program.parse(process.argv)
 ```
 
+Here's an example of how we would call the command that we just wrote:
+
+```bash
+$ note add "This is a new note."
+```
+
 ## Creating and Using Actions
+
+With our command created, it's time to write the logic that handles the `add` event.
