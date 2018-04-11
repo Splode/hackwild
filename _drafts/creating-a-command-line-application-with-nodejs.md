@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Creating a Command Line Application with Node.js
+title: Creating a Command Line Application with Node and Commander.js
 description: >
   Create live image previews for file uploads using the File API and the FileReader object in vanilla JavaScript.
 tags: JavaScript
@@ -8,6 +8,8 @@ category: JavaScript
 ---
 
 ## Getting Started
+
+### Project Setup
 
 ```bash
 $ npm init
@@ -82,6 +84,8 @@ $ notes
 
 In both instances, the command should return the same version number.
 
+## Creating Commands
+
 ### Commander Basics
 
 Commander makes it quite easy to create CLI applications. It includes several useful methods, including automatically generated `help` and `version` flags. We can start using Commander in our application by simply requiring it and calling the `parse()` method at the end of our script and passing in the process arguments.
@@ -105,7 +109,7 @@ $ notes --version
 0.0.1
 ```
 
-## Creating Commands
+### Basic Structure
 
 There are three primary ways to working with commands with Commander:
 
@@ -140,6 +144,8 @@ program
 
 program.parse(process.argv)
 ```
+
+### Using Commander Methods
 
 Once we have our command structure in place, we'll start populating each method with the appropriate arguments, starting with the `command()` method.
 
