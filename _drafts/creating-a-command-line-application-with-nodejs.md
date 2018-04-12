@@ -179,18 +179,10 @@ program
     console.log(note)
   })
 
-program
-  .command('list [index]')
-  .alias('ls')
-  .description(
-    'List all notes. Show the note at the given index.'
-  )
-  .action(index => {
-    console.log(index)
-  })
-
 program.parse(process.argv)
 ```
+
+To add more commands to our application, we would simply add another block of methods before the closing `parse()` method.
 
 Here's an example of how we would call the command that we just wrote:
 
@@ -200,4 +192,60 @@ $ note add "This is a new note."
 
 ## Creating and Using Actions
 
-With our command created, it's time to write the logic that handles the `add` event.
+### Setting Up the Add Module
+
+With our command created, it's time to write the logic that handles the `add` event. We'll start by creating a file, `add.js`, in the `lib` directory. The `add` script will be responsible for receiving an input (the note given by the `add` command), adding it to a notebook object, and finally writing that option in a local file for persistent storage.
+
+Let's stub out the module with the functions that we know we'll need. We'll export a function to be called in our program as the `add()` function, which will take a note as input. 
+
+The `add` action will require us to write note data to a file, so we'll need access to the Node `fs` module (filesystem). We'll also use the Node `path` module to help resolve filesystem paths.
+
+Our `write()` function will take in a filepath, the location and name of the file to save and the data (note) to save. 
+
+We don't want to overwrite our notes everytime we add a new note, so we also need a way to check for existing data and append new values. For this, we'll make use of a `read()` function that accepts a filepath as the only argument.
+
+#### add.js
+
+```js
+const fs = require('fs')
+const path = require('path')
+
+const read = filePath => {}
+const write = (filePath, data) => {}
+
+module.exports = function (note) {}
+```
+
+### Building the Read and Write functions
+
+First, we'll create a variable, `notesPath` which defines both the path and filename of the file that will store our notes. We want to store this as a `JSON` file in the root project directory
+
+#### add.js
+
+```js
+const fs = require('fs')
+const path = require('path')
+
+const notesPath = path.resolve(process.cwd(), 'notes.json')
+
+const read = filePath => {
+  fs.readFileSync(filePath, JSON.parse(data), err => {
+    if (err) {
+      console.log(err)
+      process.exit(1)
+    }
+    return data
+  })
+}
+
+const write = (filePath, data) => {
+  fs.writeFileSync(filePath, JSON.stringify(data), err => {
+    if (err) {
+      console.log(err)
+      process.exit(1)
+    }
+  })
+}
+
+module.exports = function (note) {}
+```
