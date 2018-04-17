@@ -2,7 +2,7 @@
 layout: post
 title: Creating a Command Line Application with Node and Commander.js
 description: >
-  Create live image previews for file uploads using the File API and the FileReader object in vanilla JavaScript.
+  Learn the basics of creating command-line applications using Node and Commander.js.
 tags: JavaScript
 category: JavaScript
 ---
@@ -121,10 +121,10 @@ We'll use the second approach, using secondary commands with options. This appro
 
 We'll start by laying out the structure of a basic command, which chains several methods together on the Commander instance (in this case, `program`). The basic structure for this approach uses the following methods:
 
-- The `command()` method is used to define the phrase used to call the command.
-- The `alias()` method is used to set an optional alias to the command.
-- The `description()` method defines a description for the command to be displayed in the help output.
-- The `action()` method is where we will pass in command arguments to functions that we'd ultimately like to call for each command.
+* The `command()` method is used to define the phrase used to call the command.
+* The `alias()` method is used to set an optional alias to the command.
+* The `description()` method defines a description for the command to be displayed in the help output.
+* The `action()` method is where we will pass in command arguments to functions that we'd ultimately like to call for each command.
 
 #### index.js
 
@@ -172,9 +172,7 @@ program.version(pckg.version)
 program
   .command('add <note>')
   .alias('a')
-  .description(
-    'Add a new note.'
-  )
+  .description('Add a new note.')
   .action(note => {
     console.log(note)
   })
@@ -196,13 +194,13 @@ $ note add "This is a new note."
 
 With our command created, it's time to write the logic that handles the `add` event. We'll start by creating a file, `add.js`, in the `lib` directory. The `add` script will be responsible for receiving an input (the note given by the `add` command), adding it to a notebook object, and finally writing that option in a local file for persistent storage.
 
-Let's stub out the module with the functions that we know we'll need. We'll export a function to be called in our program as the `add()` function, which will take a note as input. 
+Let's stub out the module with the functions that we know we'll need. We know that we'll need three basic functions: two utility functions for reading and writing to the filesystem, and a function that handles taking a note input from the user and adding it to a collection.
 
 The `add` action will require us to write note data to a file, so we'll need access to the Node `fs` module (filesystem). We'll also use the Node `path` module to help resolve filesystem paths.
 
-Our `write()` function will take in a filepath, the location and name of the file to save and the data (note) to save. 
+Our `write()` function will take in a **filepath** (the location and name of the file to save) and the **data** (note) to save.
 
-We don't want to overwrite our notes everytime we add a new note, so we also need a way to check for existing data and append new values. For this, we'll make use of a `read()` function that accepts a filepath as the only argument.
+We don't want to overwrite our notes everytime we add a new note, so we also need a way to check for existing data and append new values. For this, we'll make use of a `read()` function that accepts a **filepath** as the only argument.
 
 #### add.js
 
@@ -213,12 +211,18 @@ const path = require('path')
 const read = filePath => {}
 const write = (filePath, data) => {}
 
-module.exports = function (note) {}
+module.exports = function(note) {}
 ```
 
 ### Building the Read and Write functions
 
-First, we'll create a variable, `notesPath` which defines both the path and filename of the file that will store our notes. We want to store this as a `JSON` file in the root project directory
+First, we'll create a variable, `notesPath` which defines both the path and filename of the file that will store our notes. We want to store this as a `JSON` file in the user's home directory, so we'll use `path.resolve()` to build this path. This will ensure a consistent path structure and experience across platforms.
+
+The `read()` function will perform a basic synchronous read and will parse the data (we're assuming that we're only going to be storing data as `JSON`).
+
+The `write()` function follows a similar structure, except that now we `stringify()` the data before writing it to the filesystem.
+
+> Note that we'll need to call `process.exit(1)` on an error to ensure that our programs quit with an error code; we don't want our program to hang in the event of an error.
 
 #### add.js
 
@@ -226,7 +230,7 @@ First, we'll create a variable, `notesPath` which defines both the path and file
 const fs = require('fs')
 const path = require('path')
 
-const notesPath = path.resolve(process.cwd(), 'notes.json')
+const notesPath = path.resolve(os.homedir(), 'notes.json')
 
 const read = filePath => {
   fs.readFileSync(filePath, JSON.parse(data), err => {
@@ -247,5 +251,41 @@ const write = (filePath, data) => {
   })
 }
 
-module.exports = function (note) {}
+module.exports = function(note) {}
+```
+
+### Creating the Add Function to Write notes
+
+#### add.js
+
+```js
+const fs = require('fs')
+const path = require('path')
+
+const notesPath = path.resolve(os.homedir(), 'notes.json')
+
+const read = filePath => {
+  fs.readFileSync(filePath, JSON.parse(data), err => {
+    if (err) {
+      console.log(err)
+      process.exit(1)
+    }
+    return data
+  })
+}
+
+const write = (filePath, data) => {
+  fs.writeFileSync(filePath, JSON.stringify(data), err => {
+    if (err) {
+      console.log(err)
+      process.exit(1)
+    }
+  })
+}
+
+module.exports = function(note) {
+  if (!fs.existsSync(notesPath)) {
+    
+  }
+}
 ```
