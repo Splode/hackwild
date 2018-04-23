@@ -7,6 +7,8 @@ tags: JavaScript
 category: JavaScript
 ---
 
+Working in the command line can be incredibly valuable.
+
 ## Getting Started
 
 ### Project Setup
@@ -256,6 +258,8 @@ module.exports = function(note) {}
 
 ### Creating the Add Function to Write notes
 
+Before we attempt to write a new note, we need to check to see if a collection of notes already exists. If a collection of notes does not exist,
+
 #### add.js
 
 ```js
@@ -285,7 +289,7 @@ const write = (filePath, data) => {
 
 module.exports = function(note) {
   if (!fs.existsSync(notesPath)) {
-    
+
   }
 }
 ```
