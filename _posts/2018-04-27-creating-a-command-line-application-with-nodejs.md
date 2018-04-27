@@ -2,7 +2,7 @@
 layout: post
 title: Creating a command-line Application with Node and Commander.js
 description: >
-  Learn the basics of creating command-line applications using Node and Commander.js by building a note-taking application for the terminal.
+  Learn the basics of creating command-line applications using Node and Commander.js by building a note taking application for the terminal.
 tags: JavaScript
 category: JavaScript
 ---
@@ -15,8 +15,10 @@ In this article we'll flesh out the basics of creating a command-line note takin
 
 ### Project Setup
 
-```bash
-$ npm init
+We'll start by initializing a project in a new directory with npm:
+
+```console
+$ mkdir notes-cli && cd notes-cli && npm init
 ```
 
 For this project we're going to be using <a href="https://github.com/tj/commander.js/" target="_blank" rel="noopener">Commander.js</a>. Commander offers many convenient tools for creating CLI applications, including option parsing and Git-style subcommands. We'll install it as a dependency to our application:
@@ -25,7 +27,7 @@ For this project we're going to be using <a href="https://github.com/tj/commande
 $ npm i -S commander
 ```
 
-Next, we'll make two directories, `bin` and `lib`, to house our application logic. It's customary for the applications executable files, or _binaries_, to be held in the `bin` directory and the _libraries_ essential to the application execution in the `lib` directory. So, we'll also create an entrypoint, `index.js`, for our application in the `bin` directory.
+Next, we'll make two directories, `bin` and `lib`, to house our application logic. It's customary for the applications executable files, or _binaries_, to be held in the `bin` directory and the _libraries_ essential to the application execution in the `lib` directory. We'll also create an entry point, `index.js`, for our application in the `bin` directory.
 
 ```bash
 $ mkdir bin lib && touch bin/index.js
@@ -51,9 +53,9 @@ $ node /bin/index.js
 
 ### Globally Registering our Application
 
-Having to prepend every command with `node` and a path is clunky and laborious. We want our command to be accessible globally, not just in this particular project directory, so that we can call it just by typing `notes`.
+Having to prepend every command with `node` and a path is clunky and laborious. We want our command to be accessible globally, not just in this particular project directory, so that we can call it just by typing `notes` in the command prompt.
 
-To register this command globally, we first need to give Node a hint about the intended rutime environment for our application. We'll do this by setting the following special comment at the beginning of our application entrypoint:
+To register this command globally, we first need to give Node a hint about the intended rutime environment for our application. We'll do this by setting the following special comment at the beginning of our application entry point:
 
 #### index.js
 
@@ -79,7 +81,7 @@ Next, we'll use the npm `link` command while in our project root to create a glo
 $ npm link
 ```
 
-We can now run our application using the command we specified in our `package.json` anywhere. To test this, let's run it both in the current project directory and outside the current directory:
+We can now run our application using the command we specified in our `package.json` anywhere. To test this, let's run it in the current project directory and outside the current directory:
 
 ```bash
 $ notes
@@ -115,7 +117,7 @@ $ notes --version
 
 ### Basic Structure
 
-There are three primary ways to working with commands with Commander:
+There are three primary ways to build commands with Commander:
 
 1.  Use primary command with options
 2.  Use secondary commands with options
@@ -155,8 +157,6 @@ Once we have our command structure in place, we'll start populating each method 
 
 The `command()` method takes a `String` argument with the following syntax: `'command <required> [optional]'`, where `command` is the sub-command name followed by arguments. The `<>` brackets indicate a required argument, while the `[]` brackets indicated an optional requirement.
 
-> The application will error-out if the `add` command is run without providing the required `note` argument.
-
 We're going to set the command to `add` and set the `note` argument as required. We'll also set a command alias, `a`. This allows us to call the `add` command with either `add` or `a`.
 
 Next, we provide a description of the command to be displayed when a user accesses the help output using the `--help` flag.
@@ -184,7 +184,7 @@ program
 program.parse(process.argv)
 ```
 
-To add more commands to our application, we would simply add another block of methods before the closing `parse()` method.
+> The application will error-out if the `add` command is run without providing the required `note` argument.
 
 Here's an example of how we would call the command that we just wrote:
 
@@ -192,19 +192,21 @@ Here's an example of how we would call the command that we just wrote:
 $ note add "This is a new note."
 ```
 
+To add more commands to our application, we would simply add another block of methods before the closing `parse()` method.
+
 ## Creating and Using Actions
 
 ### Setting Up the Add Module
 
-With our command created, it's time to write the logic that handles the `add` event. We'll start by creating a file, `add.js`, in the `lib` directory. The `add` script will be responsible for receiving an input (the note given by the `add` command), adding it to a notebook object, and finally writing that option in a local file for persistent storage.
+With our command created, it's time to write the logic that handles the `add` event. We'll start by creating a file, `add.js`, in the `lib` directory. The `add` script will be responsible for receiving an input (the note given by the `add` command), adding it to a notebook collection, and finally writing the collection to a local file for persistent storage.
 
 Let's stub out the module with the functions that we know we'll need. We know that we'll need three basic functions: two utility functions for reading and writing to the filesystem, and a function that handles taking a note input from the user and adding it to a collection.
 
-The `add` action will require us to write note data to a file, so we'll need access to the Node `fs` module (filesystem). We'll also use the Node `path` module to help resolve filesystem paths.
+The `add` action will require us to write note data to a file, so we'll need access to the Node `fs` (filesystem) module. We'll also use the Node `path` module to help resolve filesystem paths and the Node `os` module to gain access to platform variables, like the default user directory.
 
 Our `write()` function will take in a **filepath** (the location and name of the file to save) and the **data** (note) to save.
 
-We don't want to overwrite our notes everytime we add a new note, so we also need a way to check for existing data and append new values. For this, we'll make use of a `read()` function that accepts a **filepath** as the only argument.
+We don't want to overwrite our notes everytime we add a new note, so we also need a way to check for existing data. For this, we'll create a `read()` function that accepts a **filepath** as the only argument.
 
 #### add.js
 
@@ -220,92 +222,134 @@ module.exports = function(note) {}
 
 ### Building the Read and Write functions
 
-First, we'll create a variable, `notesPath` which defines both the path and filename of the file that will store our notes. We want to store this as a `JSON` file in the user's home directory, so we'll use `path.resolve()` to build this path. This will ensure a consistent path structure and experience across platforms.
+First, we'll create a variable, `notesPath` which defines both the path and filename of the file that will store our notes. We want to store this as a `JSON` file in the user's home directory, so we'll use `path.resolve()` and `os.homedir()` to build this path. This will ensure a consistent path structure and experience across platforms.
 
-The `read()` function will perform a basic synchronous read and will parse the data (we're assuming that we're only going to be storing data as `JSON`).
+The `read()` function will perform a basic synchronous read and will return parsed data (we're assuming that we're only going to be storing data as `JSON`).
 
 The `write()` function follows a similar structure, except that now we `stringify()` the data before writing it to the filesystem.
 
-> Note that we'll need to call `process.exit(1)` on an error to ensure that our programs quit with an error code; we don't want our program to hang in the event of an error.
+> Note that we'll need to call `process.exit(1)` on an error to ensure that our program quits with an error code; we don't want our program to hang in the event of an error.
 
 #### add.js
 
 ```js
 const fs = require('fs')
+const os = require('os')
 const path = require('path')
 
 const notesPath = path.resolve(os.homedir(), 'notes.json')
 
 const read = filePath => {
-  fs.readFileSync(filePath, JSON.parse(data), err => {
-    if (err) {
-      console.log(err)
-      process.exit(1)
-    }
-    return data
-  })
+  try {
+    return JSON.parse(fs.readFileSync(filePath))
+  } catch (error) {
+    console.log(error)
+    process.exit(1)
+  }
 }
 
 const write = (filePath, data) => {
-  fs.writeFileSync(filePath, JSON.stringify(data), err => {
-    if (err) {
-      console.log(err)
+  fs.writeFileSync(filePath, JSON.stringify(data), error => {
+    if (error) {
+      console.log(error)
       process.exit(1)
     }
   })
 }
 
-module.exports = function(note) {}
+module.exports = function (note) {}
 ```
 
-### Creating the Add Function to Write notes
+### Creating the Add Function
 
-Before we attempt to write a new note, we need to check to see if a collection of notes already exists. If a collection of notes does not exist,
+We'll start by declaring a variable, `collection`. Before we attempt to write a new note, we need to check to see if a collection of notes already exists. If a collection of notes **does** exist, we'll set `collection` to the existing notes collection and `push` the new note into the existing array.
+
+If the collection does not already exist, we'll set `collection` to an array with the supplied note as its only element.
+
+After performing either of these actions, we'll write our collection to the `notesPath` and log some feedback to the console.
 
 #### add.js
 
 ```js
 const fs = require('fs')
+const os = require('os')
 const path = require('path')
 
 const notesPath = path.resolve(os.homedir(), 'notes.json')
 
 const read = filePath => {
-  fs.readFileSync(filePath, JSON.parse(data), err => {
-    if (err) {
-      console.log(err)
-      process.exit(1)
-    }
-    return data
-  })
+  try {
+    return JSON.parse(fs.readFileSync(filePath))
+  } catch (error) {
+    console.log(error)
+    process.exit(1)
+  }
 }
 
 const write = (filePath, data) => {
-  fs.writeFileSync(filePath, JSON.stringify(data), err => {
-    if (err) {
-      console.log(err)
+  fs.writeFileSync(filePath, JSON.stringify(data), error => {
+    if (error) {
+      console.log(error)
       process.exit(1)
     }
   })
 }
 
-module.exports = function(note) {
+module.exports = function (note) {
+  let collection
   if (fs.existsSync(notesPath)) {
-    const collection = read(notesPath)
+    collection = read(notesPath)
     collection.push(note)
   } else {
-    const collection = [note]
+    collection = [note]
   }
 
   write(notesPath, collection)
   console.log()
-  console.log(`✔ Added ${note} to the notes collection.`)
+  console.log(`✔ Added "${note}" to the notes collection.`)
   console.log()
 }
 ```
 
+### Wiring it all Together in Commander
+
+Back in our app entry point, `index.js`, we'll import the `add` function that we just created and call it as part of the `add` action, passing in the provided note as an argument.
+
+#### index.js
+
+```js
+#!/usr/bin/env node
+
+const pckg = require('./../package.json')
+const program = require('commander')
+
+const add = require('./../lib/add')
+
+program.version(pckg.version)
+
+program
+  .command('add <note>')
+  .alias('a')
+  .description('Add a new note.')
+  .action(note => {
+    add(note)
+  })
+
+program.parse(process.argv)
+```
+
+We can now run `note add "hello world"` and expect the following result:
+
+```console
+✔ Added "hello world" to the notes collection.
+```
+
+> Tip: you can provide additional formatting to your console output to help convey important information. Check out the widely-used <a href="https://github.com/chalk/chalk" target="_blank" rel="noopener">chalk</a> library for color-formatting.
+
+Running this command again will append an additional entry to our newly-created notes collection. You can verify that the notes have actually been saved by viewing the notes collection, `notes.json`, in the home directory.
+
 ## Wrapping Up
 
-We now have a basic structure for a command-line application. With the basic tools that we've covered
+We now have a basic structure for a command-line application. A lot can be accomplished with the basic tools that we've covered in this article. In fact, it only scratches the surface of what's possible.
 
-This article was partly informed by a process I recently went through when creating a command-line note-taking application called <a href="https://github.com/Splode/jin" target="_blank" rel="noopener">*jin*</a>. If you want to dive deeper into a command-line project, or would like to have a nifty tool for taking notes in the terminal, check out the <a href="https://github.com/Splode/jin" target="_blank" rel="noopener">source for jin on Github</a>.
+This article was partly informed by a process I recently went through when creating a command-line note taking application called <a href="https://github.com/Splode/jin" target="_blank" rel="noopener">*jin*</a>. If you want to dive deeper into a command-line project, or would like to have a nifty tool for taking notes in the terminal, check out the <a href="https://github.com/Splode/jin" target="_blank" rel="noopener">source for jin on Github</a>.
