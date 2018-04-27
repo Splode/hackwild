@@ -1,13 +1,15 @@
 ---
 layout: post
-title: Creating a Command Line Application with Node and Commander.js
+title: Creating a command-line Application with Node and Commander.js
 description: >
-  Learn the basics of creating command-line applications using Node and Commander.js.
+  Learn the basics of creating command-line applications using Node and Commander.js by building a note-taking application for the terminal.
 tags: JavaScript
 category: JavaScript
 ---
 
-Working in the command line can be incredibly valuable.
+Having a working knowledge of the command-line interface (CLI) can be incredibly valuable. The CLI is the historical bedrock of programming and still proves to be an essential part of the modern development ecosystem. This is due in no small part to the fact that command-line apps tend to be efficient, fast, and powerful.
+
+In this article we'll flesh out the basics of creating a command-line note taking application. We'll cover writing commands, working with user input, performing basic I/O for storage, and registering our application globally.
 
 ## Getting Started
 
@@ -288,8 +290,22 @@ const write = (filePath, data) => {
 }
 
 module.exports = function(note) {
-  if (!fs.existsSync(notesPath)) {
-
+  if (fs.existsSync(notesPath)) {
+    const collection = read(notesPath)
+    collection.push(note)
+  } else {
+    const collection = [note]
   }
+
+  write(notesPath, collection)
+  console.log()
+  console.log(`✔ Added ${note} to the notes collection.`)
+  console.log()
 }
 ```
+
+## Wrapping Up
+
+We now have a basic structure for a command-line application. With the basic tools that we've covered
+
+This article was partly informed by a process I recently went through when creating a command-line note-taking application called <a href="https://github.com/Splode/jin" target="_blank" rel="noopener">*jin*</a>. If you want to dive deeper into a command-line project, or would like to have a nifty tool for taking notes in the terminal, check out the <a href="https://github.com/Splode/jin" target="_blank" rel="noopener">source for jin on Github</a>.
