@@ -2,6 +2,7 @@
 _site
 .sass-cache
 .jekyll-metadata
+_includes/scripts.html
 
 # ================ Windows =====================
 
