@@ -104,8 +104,12 @@ pre {
 
 pre {
   line-height: 2rem;
-  margin-bottom: 2rem;
+  margin: 0;
   white-space: pre-wrap;
+}
+
+div.highlight {
+  margin-bottom: 2rem;
 }
 
 .Post-author {
