@@ -2,7 +2,7 @@
 layout: topic
 title: Git
 topic: Git
-tagline: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi diam nisl, vehicula vel nunc maximus, faucibus pellentesque nibh. Sed sed pharetra erat, ut laoreet diam. Praesent volutpat egestas nulla in pharetra. In eu rhoncus ante. Vivamus sit amet eleifend velit. Praesent eu varius urna. Praesent finibus ac urna commodo lobortis.
+tagline: Git is a version control system for tracking changes in computer files and coordinating work on those files among multiple people. It is also the de facto version control method for modern development.
 ---
 
 <img src="/static/brand-logos/git-logo.svg" alt="Git logo" class="Logo-brand">
