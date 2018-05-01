@@ -7,9 +7,9 @@ tags: Git
 category: Git
 ---
 
-Using a simple semantic naming system for your git commits can greatly improve your git log readability at a glance. It helps to clarify the record of changes to a project and helps focus commits into .
+I recently found about semantic Git commit messages—a method for. These semantic Git commit message tags are inspired by Karma's 
 
-These semantic Git commit message tags are inspired by Karma's 
+Using a semantic naming system for your git commits can greatly improve your git log readability at a glance. It helps to clarify the record of changes to a project and helps focus commits into .
 
 Git commit messages should begin with **one** the following tag prefixes:
 
