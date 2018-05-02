@@ -1,17 +1,15 @@
 ---
 layout: post
-title: Semantic Git Commit Messages for Improved Readability
+title: Semantic Git Commit Messages for Clarity and Structure
 description: >
-  Using a semantic Git commit method can greatly improve...
+  Using a semantic Git commit method can greatly improve the readability of Git logs and help to organize the scope of individual commits.
 tags: Git
 category: Git
 ---
 
-I recently found about semantic Git commit messages—a method for. These semantic Git commit message tags are inspired by Karma's 
+I recently found out about semantic Git commit messages—a method for structuring Git commits into logical chunks by using semantic labels. Inspired by <a href="http://karma-runner.github.io/2.0/dev/git-commit-msg.html" target="_blank" rel="noopener">Karma's style guide</a> for Git commit messages, the following semantic Git commits can greatly improve your Git log readability at a glance. They help to clarify the record of changes to a project and help focus commits into scoped segments.
 
-Using a semantic naming system for your git commits can greatly improve your git log readability at a glance. It helps to clarify the record of changes to a project and helps focus commits into .
-
-Git commit messages should begin with **one** the following tag prefixes:
+Semantic Git commits start with a semantic tag and use an imperative voice. Git commit messages should be prefixed with **one** the following tags:
 
 * `feat:` - implement new features for endusers
 * `fix:` - bug fix for endusers (not a build-process fix)
@@ -53,7 +51,7 @@ docs: add detailed installation instructions for Ubuntu
 
 ## style
 
-The `style:` tag should be used to identify changes made to the **code** style, which do not effect the enduser. Note that this is separate from the styling of user interfaces, which does effect the enduser. For example, a style change may indicate a change from using tabs for indentation to spaces.
+The `style:` tag should be used to identify changes made to the **code** style, which do not effect the enduser. Note that this is separate from the styling of user interfaces, which does effect the enduser. For example, a style change may indicate a change from using tab indentation to spaces.
 
 For style updates that would effect the enduser, such as CSS changes, use the `feat:` tag instead.
 
@@ -92,5 +90,3 @@ The `chore:` tag should be used to identify changes to build scripts and other u
 ```
 chore: update build script to webpack 4
 ```
-
-http://karma-runner.github.io/2.0/dev/git-commit-msg.html
