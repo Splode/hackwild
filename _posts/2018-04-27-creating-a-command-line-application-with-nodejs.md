@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Creating a command-line Application with Node and Commander.js
+title: Creating a Command-line Application with Node and Commander.js
 description: >
   Learn the basics of creating command-line applications using Node and Commander.js by building a note taking application for the terminal.
 tags: JavaScript
