@@ -1,11 +1,13 @@
 import Vue from 'vue'
 import { Bus } from './lib/bus'
 import Logo from './components/Logo'
+import TheTableOfContents from './components/TheTableOfContents'
 import TheMobileMenu from './components/TheMobileMenu'
 import TheSearchInput from './components/search/TheSearchInput'
 import TheSearchResults from './components/search/TheSearchResults'
 
 Vue.component('logo', Logo)
+Vue.component('TheTableOfContents', TheTableOfContents)
 Vue.component('theMobileMenu', TheMobileMenu)
 Vue.component('theSearchInput', TheSearchInput)
 Vue.component('theSearchResults', TheSearchResults)
