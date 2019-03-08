@@ -10,17 +10,17 @@ HackWild explores the world of modern web development with useful tips, tutorial
 
 ## Technical
 
-HackWild is built with Jekyll and Vue.js. 
+HackWild is built with Jekyll and Vue.js.
 
 ### Install
 
-```
+```bash
 npm i && bundle install
 ```
 
 ### Development
 
-```
+```bash
 npm run watch && bundle exec jekyll s
 ```
 
@@ -28,7 +28,7 @@ npm run watch && bundle exec jekyll s
 
 HackWild is continuously deployed using Netlify, but can be manually built using:
 
-```
+```bash
 npm run build && bundle exec jekyll build
 ```
 

@@ -8,15 +8,15 @@
 }
 
 .PostPreview--condensed {
-  margin-bottom: .5rem;
-  padding: .5rem .75rem;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 0.75rem;
 }
 
 .PostPreview-title {
   color: $colorGreen;
   font-size: 1.66rem;
   font-weight: 400;
-  letter-spacing: .025rem;
+  letter-spacing: 0.025rem;
 }
 
 .PostPreview-title--condensed {
@@ -36,7 +36,7 @@
 
 .PostPreview-body--condensed {
   color: $colorLightBlue;
-  font-size: .9rem;
+  font-size: 0.9rem;
 }
 
 .PostPreview-footer {
@@ -60,7 +60,7 @@
   border-radius: $borderRadius;
   color: $colorPink;
   margin: 0;
-  padding: .075rem 1rem;
+  padding: 0.075rem 1rem;
 }
 
 .PostPreview-tag--article {
@@ -69,5 +69,5 @@
 }
 
 .PostPreview-tag--condensed {
-  padding: .005rem .75rem;
+  padding: 0.005rem 0.75rem;
 }

@@ -5,7 +5,5 @@ module.exports = {
     node: true
   },
   extends: ['standard', 'plugin:vue/strongly-recommended'],
-  plugins: [
-      'vue'
-  ]
+  plugins: ['vue']
 }

@@ -1,13 +1,13 @@
 <template>
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    baseProfile="tiny" 
-    version="1.2" 
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    baseProfile="tiny"
+    version="1.2"
     viewBox="0 0 422.1 329.5"
     :width="width"
     :height="width"
   >
-    <path 
+    <path
       :class="color"
       :stroke-width="strokeWidth"
       stroke-miterlimit="10"

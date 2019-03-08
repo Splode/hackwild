@@ -1,8 +1,17 @@
 <template>
   <div class="Hamburger-wrapper">
-    <div class="Hamburger" @click="menuController">
-      <div class="Hamburger-bar" :class="menuClass"></div>
-      <div class="Hamburger-bar" :class="menuClass"></div>
+    <div
+      class="Hamburger"
+      @click="menuController"
+    >
+      <div
+        class="Hamburger-bar"
+        :class="menuClass"
+      ></div>
+      <div
+        class="Hamburger-bar"
+        :class="menuClass"
+      ></div>
     </div>
   </div>
 </template>
@@ -29,7 +38,7 @@ export default {
   },
 
   methods: {
-    menuController () {
+    menuController() {
       this.menuIsOpen = !this.menuIsOpen
       Bus.$emit('menu-toggled')
     }

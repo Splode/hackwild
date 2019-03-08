@@ -1,5 +1,4 @@
 article {
-  // border-bottom: $borderRadius solid $colorBlueGrey;
   padding-bottom: 2rem;
   & blockquote {
     background-color: $colorBlueGrey;
@@ -39,7 +38,7 @@ article {
   }
   & h3 {
     font-size: 1.25rem;
-    letter-spacing: .025rem;
+    letter-spacing: 0.025rem;
     text-transform: uppercase;
     & + p {
       margin-top: 1rem;
@@ -53,7 +52,7 @@ article {
   h4 {
     color: $colorGreen;
     font-family: $fontStackMono;
-    letter-spacing: .025rem;
+    letter-spacing: 0.025rem;
   }
   & p {
     @extend .BodyCopy;
@@ -98,7 +97,7 @@ hr {
 code,
 pre {
   font-family: $fontStackMono;
-  font-size: .9rem;
+  font-size: 0.9rem;
   font-weight: 300;
 }
 

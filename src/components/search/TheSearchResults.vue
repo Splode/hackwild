@@ -2,18 +2,33 @@
   <div class="row">
     <div class="col-lg-8 mx-auto text-center">
       <h2 class="Search-title">Search Results for: <span class="Search-query">{{ query }}</span></h2>
-      <p class="Button--inline Button--inline--blue" @click="emitQueryClear">Clear</p>
+      <p
+        class="Button--inline Button--inline--blue"
+        @click="emitQueryClear"
+      >Clear</p>
     </div>
-    <div class="col-lg-8 mx-auto Search-empty" v-if="filteredPosts.length === 0 && query !== ''">
+    <div
+      class="col-lg-8 mx-auto Search-empty"
+      v-if="filteredPosts.length === 0 && query !== ''"
+    >
       <h3 class="Search-empty-title">Nothing Found</h3>
     </div>
     <div class="col-lg-8 mx-auto">
-      <div class="PostPreview" v-for="(post, i) in filteredPosts" :key="i">
-        <a :href="post.url" :aria-label="'View ' + post.title + ' article'">
+      <div
+        class="PostPreview"
+        v-for="(post, i) in filteredPosts"
+        :key="i"
+      >
+        <a
+          :href="post.url"
+          :aria-label="'View ' + post.title + ' article'"
+        >
           <h2 class="PostPreview-title">{{ post.title }}</h2>
           <div class="PostPreview-footer">
             <p class="PostPreview-body">{{ post.description }}</p>
-            <a :href="'/topic/' + post.tag.toLowerCase()"><p class="PostPreview-tag">{{ post.tag }}</p></a>
+            <a :href="'/topic/' + post.tag.toLowerCase()">
+              <p class="PostPreview-tag">{{ post.tag }}</p>
+            </a>
           </div>
         </a>
       </div>
@@ -37,7 +52,7 @@ export default {
   },
 
   computed: {
-    filteredPosts () {
+    filteredPosts() {
       if (this.query === '') {
         return []
       }
@@ -53,13 +68,13 @@ export default {
   },
 
   methods: {
-    emitQueryClear () {
+    emitQueryClear() {
       this.query = ''
       Bus.$emit('query-cleared')
     }
   },
 
-  created () {
+  created() {
     axios
       .get('/data/posts.json')
       .then(response => {
@@ -70,7 +85,7 @@ export default {
       })
   },
 
-  mounted () {
+  mounted() {
     Bus.$on('query-updated', payload => {
       console.log('call query update in search-results')
       this.query = payload.query
@@ -82,7 +97,7 @@ export default {
 <style lang="scss" scoped>
 .Search-title {
   font-weight: 400;
-  letter-spacing: .015rem;
+  letter-spacing: 0.015rem;
 }
 
 .Search-query {
@@ -92,7 +107,7 @@ export default {
 
 .Search-empty {
   background-color: #354258;
-  border: 2px solid #607aa5; 
+  border: 2px solid #607aa5;
   border-radius: 4px;
   padding-top: 3rem;
   padding-bottom: 3rem;
@@ -101,6 +116,6 @@ export default {
 
 .Search-empty-title {
   font-weight: 400;
-  letter-spacing: .025rem;
+  letter-spacing: 0.025rem;
 }
 </style>
