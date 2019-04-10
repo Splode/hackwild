@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: hackwild.com 
+Token: a0c86e49ebee5df64a78866be021ec87f02ae28eaf89d63597cf3ad52f7bb8c1

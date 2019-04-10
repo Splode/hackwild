@@ -18,10 +18,10 @@ tagline: Hacking through the Dense Jungle of Modern Development
 email: trainstationblues@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
   HackWild explores the world of modern web development with useful tips, tutorials and articles.
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://hackwild.com" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: '' # the subpath of your site, e.g. /blog
+url: 'https://hackwild.com' # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: splode
-github_username:  splode
+github_username: splode
 author: Christopher Murphy
 
 # Build settings
@@ -61,3 +61,5 @@ exclude:
   - .eslintrc.js
   - .editorconfig
   - .github/
+
+include: ['.well-known']
