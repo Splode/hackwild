@@ -1,8 +1,7 @@
 ---
 layout: post
 title: Semantic Git Commit Messages for Clarity and Structure
-description: >
-  Using a semantic Git commit method can greatly improve the readability of Git logs and help to organize the scope of individual commits.
+description: Using a semantic Git commit method can greatly improve the readability of Git logs and help to organize the scope of individual commits.
 tags: Git
 category: Git
 ---
@@ -11,13 +10,13 @@ I recently found out about semantic Git commit messages—a method for structuri
 
 Semantic Git commits start with a semantic tag and use an imperative voice. Git commit messages should be prefixed with **one** the following tags:
 
-* `feat:` - implement new features for endusers
-* `fix:` - bug fix for endusers (not a build-process fix)
-* `docs:` - update to project documentation
-* `style:` - update code formatting (indentation, tabs vs spaces, etc.)
-* `refactor:` - refactoring of code
-* `test:` - adding or updating tests
-* `chore:` - updates to build process
+- `feat:` - implement new features for endusers
+- `fix:` - bug fix for endusers (not a build-process fix)
+- `docs:` - update to project documentation
+- `style:` - update code formatting (indentation, tabs vs spaces, etc.)
+- `refactor:` - refactoring of code
+- `test:` - adding or updating tests
+- `chore:` - updates to build process
 
 ## feat
 

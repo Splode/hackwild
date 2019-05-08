@@ -1,8 +1,7 @@
 ---
 layout: post
 title: Live Image Previews for File Uploads using the FileReader API
-description: >
-  Create live image previews for file uploads using the File API and the FileReader object in vanilla JavaScript.
+description: Create live image previews for file uploads using the File API and the FileReader object in vanilla JavaScript.
 tags: JavaScript
 category: JavaScript
 ---
@@ -21,9 +20,9 @@ Our basic structure will be an image container with an empty `<img>` element and
 
 ```html
 <div class="Preview-img">
-  <img data-id="filePreview">
+  <img data-id="filePreview" />
 </div>
-<input type="file" accept=".jpg, .jpeg, .png, .gif" data-id="fileInput">
+<input type="file" accept=".jpg, .jpeg, .png, .gif" data-id="fileInput" />
 ```
 
 ### Providing a few Basic Display Constraints with CSS

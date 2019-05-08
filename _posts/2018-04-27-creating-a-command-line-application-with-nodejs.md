@@ -1,8 +1,7 @@
 ---
 layout: post
 title: Creating a Command-line Application with Node and Commander.js
-description: >
-  Learn the basics of creating command-line applications using Node and Commander.js by building a note taking application for the terminal.
+description: Learn the basics of creating command-line applications using Node and Commander.js by building a note taking application for the terminal.
 tags: JavaScript
 category: JavaScript
 ---
@@ -127,10 +126,10 @@ We'll use the second approach, using secondary commands with options. This appro
 
 We'll start by laying out the structure of a basic command, which chains several methods together on the Commander instance (in this case, `program`). The basic structure for this approach uses the following methods:
 
-* The `command()` method is used to define the phrase used to call the command.
-* The `alias()` method is used to set an optional alias to the command.
-* The `description()` method defines a description for the command to be displayed in the help output.
-* The `action()` method is where we will pass in command arguments to functions that we'd ultimately like to call for each command.
+- The `command()` method is used to define the phrase used to call the command.
+- The `alias()` method is used to set an optional alias to the command.
+- The `description()` method defines a description for the command to be displayed in the help output.
+- The `action()` method is where we will pass in command arguments to functions that we'd ultimately like to call for each command.
 
 #### index.js
 
@@ -257,7 +256,7 @@ const write = (filePath, data) => {
   })
 }
 
-module.exports = function (note) {}
+module.exports = function(note) {}
 ```
 
 ### Creating the Add Function
@@ -295,7 +294,7 @@ const write = (filePath, data) => {
   })
 }
 
-module.exports = function (note) {
+module.exports = function(note) {
   let collection
   if (fs.existsSync(notesPath)) {
     collection = read(notesPath)
@@ -352,4 +351,4 @@ Running this command again will append an additional entry to our newly-created 
 
 We now have a basic structure for a command-line application. A lot can be accomplished with the basic tools that we've covered in this article. In fact, it only scratches the surface of what's possible.
 
-This article was partly informed by a process I recently went through when creating a command-line note taking application called <a href="https://github.com/Splode/jin" target="_blank" rel="noopener">*jin*</a>. If you want to dive deeper into a command-line project, or would like to have a nifty tool for taking notes in the terminal, check out the <a href="https://github.com/Splode/jin" target="_blank" rel="noopener">source for jin on Github</a>.
+This article was partly informed by a process I recently went through when creating a command-line note taking application called <a href="https://github.com/Splode/jin" target="_blank" rel="noopener">_jin_</a>. If you want to dive deeper into a command-line project, or would like to have a nifty tool for taking notes in the terminal, check out the <a href="https://github.com/Splode/jin" target="_blank" rel="noopener">source for jin on Github</a>.

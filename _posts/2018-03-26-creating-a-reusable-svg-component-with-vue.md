@@ -1,8 +1,7 @@
 ---
 layout: post
 title: Creating a Reusable SVG Component with Vue.js
-description: >
-  Learn how to create a reusable, configurable and lightweight SVG component using Vue Single File Components.
+description: Learn how to create a reusable, configurable and lightweight SVG component using Vue Single File Components.
 tags: Vue
 category: Vue
 ---
@@ -23,7 +22,8 @@ In this example, we'll develop a reusable SVG component using the HackWild SVG l
 <template>
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    baseProfile="tiny" version="1.2"
+    baseProfile="tiny"
+    version="1.2"
     viewBox="0 0 422.1 329.5"
   >
     <path
@@ -35,13 +35,12 @@ In this example, we'll develop a reusable SVG component using the HackWild SVG l
 </template>
 
 <script>
-export default {
-  name: 'Logo'
-}
+  export default {
+    name: 'Logo'
+  }
 </script>
 
-<style lang="css" scoped>
-</style>
+<style lang="css" scoped></style>
 ```
 
 > It's a good idea to name this component in a way that makes sense for your application. Check out the [official Vue style guide](https://vuejs.org/v2/style-guide/) for best practices.
@@ -55,18 +54,18 @@ Now that we have our SVG component, we'll register it in our primary `App` compo
 ```html
 <template>
   <div id="app">
-    <Logo/>
+    <Logo />
   </div>
 </template>
 
 <script>
-import Logo from './components/Logo'
-export default {
-  name: 'App',
-  components: {
-    Logo
+  import Logo from './components/Logo'
+  export default {
+    name: 'App',
+    components: {
+      Logo
+    }
   }
-}
 </script>
 ```
 
@@ -108,43 +107,43 @@ To control the fill and stroke colors of our SVG component, we'll define several
 </template>
 
 <script>
-export default {
-  name: 'Logo',
-  props: {
-    color: {
-      type: String,
-      default: 'white', // green, green--outline, white
-      required: false
-    },
-    strokeWidth: {
-      type: Number,
-      default: 5,
-      required: false
-    },
-    width: {
-      type: Number,
-      default: 50,
-      required: false
+  export default {
+    name: 'Logo',
+    props: {
+      color: {
+        type: String,
+        default: 'white', // green, green--outline, white
+        required: false
+      },
+      strokeWidth: {
+        type: Number,
+        default: 5,
+        required: false
+      },
+      width: {
+        type: Number,
+        default: 50,
+        required: false
+      }
     }
   }
-}
 </script>
 
 <style lang="css" scoped>
-.green {
-  fill: #61ffab;
-  stroke: none;
-}
+  .green {
+    fill: #61ffab;
+    stroke: none;
+  }
 
-.green--outline {
-  fill: #354258;
-  stroke: #61ffab;
-}
+  .green--outline {
+    fill: #354258;
+    stroke: #61ffab;
+  }
 
-.white {
-  fill: mintcream;
-  stroke: none;
-}
+  .white {
+    fill: mintcream;
+    stroke: none;
+  }
 </style>
 ```
 
@@ -160,27 +159,20 @@ Now that we've readied our component to accept various properties, we can pass t
 <template>
   <div id="app">
     <!-- Logo instance 1 -->
-    <Logo
-      color="green--outline"
-      :width="150"
-      :strokeWidth="10"
-    />
+    <Logo color="green--outline" :width="150" :strokeWidth="10" />
     <!-- Logo instance 2 -->
-    <Logo
-      color="green"
-      :width="50"
-    />
+    <Logo color="green" :width="50" />
   </div>
 </template>
 
 <script>
-import Logo from './components/Logo'
-export default {
-  name: 'App',
-  components: {
-    Logo
+  import Logo from './components/Logo'
+  export default {
+    name: 'App',
+    components: {
+      Logo
+    }
   }
-}
 </script>
 ```
 
