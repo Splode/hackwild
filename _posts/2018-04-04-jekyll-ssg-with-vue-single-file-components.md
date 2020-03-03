@@ -4,6 +4,7 @@ title: Jekyll Static Site Generation with Vue.js Single File Components
 description: Create a statically generated site with Jekyll, Vue Single File Components and webpack optimizations.
 tags: Jekyll
 category: Jekyll
+hero_image: 'jekyll-vue--lg.png'
 ---
 
 Static Site Generators (SSG) are awesome and Jekyll is one of the most robust options available. It's stable, well supported and straightforward. What would make it even better? The reactivity of Vue.js Single File Components (SFC) and webpack optimizations, of course.
@@ -35,22 +36,20 @@ Next, we'll create a `_layouts` directory to store our page layouts and create a
 #### default.html
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Example Title</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Example Title</title>
-</head>
-
-<body>
-  <div id="app">
-    {% raw %}{{ "{{ content "  }}}}{% endraw %}
-  </div>
-</body>
-
+  <body>
+    <div id="app">
+      {% raw %}{{ "{{ content " }}}}{% endraw %}
+    </div>
+  </body>
 </html>
 ```
 
@@ -112,13 +111,13 @@ $ npm i -D webpack webpack-cli
 
 We'll also install several modules and loaders that will assist in handling assets for webpack processing. Let's go through the purpose of each module:
 
-* `cross-env` smooths out the inconsistencies of using environment variables across platforms
-* `css-loader` allows webpack to resolve CSS `@import` and `url()` statements
-* `node-sass` is required for compiling SASS/SCSS
-* `sass-loader` allows webpack to compile SASS/SCSS to CSS
-* `vue-loader` allows webpack to compile Vue Single File Components into JS modules
-* `vue-style-loader` allows webpack to dynamically inject CSS into the DOM
-* `vue-template-compiler` used by `vue-loader` to precompile Vue templates to render functions
+- `cross-env` smooths out the inconsistencies of using environment variables across platforms
+- `css-loader` allows webpack to resolve CSS `@import` and `url()` statements
+- `node-sass` is required for compiling SASS/SCSS
+- `sass-loader` allows webpack to compile SASS/SCSS to CSS
+- `vue-loader` allows webpack to compile Vue Single File Components into JS modules
+- `vue-style-loader` allows webpack to dynamically inject CSS into the DOM
+- `vue-template-compiler` used by `vue-loader` to precompile Vue templates to render functions
 
 ```bash
 $ npm i -D cross-env css-loader node-sass sass-loader vue-loader vue-style-loader vue-template-compiler
@@ -250,7 +249,7 @@ Now that we have Jekyll running and Vue with webpack configured, it's time to te
 $ npm run dev
 ```
 
-We should see no errors during the build process and we should now have a newly created `dist` directory in the project root containing a `build.js` file. If we take a look at `build.js`, we'll see that it includes the Vue.js module. You can further test the workflow by running the `build` and `watch` scripts as well. 
+We should see no errors during the build process and we should now have a newly created `dist` directory in the project root containing a `build.js` file. If we take a look at `build.js`, we'll see that it includes the Vue.js module. You can further test the workflow by running the `build` and `watch` scripts as well.
 
 > Note that when running `npm run build`, our `build.js` bundle is minified. webpack 4 now performs all sorts of optimizations, such as minificiation, by default when the environment mode is set to `production`.
 
@@ -268,16 +267,16 @@ In our `src` directory, we'll create a `components` directory to house all of ou
 </template>
 
 <script>
-export default {
-  name: 'HelloWorld'
-}
+  export default {
+    name: 'HelloWorld'
+  }
 </script>
 
 <style scoped>
-h1 {
-  color: darkslategrey;
-  font-size: 2rem;
-}
+  h1 {
+    color: darkslategrey;
+    font-size: 2rem;
+  }
 </style>
 ```
 
@@ -305,23 +304,21 @@ Let's update our default layout, `default.html`, with the id of `app` (we define
 #### default.html
 
 ```html
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Example Title</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Example Title</title>
-</head>
-
-<body>
-  <div id="app">
-    <hello-world></hello-world>
-    {% raw %}{{ "{{ content "  }}}}{% endraw %}
-  </div>
-</body>
-
+  <body>
+    <div id="app">
+      <hello-world></hello-world>
+      {% raw %}{{ "{{ content " }}}}{% endraw %}
+    </div>
+  </body>
 </html>
 ```
 
