@@ -6,7 +6,7 @@ page-type: post
 <div class="row">
   <article class="col-lg-9 ml-lg-auto">
     {% if page.hero_image %}
-    <img src="/static/images/{{ page.hero_image }}" alt="" />
+    <img src="/static/images/{{ page.hero_image.src }}" alt="{{ page.hero_image.alt }}" class="mb-3" />
     {% endif %}
     <h1 id="article-title">{{ page.title }}</h1>
 

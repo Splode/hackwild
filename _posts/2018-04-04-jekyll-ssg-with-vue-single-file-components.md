@@ -4,7 +4,9 @@ title: Jekyll Static Site Generation with Vue.js Single File Components
 description: Create a statically generated site with Jekyll, Vue Single File Components and webpack optimizations.
 tags: Jekyll
 category: Jekyll
-hero_image: 'jekyll-vue--lg.png'
+hero_image:
+  src: 'jekyll-vue--lg.png'
+  alt: Jekyll-Vue template project logo
 ---
 
 Static Site Generators (SSG) are awesome and Jekyll is one of the most robust options available. It's stable, well supported and straightforward. What would make it even better? The reactivity of Vue.js Single File Components (SFC) and webpack optimizations, of course.
