@@ -22,7 +22,7 @@ We'll begin by scaffolding a new Jekyll project. If you don't have Jekyll instal
 ### New Jekyll Project
 
 ```bash
-$ jekyll new jekyll-vue-template
+jekyll new jekyll-vue-template
 ```
 
 We'll disable the default theme, _Minima_, that Jekyll ships with by commenting it out of or deleting it from our `config.yml` file.
@@ -69,8 +69,8 @@ layout: default
 
 Let's test to ensure that our Jekyll project scaffolding was successful by spooling up a dev server using the following command:
 
-```
-$ bundle exec jekyll s
+```sh
+bundle exec jekyll s
 ```
 
 ### npm Initialization
@@ -78,7 +78,7 @@ $ bundle exec jekyll s
 After we've successfully setup Jekyll, we'll initialize an npm workflow in the project root allowing us to work with node modules, including Vue.js and webpack.
 
 ```bash
-$ npm init
+npm init
 ```
 
 > Be sure to update the `exclude` field in your `config.yml` file to keep various development environment files, such as `package.json`, from being generated into your Jekyll production build.
@@ -92,7 +92,7 @@ Ok, take a deep breath. It's time to take a dive into installing and configuring
 First, we'll install Vue as a dependency:
 
 ```bash
-$ npm i -S vue
+npm i -S vue
 ```
 
 Next, we'll create a directory, `src`, in our project root where all of our Vue application components will live. We'll also create an entry point for our Vue application, `main.js`. For now, we'll just import Vue.
@@ -108,7 +108,7 @@ import Vue from 'vue'
 Next, we'll install the `webpack` core module and `webpack-cli`, which allows us to pass commands and arguments through the CLI to webpack.
 
 ```bash
-$ npm i -D webpack webpack-cli
+npm i -D webpack webpack-cli
 ```
 
 We'll also install several modules and loaders that will assist in handling assets for webpack processing. Let's go through the purpose of each module:
@@ -122,7 +122,7 @@ We'll also install several modules and loaders that will assist in handling asse
 - `vue-template-compiler` used by `vue-loader` to precompile Vue templates to render functions
 
 ```bash
-$ npm i -D cross-env css-loader node-sass sass-loader vue-loader vue-style-loader vue-template-compiler
+npm i -D cross-env css-loader node-sass sass-loader vue-loader vue-style-loader vue-template-compiler
 ```
 
 ### Configuring webpack
@@ -248,7 +248,7 @@ Once we've configured webpack, we'll create the scripts needed to run it. We'll 
 Now that we have Jekyll running and Vue with webpack configured, it's time to test that our workflow is working as intended. We'll test our webpack build by running our `dev` script:
 
 ```bash
-$ npm run dev
+npm run dev
 ```
 
 We should see no errors during the build process and we should now have a newly created `dist` directory in the project root containing a `build.js` file. If we take a look at `build.js`, we'll see that it includes the Vue.js module. You can further test the workflow by running the `build` and `watch` scripts as well.
