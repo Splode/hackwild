@@ -4,8 +4,10 @@ page-type: post
 ---
 
 <div class="row">
-  <the-table-of-contents></the-table-of-contents>
   <article class="col-lg-9 ml-lg-auto">
+    {% if page.hero_image %}
+    <img src="/static/images/{{ page.hero_image }}" alt="" />
+    {% endif %}
     <h1 id="article-title">{{ page.title }}</h1>
 
     <div class="d-flex align-items-center justify-content-between">
@@ -24,4 +26,5 @@ page-type: post
     <hr />
     {{ content }}
   </article>
+  <the-table-of-contents></the-table-of-contents>
 </div>
