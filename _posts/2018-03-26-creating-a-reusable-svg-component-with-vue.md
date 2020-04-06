@@ -18,7 +18,7 @@ In this example, we'll develop a reusable SVG component using the HackWild SVG l
 
 #### Logo.vue
 
-```html
+```vue
 <template>
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -35,9 +35,9 @@ In this example, we'll develop a reusable SVG component using the HackWild SVG l
 </template>
 
 <script>
-  export default {
-    name: 'Logo'
-  }
+export default {
+  name: 'Logo',
+}
 </script>
 
 <style lang="css" scoped></style>
@@ -51,7 +51,7 @@ Now that we have our SVG component, we'll register it in our primary `App` compo
 
 #### App.vue
 
-```html
+```vue
 <template>
   <div id="app">
     <Logo />
@@ -59,13 +59,13 @@ Now that we have our SVG component, we'll register it in our primary `App` compo
 </template>
 
 <script>
-  import Logo from './components/Logo'
-  export default {
-    name: 'App',
-    components: {
-      Logo
-    }
-  }
+import Logo from './components/Logo'
+export default {
+  name: 'App',
+  components: {
+    Logo,
+  },
+}
 </script>
 ```
 
@@ -87,7 +87,7 @@ To control the fill and stroke colors of our SVG component, we'll define several
 
 #### Logo.vue
 
-```html
+```vue
 <template>
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -107,43 +107,43 @@ To control the fill and stroke colors of our SVG component, we'll define several
 </template>
 
 <script>
-  export default {
-    name: 'Logo',
-    props: {
-      color: {
-        type: String,
-        default: 'white', // green, green--outline, white
-        required: false
-      },
-      strokeWidth: {
-        type: Number,
-        default: 5,
-        required: false
-      },
-      width: {
-        type: Number,
-        default: 50,
-        required: false
-      }
-    }
-  }
+export default {
+  name: 'Logo',
+  props: {
+    color: {
+      type: String,
+      default: 'white', // green, green--outline, white
+      required: false,
+    },
+    strokeWidth: {
+      type: Number,
+      default: 5,
+      required: false,
+    },
+    width: {
+      type: Number,
+      default: 50,
+      required: false,
+    },
+  },
+}
 </script>
 
 <style lang="css" scoped>
-  .green {
-    fill: #61ffab;
-    stroke: none;
-  }
+.green {
+  fill: #61ffab;
+  stroke: none;
+}
 
-  .green--outline {
-    fill: #354258;
-    stroke: #61ffab;
-  }
+.green--outline {
+  fill: #354258;
+  stroke: #61ffab;
+}
 
-  .white {
-    fill: mintcream;
-    stroke: none;
-  }
+.white {
+  fill: mintcream;
+  stroke: none;
+}
 </style>
 ```
 
@@ -155,7 +155,7 @@ Now that we've readied our component to accept various properties, we can pass t
 
 #### App.vue
 
-```html
+```vue
 <template>
   <div id="app">
     <!-- Logo instance 1 -->
@@ -166,13 +166,13 @@ Now that we've readied our component to accept various properties, we can pass t
 </template>
 
 <script>
-  import Logo from './components/Logo'
-  export default {
-    name: 'App',
-    components: {
-      Logo
-    }
-  }
+import Logo from './components/Logo'
+export default {
+  name: 'App',
+  components: {
+    Logo,
+  },
+}
 </script>
 ```
 

@@ -78,7 +78,7 @@ function handleFileUpload(inputEvent) {
   const reader = new FileReader()
 
   reader.readAsDataURL(input.files[0])
-  reader.onload = readerEvent => {
+  reader.onload = (readerEvent) => {
     filePreview.src = readerEvent.target.result
   }
 }
@@ -110,7 +110,7 @@ function handleFileUpload(inputEvent) {
   }
 
   reader.readAsDataURL(input.files[0])
-  reader.onload = readerEvent => {
+  reader.onload = (readerEvent) => {
     filePreview.src = readerEvent.target.result
   }
 }

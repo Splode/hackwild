@@ -24,8 +24,8 @@ The `feat:` tag should be used to identify new features or changes to production
 
 #### Example
 
-```
-feat: add ability to view most popular posts
+```sh
+"feat: add ability to view most popular posts"
 ```
 
 ## fix
@@ -34,8 +34,8 @@ The `fix:` tag should be used to identify any bug fixes to production code. This
 
 #### Example
 
-```
-fix: check if file exists before attempting to unlink
+```sh
+"fix: check if file exists before attempting to unlink"
 ```
 
 ## docs
@@ -44,8 +44,8 @@ The `docs:` tag is fairly straightforward and should be used to identify changes
 
 #### Example
 
-```
-docs: add detailed installation instructions for Ubuntu
+```sh
+"docs: add detailed installation instructions for Ubuntu"
 ```
 
 ## style
@@ -56,8 +56,8 @@ For style updates that would effect the enduser, such as CSS changes, use the `f
 
 #### Example
 
-```
-style: convert from 4 space indentation to 2 spaces
+```sh
+"style: convert from 4 space indentation to 2 spaces"
 ```
 
 ## refactor
@@ -66,8 +66,8 @@ The `refactor:` tag should be used to identify refactoring in the codebase. This
 
 #### Example
 
-```
-refactor: rename ArticleController to PostController
+```sh
+"refactor: rename ArticleController to PostController"
 ```
 
 ## test
@@ -76,8 +76,8 @@ The `test:` tag should be used to identify changes surrounding tests.
 
 #### Example
 
-```
-test: add assertions for Collection update and destroy methods
+```sh
+"test: add assertions for Collection update and destroy methods"
 ```
 
 ## chore
@@ -86,6 +86,6 @@ The `chore:` tag should be used to identify changes to build scripts and other u
 
 #### Example
 
-```
-chore: update build script to webpack 4
+```sh
+"chore: update build script to webpack 4"
 ```

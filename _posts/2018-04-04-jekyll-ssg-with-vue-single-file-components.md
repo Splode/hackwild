@@ -139,9 +139,9 @@ module.exports = {
   entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, './dist'),
-    filename: 'build.js'
+    filename: 'build.js',
   },
-  mode: 'development'
+  mode: 'development',
 }
 ```
 
@@ -157,10 +157,10 @@ module: {
       loader: 'vue-loader',
       options: {
         loaders: {
-          scss: ['vue-style-loader', 'css-loader', 'sass-loader']
-        }
-      }
-    }
+          scss: ['vue-style-loader', 'css-loader', 'sass-loader'],
+        },
+      },
+    },
   ]
 }
 ```
@@ -202,7 +202,7 @@ module.exports = {
   entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, './dist'),
-    filename: 'build.js'
+    filename: 'build.js',
   },
   mode: 'development',
   module: {
@@ -212,18 +212,18 @@ module.exports = {
         loader: 'vue-loader',
         options: {
           loaders: {
-            scss: ['vue-style-loader', 'css-loader', 'sass-loader']
-          }
-        }
-      }
-    ]
+            scss: ['vue-style-loader', 'css-loader', 'sass-loader'],
+          },
+        },
+      },
+    ],
   },
   resolve: {
     alias: {
-      vue$: 'vue/dist/vue.esm.js'
+      vue$: 'vue/dist/vue.esm.js',
     },
-    extensions: ['*', '.js', '.vue', '.json']
-  }
+    extensions: ['*', '.js', '.vue', '.json'],
+  },
 }
 
 if (process.env.NODE_ENV === 'production') {
@@ -270,7 +270,7 @@ In our `src` directory, we'll create a `components` directory to house all of ou
 
 <script>
   export default {
-    name: 'HelloWorld'
+    name: 'HelloWorld',
   }
 </script>
 
@@ -295,7 +295,7 @@ import HelloWorld from './components/HelloWorld'
 Vue.component('helloWorld', HelloWorld)
 
 const app = new Vue({
-  el: '#app'
+  el: '#app',
 })
 ```
 

@@ -16,20 +16,20 @@ In this article we'll flesh out the basics of creating a command-line note takin
 
 We'll start by initializing a project in a new directory with npm:
 
-```console
-$ mkdir notes-cli && cd notes-cli && npm init
+```sh
+mkdir notes-cli && cd notes-cli && npm init
 ```
 
 For this project we're going to be using <a href="https://github.com/tj/commander.js/" target="_blank" rel="noopener">Commander.js</a>. Commander offers many convenient tools for creating CLI applications, including option parsing and Git-style subcommands. We'll install it as a dependency to our application:
 
-```bash
-$ npm i -S commander
+```sh
+npm i -S commander
 ```
 
 Next, we'll make two directories, `bin` and `lib`, to house our application logic. It's customary for the applications executable files, or _binaries_, to be held in the `bin` directory and the _libraries_ essential to the application execution in the `lib` directory. We'll also create an entry point, `index.js`, for our application in the `bin` directory.
 
-```bash
-$ mkdir bin lib && touch bin/index.js
+```sh
+mkdir bin lib && touch bin/index.js
 ```
 
 Let's start by just outputting the version number of our application. Instead of having to manually keep track of the application version in multiple places, we'll use the version field already defined in our `package.json` file (which allows us to take advantage of npm's semantic versioning tools):
@@ -46,8 +46,8 @@ console.log(pckg.version)
 
 Now, when we run this file with `node` we should expect to see the version, `0.0.1`, output to the console.
 
-```bash
-$ node /bin/index.js
+```sh
+node /bin/index.js
 ```
 
 ### Globally Registering our Application
@@ -76,13 +76,13 @@ We're going to be using npm to create a symbolic link to our application entry p
 
 Next, we'll use the npm `link` command while in our project root to create a global link to our application entry point:
 
-```bash
-$ npm link
+```sh
+npm link
 ```
 
 We can now run our application using the command we specified in our `package.json` anywhere. To test this, let's run it in the current project directory and outside the current directory:
 
-```bash
+```sh
 $ notes
 0.0.1
 ```
@@ -109,7 +109,7 @@ program.parse(process.argv)
 
 If we run the application again but add the `--version` flag set, we'll achieve the same effect as we did when we used `console.log` in the previous example:
 
-```bash
+```sh
 $ notes --version
 0.0.1
 ```
@@ -118,9 +118,9 @@ $ notes --version
 
 There are three primary ways to build commands with Commander:
 
-1.  Use primary command with options
-2.  Use secondary commands with options
-3.  Use git-style sub-commands with options
+1. Use primary command with options
+2. Use secondary commands with options
+3. Use git-style sub-commands with options
 
 We'll use the second approach, using secondary commands with options. This approach allows us to define several different commands, each with the potential to have its own options and help output.
 
@@ -141,11 +141,7 @@ const program = require('commander')
 
 program.version(pckg.version)
 
-program
-  .command()
-  .alias()
-  .description()
-  .action()
+program.command().alias().description().action()
 
 program.parse(process.argv)
 ```
@@ -176,7 +172,7 @@ program
   .command('add <note>')
   .alias('a')
   .description('Add a new note.')
-  .action(note => {
+  .action((note) => {
     console.log(note)
   })
 
@@ -187,8 +183,8 @@ program.parse(process.argv)
 
 Here's an example of how we would call the command that we just wrote:
 
-```bash
-$ note add "This is a new note."
+```sh
+note add "This is a new note."
 ```
 
 To add more commands to our application, we would simply add another block of methods before the closing `parse()` method.
@@ -213,10 +209,10 @@ We don't want to overwrite our notes everytime we add a new note, so we also nee
 const fs = require('fs')
 const path = require('path')
 
-const read = filePath => {}
+const read = (filePath) => {}
 const write = (filePath, data) => {}
 
-module.exports = function(note) {}
+module.exports = function (note) {}
 ```
 
 ### Building the Read and Write functions
@@ -238,7 +234,7 @@ const path = require('path')
 
 const notesPath = path.resolve(os.homedir(), 'notes.json')
 
-const read = filePath => {
+const read = (filePath) => {
   try {
     return JSON.parse(fs.readFileSync(filePath))
   } catch (error) {
@@ -248,7 +244,7 @@ const read = filePath => {
 }
 
 const write = (filePath, data) => {
-  fs.writeFileSync(filePath, JSON.stringify(data), error => {
+  fs.writeFileSync(filePath, JSON.stringify(data), (error) => {
     if (error) {
       console.log(error)
       process.exit(1)
@@ -256,7 +252,7 @@ const write = (filePath, data) => {
   })
 }
 
-module.exports = function(note) {}
+module.exports = function (note) {}
 ```
 
 ### Creating the Add Function
@@ -276,7 +272,7 @@ const path = require('path')
 
 const notesPath = path.resolve(os.homedir(), 'notes.json')
 
-const read = filePath => {
+const read = (filePath) => {
   try {
     return JSON.parse(fs.readFileSync(filePath))
   } catch (error) {
@@ -286,7 +282,7 @@ const read = filePath => {
 }
 
 const write = (filePath, data) => {
-  fs.writeFileSync(filePath, JSON.stringify(data), error => {
+  fs.writeFileSync(filePath, JSON.stringify(data), (error) => {
     if (error) {
       console.log(error)
       process.exit(1)
@@ -294,7 +290,7 @@ const write = (filePath, data) => {
   })
 }
 
-module.exports = function(note) {
+module.exports = function (note) {
   let collection
   if (fs.existsSync(notesPath)) {
     collection = read(notesPath)
@@ -330,7 +326,7 @@ program
   .command('add <note>')
   .alias('a')
   .description('Add a new note.')
-  .action(note => {
+  .action((note) => {
     add(note)
   })
 
