@@ -112,6 +112,14 @@ div.highlight {
 
 .Post-author {
   color: $colorLightBlue;
+  display: inline-block;
+  font-size: 1rem;
+  margin: 0 1rem 0 0;
+}
+
+.Post-date {
+  color: $colorLightBlue;
+  display: inline-block;
   font-size: 1rem;
   margin: 0;
 }

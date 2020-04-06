@@ -6,17 +6,23 @@ page-type: post
 <div class="row">
   <article class="col-lg-9 ml-lg-auto">
     {% if page.hero_image %}
-    <img src="/static/images/{{ page.hero_image.src }}" alt="{{ page.hero_image.alt }}" class="mb-3" />
+    <img
+      src="/static/images/{{ page.hero_image.src }}"
+      alt="{{ page.hero_image.alt }}"
+      class="mb-3"
+    />
     {% endif %}
     <h1 id="article-title">{{ page.title }}</h1>
 
     <div class="d-flex align-items-center justify-content-between">
-      {% if page.author %}
-      <p class="Post-author">{{ page.author }}</p>
-      {% else %}
-      <p class="Post-author">{{ site.author }}</p>
-      {% endif %}
-
+      <div>
+        {% if page.author %}
+        <p class="Post-author">{{ page.author }}</p>
+        {% else %}
+        <p class="Post-author">{{ site.author }}</p>
+        {% endif %}
+        <p class="Post-date">{{ page.date | date: "%B %d, %Y" }}</p>
+      </div>
       <a href="/topic/{{ page.tags | first | downcase }}/"
         ><p class="PostPreview-tag PostPreview-tag--article">
           {{ page.tags | first }}
