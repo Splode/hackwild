@@ -6,7 +6,7 @@ tags: Git
 category: Git
 ---
 
-The git subcommand `log` shows the commits in a repository and is a useful tool for inspecting the history of a project. Its output can also be used to generate project documentation such as release notes and changelogs. Pairing `git log` with [clear and meaningful commit messages](/article/semantic-git-commits/) can be a powerful tool in the project documentation toolkit.
+The git subcommand `log` shows the commits in a repository and is a useful tool for inspecting the history of a project. Its output can also be used to generate project documentation such as release notes and changelogs. Pairing `git log` with clear and [meaningful commit messages](/article/semantic-git-commits/) can be a powerful tool in the project documentation toolkit.
 
 ## Generate Basic Release Notes
 
