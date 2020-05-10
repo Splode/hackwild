@@ -6,13 +6,13 @@ tags: Git
 category: Git
 ---
 
-The git subcommand `log` shows the commits in a repository and is a useful tool for inspecting the history of a project. Its output can also be used to generate project documentation such as release notes and changelogs. Pairing `git log` with clear and [meaningful commit messages](/article/semantic-git-commits/) can be a powerful tool in the project documentation toolkit.
+The git sub-command `log` shows the commits in a repository and is a useful tool for inspecting the history of a project. Its output can generate project documentation such as release notes and changelogs. Pairing `git log` with clear and [meaningful commit messages](article/semantic-git-commits/) can be a powerful tool in the project documentation toolkit.
 
 ## Generate Basic Release Notes
 
-By itself, the `log` command shows quite a bit of information, including the full commit hash, author name and email, date, full commit message, etc. However, git log has numerous options and can be formatted in numerous ways, allowing for a high level of customization.
+By itself, the log command shows quite a bit of information, including the full commit hash, author name, and email, date, full commit message, etc. We can pare down this information using git log's many options.
 
-In the following example, we use `git log` to generate a list of commits that can be used in release notes. We pass the `--oneline` formatting flag to denote that we want a condensed version of each commit intended to fit one commit per line. We can limit the range of the log by using the `revision range` argument. In this case, we'll display only the commits between the previous tag `v0.7.0` and the current tag `v0.7.1`.
+In the following example, we use git log to generate a list of commits that can for release notes. We pass the `--oneline` formatting flag to denote that we want a condensed version of each commit intended to fit one commit per line. We can limit the range of the log by using the `revision range` argument. In this case, we’ll display only the commits between the previous tag `v0.7.0` and the current tag `v0.7.1`.
 
 ```git
 $ git log --oneline v0.7.0...v0.7.1
@@ -28,19 +28,19 @@ e5df77a feat: add hero image alt text field to post
 91b98b5 fix: set image max width
 ```
 
-We can write this information to a changelog by directing output and appending to a file. In this example, we'll append it to a changelog. This will append the contents of `git log` to the `CHANGELOG` file, or create it if it doesn't exist.
+We can write this information to a changelog by directing output and appending to a file. In this example, we’ll append it to a changelog. This will append the contents of git log to the `CHANGELOG` file, or create it if it doesn’t exist.
 
 ```bash
 git log --oneline v0.7.0...v0.7.1 >> CHANGELOG
 ```
 
-A benefit of generating release notes in this way is that GitHub will hyperlink commit hashes in release notes to the actual commit. This provides a convenient way to navigate to different points in a codebase's history.
+A benefit of generating release notes in this way is that GitHub will hyperlink commit hashes in release notes to the actual commit. This provides a convenient way to navigate to different points in a codebase’s history.
 
 ### Customize Log Format
 
-The output from `git log` can be customized in a number of ways. In this example, we're going to slightly alter the format of the log output so that it better integrates with markdown. Each log entry is essentially an item in a list of commits, so we'll add a leading `-` to each line item, allowing the log to be displayed as an unordered list in markdown.
+Customizing the git log output is simple. Formatting the output involves passing the `--format` flag along with a formatting string and placeholders.
 
-Formatting the output involves passing the `--format` flag along with a formatting string and placeholders. The `%h` placeholder denotes an abbreviated commit hash and the `%s` placeholder denotes the commit subject (or title).
+In this example, we’re going to alter the format of the log output so that it better integrates with markdown. Each log entry is an item in a list of commits, so we’ll add a leading `-` to each line item, displaying the log as an unordered list in markdown. The `%h` placeholder denotes an abbreviated commit hash and the `%s` placeholder denotes the commit subject (or title).
 
 ```git
 $ git log --format="- %h %s"
@@ -53,7 +53,7 @@ You can find more formatting placeholders in [the official git log documentation
 
 ## Using Shortlog for Teams
 
-The `shortlog` command is especially useful when generating release notes for projects with numerous collaborators. `shortlog` groups commits by author, sorted alphabetically by default. In this example, we'll pass the `-n` flag to indicate that the output should be sorted by the number of commits by an author.
+The `shortlog` command is especially useful when generating release notes for projects with many collaborators. `shortlog` groups commits by author, sorted by name. In this example, we’ll pass the `-n` flag to sort by the number of commits by author.
 
 ```git
 $ git shortlog -n --format="- %h %s" v0.7.1...v0.8.0
@@ -79,4 +79,4 @@ dependabot[bot] (1):
 
 ## Conclusion and Related Projects
 
-I've found that this approach, when paired with meaningful commit messages, can be used to build consistent documentation for projects. It provides a clear path for collaborators (and you) to navigate the changes associated with a codebase in a given period of time. It's also flexible in that it the `log` output can be formatted any number of ways. As a command-line tool, it can be easily integrated with numerous workflows, including continuous integration and deployment.
+I’ve found that this approach, when paired with meaningful commit messages, helps build consistent documentation for projects. It provides a clear path for collaborators (and you) to navigate the changes associated with a codebase in a given period. It’s also flexible in that the log output can be formatted in any number of ways. As a command-line tool, it integrates with many workflows, including continuous integration and deployment.
