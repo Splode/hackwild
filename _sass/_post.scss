@@ -101,8 +101,11 @@ pre {
 }
 
 pre {
+  background-color: #282a36;
+  border-radius: $borderRadius;
   line-height: 2rem;
   margin: 0;
+  padding: 1rem;
   white-space: pre-wrap;
 }
 
@@ -124,16 +127,11 @@ div.highlight {
   margin: 0;
 }
 
-// dracula syntax highlight hook
-.highlight {
-  border-radius: $borderRadius;
-  padding: 1rem;
-}
-
 // inline code manually styled
 code.highlighter-rouge {
   background: #282a36;
   border-radius: $borderRadius;
   color: #f8f8f2;
   padding: 0.075rem 0.5rem;
+  white-space: pre;
 }
