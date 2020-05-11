@@ -1,0 +1,324 @@
+I"�t<p>Static Site Generators (SSG) are awesome and Jekyll is one of the most robust options available. It’s stable, well supported and straightforward. What would make it even better? The reactivity of Vue.js Single File Components (SFC) and webpack optimizations, of course.</p>
+
+<p>In this article we’ll combine the configurability of Jekyll SSG with the reactivity of Vue. We’ll cover starting a new Jekyll project, installing Vue, configuring webpack to compile SFCs, and finally mount SFCs in Jekyll views ⚡.</p>
+
+<blockquote>
+  <p>This tutorial will assume a basic knowledge of <a href="https://jekyllrb.com/" target="_blank" rel="noopener">Jekyll</a> and <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue.js<a></a>.</a></p>
+</blockquote>
+
+<h2 id="setting-up-the-project">Setting Up the Project</h2>
+
+<p>We’ll begin by scaffolding a new Jekyll project. If you don’t have Jekyll installed, check out the <a href="https://jekyllrb.com/" target="_blank" rel="noopener">official installation guide</a>.</p>
+
+<h3 id="new-jekyll-project">New Jekyll Project</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jekyll new jekyll-vue-template
+</code></pre></div></div>
+
+<p>We’ll disable the default theme, <em>Minima</em>, that Jekyll ships with by commenting it out of or deleting it from our <code class="highlighter-rouge">config.yml</code> file.</p>
+
+<h4 id="configyml">config.yml</h4>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># theme: minima</span>
+</code></pre></div></div>
+
+<p>Next, we’ll create a <code class="highlighter-rouge">_layouts</code> directory to store our page layouts and create a default layout, <code class="highlighter-rouge">default.html</code>, within it. In our layout we’ll create a top-level <code class="highlighter-rouge">&lt;div&gt;</code>, which will be used later as an entrypoint for Vue.</p>
+
+<h4 id="defaulthtml">default.html</h4>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=device-width, initial-scale=1.0"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"X-UA-Compatible"</span> <span class="na">content=</span><span class="s">"ie=edge"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Example Title<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;</span>
+      {{ "{{ content " }}}}
+    <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>Lastly, we’ll change the layout type in the YAML front matter of <code class="highlighter-rouge">index.md</code> at the project root to match our newly created <code class="highlighter-rouge">default</code> layout:</p>
+
+<h4 id="indexmd">index.md</h4>
+
+<div class="language-md highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
+<span class="na">layout</span><span class="pi">:</span> <span class="s">default</span>
+<span class="nn">---</span>
+
+<span class="gh"># jekyll-vue-template</span>
+</code></pre></div></div>
+
+<p>Let’s test to ensure that our Jekyll project scaffolding was successful by spooling up a dev server using the following command:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle <span class="nb">exec </span>jekyll s
+</code></pre></div></div>
+
+<h3 id="npm-initialization">npm Initialization</h3>
+
+<p>After we’ve successfully setup Jekyll, we’ll initialize an npm workflow in the project root allowing us to work with node modules, including Vue.js and webpack.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm init
+</code></pre></div></div>
+
+<blockquote>
+  <p>Be sure to update the <code class="highlighter-rouge">exclude</code> field in your <code class="highlighter-rouge">config.yml</code> file to keep various development environment files, such as <code class="highlighter-rouge">package.json</code>, from being generated into your Jekyll production build.</p>
+</blockquote>
+
+<h2 id="installing-vue--configuring-webpack">Installing Vue &amp; Configuring webpack</h2>
+
+<p>Ok, take a deep breath. It’s time to take a dive into installing and configuring webpack from scratch. This can be a daunting process, but we’ll go through this process step-by-step. If you’re comfortable with configuring webpack with Vue, feel free to skip to the <a href="#integrating-vue-and-jekyll">Integrating Vue and Jekyll</a> section.</p>
+
+<h3 id="installing-vue">Installing Vue</h3>
+
+<p>First, we’ll install Vue as a dependency:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm i <span class="nt">-S</span> vue
+</code></pre></div></div>
+
+<p>Next, we’ll create a directory, <code class="highlighter-rouge">src</code>, in our project root where all of our Vue application components will live. We’ll also create an entry point for our Vue application, <code class="highlighter-rouge">main.js</code>. For now, we’ll just import Vue.</p>
+
+<h4 id="mainjs">main.js</h4>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">Vue</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">vue</span><span class="dl">'</span>
+</code></pre></div></div>
+
+<h3 id="installing-webpack-and-its-modules">Installing webpack and its Modules</h3>
+
+<p>Next, we’ll install the <code class="highlighter-rouge">webpack</code> core module and <code class="highlighter-rouge">webpack-cli</code>, which allows us to pass commands and arguments through the CLI to webpack.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm i <span class="nt">-D</span> webpack webpack-cli
+</code></pre></div></div>
+
+<p>We’ll also install several modules and loaders that will assist in handling assets for webpack processing. Let’s go through the purpose of each module:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">cross-env</code> smooths out the inconsistencies of using environment variables across platforms</li>
+  <li><code class="highlighter-rouge">css-loader</code> allows webpack to resolve CSS <code class="highlighter-rouge">@import</code> and <code class="highlighter-rouge">url()</code> statements</li>
+  <li><code class="highlighter-rouge">node-sass</code> is required for compiling SASS/SCSS</li>
+  <li><code class="highlighter-rouge">sass-loader</code> allows webpack to compile SASS/SCSS to CSS</li>
+  <li><code class="highlighter-rouge">vue-loader</code> allows webpack to compile Vue Single File Components into JS modules</li>
+  <li><code class="highlighter-rouge">vue-style-loader</code> allows webpack to dynamically inject CSS into the DOM</li>
+  <li><code class="highlighter-rouge">vue-template-compiler</code> used by <code class="highlighter-rouge">vue-loader</code> to precompile Vue templates to render functions</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm i <span class="nt">-D</span> cross-env css-loader node-sass sass-loader vue-loader vue-style-loader vue-template-compiler
+</code></pre></div></div>
+
+<h3 id="configuring-webpack">Configuring webpack</h3>
+
+<p>We’ll begin configuring our webpack workflow by creating a config file, <code class="highlighter-rouge">webpack.config.js</code> in the project root. We’ll set the entry point to the <code class="highlighter-rouge">main.js</code> file that we created earlier and set the output to <code class="highlighter-rouge">dist/build.js</code> (both the directory and the bundled script file will be created when we run webpack). We’ll set the default environment <code class="highlighter-rouge">mode</code> to <code class="highlighter-rouge">development</code>.</p>
+
+<h4 id="webpackconfigjs">webpack.config.js</h4>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">path</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">webpack</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">webpack</span><span class="dl">'</span><span class="p">)</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">entry</span><span class="p">:</span> <span class="dl">'</span><span class="s1">./src/main.js</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">output</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">path</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="dl">'</span><span class="s1">./dist</span><span class="dl">'</span><span class="p">),</span>
+    <span class="na">filename</span><span class="p">:</span> <span class="dl">'</span><span class="s1">build.js</span><span class="dl">'</span><span class="p">,</span>
+  <span class="p">},</span>
+  <span class="na">mode</span><span class="p">:</span> <span class="dl">'</span><span class="s1">development</span><span class="dl">'</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>Note: webpack 4 now requires the environment <code class="highlighter-rouge">mode</code> to be explicitly set. We set it to <code class="highlighter-rouge">development</code> by default in our config file and will programmitically set it with npm scripts later in the tutorial.</p>
+</blockquote>
+
+<p>Next, we’ll add a module rule for Vue SFCs. This rule uses a regular expression to parse any file with a <code class="highlighter-rouge">.vue</code> extension and loads it with <code class="highlighter-rouge">vue-loader</code>. We’ll also pass in several loaders as options so that our SFC styles can be resolved.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">module</span><span class="p">:</span> <span class="p">{</span>
+  <span class="nl">rules</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="na">test</span><span class="p">:</span> <span class="sr">/</span><span class="se">\.</span><span class="sr">vue$/</span><span class="p">,</span>
+      <span class="na">loader</span><span class="p">:</span> <span class="dl">'</span><span class="s1">vue-loader</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">options</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">loaders</span><span class="p">:</span> <span class="p">{</span>
+          <span class="na">scss</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">vue-style-loader</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">css-loader</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">sass-loader</span><span class="dl">'</span><span class="p">],</span>
+        <span class="p">},</span>
+      <span class="p">},</span>
+    <span class="p">},</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The Vue package ships with several library versions. To make sure we use the correct one, we’ll define an alias for <code class="highlighter-rouge">vue</code>, which webpack will resolve to the runtime + compiler (<code class="highlighter-rouge">vue.esm.js</code>) version of Vue. For more information on the Vue runtime and compiler, visit the <a href="https://vuejs.org/v2/guide/installation.html#Runtime-Compiler-vs-Runtime-only" target="_blank" rel="noopener">official Vue docs</a>.</p>
+
+<p>To make working with Vue components and other modules more convenient, we’ll add an array of file extensions for webpack to resolve when using import statements. This allows us to call a module import using only the filename without the extension. For example, we can use <code class="highlighter-rouge">import vueComponent from 'components/vueComponent'</code> without the <code class="highlighter-rouge">.vue</code> extension.</p>
+
+<h4 id="webpackconfigjs-1">webpack.config.js</h4>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">resolve</span><span class="p">:</span> <span class="p">{</span>
+  <span class="nl">alias</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nx">vue$</span><span class="p">:</span> <span class="dl">'</span><span class="s1">vue/dist/vue.esm.js</span><span class="dl">'</span>
+  <span class="p">},</span>
+  <span class="nx">extensions</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">*</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">.js</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">.vue</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">.json</span><span class="dl">'</span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Lastly, we’ll perform a check on our environment variable to control build settings. If the environment variable is set to <code class="highlighter-rouge">production</code>, we’ll overwrite the default <code class="highlighter-rouge">development</code> mode that we defined earlier. Webpack will perform several useful optimizations if the mode is set to <code class="highlighter-rouge">production</code>.</p>
+
+<h4 id="webpackconfigjs-2">webpack.config.js</h4>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">production</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">mode</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">production</span><span class="dl">'</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="putting-it-all-together">Putting it All Together</h3>
+
+<h4 id="webpackconfigjs-3">webpack.config.js</h4>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">path</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">webpack</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">webpack</span><span class="dl">'</span><span class="p">)</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">entry</span><span class="p">:</span> <span class="dl">'</span><span class="s1">./src/main.js</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">output</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">path</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="dl">'</span><span class="s1">./dist</span><span class="dl">'</span><span class="p">),</span>
+    <span class="na">filename</span><span class="p">:</span> <span class="dl">'</span><span class="s1">build.js</span><span class="dl">'</span><span class="p">,</span>
+  <span class="p">},</span>
+  <span class="na">mode</span><span class="p">:</span> <span class="dl">'</span><span class="s1">development</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">module</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">rules</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="na">test</span><span class="p">:</span> <span class="sr">/</span><span class="se">\.</span><span class="sr">vue$/</span><span class="p">,</span>
+        <span class="na">loader</span><span class="p">:</span> <span class="dl">'</span><span class="s1">vue-loader</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">options</span><span class="p">:</span> <span class="p">{</span>
+          <span class="na">loaders</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">scss</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">vue-style-loader</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">css-loader</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">sass-loader</span><span class="dl">'</span><span class="p">],</span>
+          <span class="p">},</span>
+        <span class="p">},</span>
+      <span class="p">},</span>
+    <span class="p">],</span>
+  <span class="p">},</span>
+  <span class="na">resolve</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">alias</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nx">vue</span><span class="na">$</span><span class="p">:</span> <span class="dl">'</span><span class="s1">vue/dist/vue.esm.js</span><span class="dl">'</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="na">extensions</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">*</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">.js</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">.vue</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">.json</span><span class="dl">'</span><span class="p">],</span>
+  <span class="p">},</span>
+<span class="p">}</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">production</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">mode</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">production</span><span class="dl">'</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Once we’ve configured webpack, we’ll create the scripts needed to run it. We’ll use three separate scripts, <code class="highlighter-rouge">dev</code> for bundling unminified assets, <code class="highlighter-rouge">build</code> for bundling production-ready assets, and <code class="highlighter-rouge">watch</code> for automatic recompilation of assets during development.</p>
+
+<h4 id="packagejson">package.json</h4>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">"scripts"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="nl">"dev"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cross-env NODE_ENV=development webpack"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"build"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cross-env NODE_ENV=production webpack --progress --hide-modules"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"watch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cross-env NODE_ENV=development webpack --watch"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="sanity-check---testing-our-current-progress">Sanity Check - Testing our Current Progress</h2>
+
+<p>Now that we have Jekyll running and Vue with webpack configured, it’s time to test that our workflow is working as intended. We’ll test our webpack build by running our <code class="highlighter-rouge">dev</code> script:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm run dev
+</code></pre></div></div>
+
+<p>We should see no errors during the build process and we should now have a newly created <code class="highlighter-rouge">dist</code> directory in the project root containing a <code class="highlighter-rouge">build.js</code> file. If we take a look at <code class="highlighter-rouge">build.js</code>, we’ll see that it includes the Vue.js module. You can further test the workflow by running the <code class="highlighter-rouge">build</code> and <code class="highlighter-rouge">watch</code> scripts as well.</p>
+
+<blockquote>
+  <p>Note that when running <code class="highlighter-rouge">npm run build</code>, our <code class="highlighter-rouge">build.js</code> bundle is minified. webpack 4 now performs all sorts of optimizations, such as minificiation, by default when the environment mode is set to <code class="highlighter-rouge">production</code>.</p>
+</blockquote>
+
+<h2 id="integrating-vue-and-jekyll">Integrating Vue and Jekyll</h2>
+
+<h3 id="creating-a-simple-vue-component">Creating a Simple Vue Component</h3>
+
+<p>In our <code class="highlighter-rouge">src</code> directory, we’ll create a <code class="highlighter-rouge">components</code> directory to house all of our application components. Within this folder, we’ll create a simple <code class="highlighter-rouge">HelloWorld.vue</code> single file component and give it a basic SFC scaffolding. We’ll also add in an <code class="highlighter-rouge">&lt;h1&gt;</code> title, a component name, and a few styles:</p>
+
+<h4 id="helloworldvue">HelloWorld.vue</h4>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;template&gt;</span>
+  <span class="nt">&lt;h1&gt;</span>Jekyll-Vue Template<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;/template&gt;</span>
+
+<span class="nt">&lt;script&gt;</span>
+  <span class="k">export</span> <span class="k">default</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">HelloWorld</span><span class="dl">'</span><span class="p">,</span>
+  <span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+
+<span class="nt">&lt;style </span><span class="na">scoped</span><span class="nt">&gt;</span>
+  <span class="nt">h1</span> <span class="p">{</span>
+    <span class="nl">color</span><span class="p">:</span> <span class="n">darkslategrey</span><span class="p">;</span>
+    <span class="nl">font-size</span><span class="p">:</span> <span class="m">2rem</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="nt">&lt;/style&gt;</span>
+</code></pre></div></div>
+
+<h3 id="register-vue-components">Register Vue Components</h3>
+
+<p>Now that we’ve created a Vue component, we’ll need to register it with our primary Vue instance. We’ll do this by importing the component in our <code class="highlighter-rouge">main.js</code> file. We also need to create a new Vue instance and give it an element entry point. We’ll use an id of <code class="highlighter-rouge">app</code> and update our Jekyll layout to reflect this shortly. Lastly, we’ll attach the component to the Vue instance using the <code class="highlighter-rouge">component</code> method.</p>
+
+<h4 id="mainjs-1">main.js</h4>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">Vue</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">vue</span><span class="dl">'</span>
+<span class="k">import</span> <span class="nx">HelloWorld</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./components/HelloWorld</span><span class="dl">'</span>
+
+<span class="nx">Vue</span><span class="p">.</span><span class="nx">component</span><span class="p">(</span><span class="dl">'</span><span class="s1">helloWorld</span><span class="dl">'</span><span class="p">,</span> <span class="nx">HelloWorld</span><span class="p">)</span>
+
+<span class="kd">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Vue</span><span class="p">({</span>
+  <span class="na">el</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#app</span><span class="dl">'</span><span class="p">,</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<h3 id="mounting-vue-components-in-jekyll-pages">Mounting Vue Components in Jekyll Pages</h3>
+
+<p>Let’s update our default layout, <code class="highlighter-rouge">default.html</code>, with the id of <code class="highlighter-rouge">app</code> (we defined this in <code class="highlighter-rouge">main.js</code>). With that in place, we can now mount our component using <code class="highlighter-rouge">&lt;hello-world&gt;</code>. We can mount instances of this component in any view that extends the default layout, including markdown posts, HTML includes, and HTML layout files.</p>
+
+<h4 id="defaulthtml-1">default.html</h4>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=device-width, initial-scale=1.0"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"X-UA-Compatible"</span> <span class="na">content=</span><span class="s">"ie=edge"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Example Title<span class="nt">&lt;/title&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"app"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;hello-world&gt;&lt;/hello-world&gt;</span>
+      {{ "{{ content " }}}}
+    <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>or…</p>
+
+<h4 id="indexmd-1">index.md</h4>
+
+<div class="language-md highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
+<span class="na">layout</span><span class="pi">:</span> <span class="s">default</span>
+<span class="nn">---</span>
+
+<span class="nt">&lt;hell-world&gt;&lt;/hello-world&gt;</span>
+</code></pre></div></div>
+
+<h2 id="wrapping-up">Wrapping Up</h2>
+
+<p>Static Site Generators like Jekyll offer some unique benefits over Single-Page Applications, especially for sites with lots of static content (like blogs). They’re fast, SEO-friendly, and offer site-wide variables, like post collections. Incorporating a reactive library like Vue.js can help to make a statically-generated site feel much more dynamic.</p>
+
+<h3 id="jekyll-vue-template">jekyll-vue-template</h3>
+
+<p>If you’d like to review the source for an example Jekyll-Vue project like the one that we’ve built in this article, check out the <a href="https://github.com/Splode/jekyll-vue-template" target="_blank" rel="noopener">jekyll-vue-template</a>. It’s a boilerplate Jekyll project with support for Vue single file components complete with webpack 4 optimizations, including cache-control, code-splitting, and Babel transpiling, and linting with ESLint.</p>
+:ET
