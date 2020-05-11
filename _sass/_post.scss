@@ -57,7 +57,7 @@ article {
   & p {
     @extend .BodyCopy;
     font-size: 1.25rem;
-    line-height: 2rem;
+    line-height: 2;
     margin: 2rem 0;
     & a {
       @extend .Link--inline;
