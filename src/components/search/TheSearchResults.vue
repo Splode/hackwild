@@ -87,7 +87,6 @@ export default {
 
   mounted() {
     Bus.$on('query-updated', payload => {
-      console.log('call query update in search-results')
       this.query = payload.query
     })
   }

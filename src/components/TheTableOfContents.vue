@@ -48,7 +48,6 @@ export default {
   mounted() {
     const article = document.getElementsByTagName('article')[0]
     const headings = article.querySelectorAll('h2')
-    console.log(headings)
     headings.forEach(el => this.headings.push(el))
   }
 }
