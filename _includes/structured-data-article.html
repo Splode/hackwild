@@ -6,6 +6,14 @@
   {% endif %}
 {% endcapture %}
 
+{% capture og_image %}
+  {% if page.og_image %}
+    {{ page.og_image }}
+  {% else %}
+    /static/images/hackwild-logo.png
+  {% endif %}
+{% endcapture %}
+
 <script type="application/ld+json">
 {
   "@context": "http://schema.org",
@@ -16,7 +24,7 @@
   },
   "headline": "{{ page.title }}",
   "image": [
-    "{{ site.url }}/static/images/hackwild-logo.png"
+    "{{ site.url }}{{ og_image | strip }}"
   ],
   "datePublished": "{{ page.date }}",
   "dateModified": "{{ page.date }}",
