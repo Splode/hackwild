@@ -60,7 +60,9 @@ article {
     line-height: 2;
     margin: 2rem 0;
     & a {
-      @extend .Link--inline;
+      @extend .green;
+      @extend .hover\:green;
+      @extend .hover\:underline-pink;
     }
   }
   & strong {
