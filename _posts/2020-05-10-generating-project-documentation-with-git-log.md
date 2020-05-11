@@ -54,7 +54,7 @@ $ git log --format="- %h %s"
 
 You can find more formatting placeholders in [the official git log documentation](https://www.git-scm.com/docs/git-log).
 
-## Using Shortlog for Teams
+## Team Notes with Shortlog
 
 The `shortlog` command is especially useful when generating release notes for projects with many collaborators. `shortlog` groups commits by author, sorted by name. In this example, we’ll pass the `-n` flag to sort by the number of commits by author.
 
