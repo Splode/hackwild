@@ -7,11 +7,11 @@
       <div
         class="Hamburger-bar"
         :class="menuClass"
-      ></div>
+      />
       <div
         class="Hamburger-bar"
         :class="menuClass"
-      ></div>
+      />
     </div>
   </div>
 </template>
@@ -22,14 +22,14 @@ import { Bus } from './../lib/bus'
 export default {
   name: 'TheMobileMenu',
 
-  data() {
+  data () {
     return {
       menuIsOpen: false
     }
   },
 
   computed: {
-    menuClass() {
+    menuClass () {
       return {
         'is-open': this.menuIsOpen,
         'is-closed': !this.menuIsOpen
@@ -38,7 +38,7 @@ export default {
   },
 
   methods: {
-    menuController() {
+    menuController () {
       this.menuIsOpen = !this.menuIsOpen
       Bus.$emit('menu-toggled')
     }
@@ -52,6 +52,7 @@ export default {
 }
 
 .Hamburger {
+  align-items: flex-end;
   display: flex;
   flex-direction: column;
   justify-content: center;
