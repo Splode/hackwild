@@ -15,7 +15,7 @@ The git sub-command `log` shows the commits in a repository and is a useful tool
 
 By itself, the log command shows quite a bit of information, including the full commit hash, author name, and email, date, full commit message, etc. We can pare down this information using git log's many options.
 
-In the following example, we use git log to generate a list of commits that can for release notes. We pass the `--oneline` formatting flag to denote that we want a condensed version of each commit intended to fit one commit per line. We can limit the range of the log by using the `revision range` argument. In this case, we’ll display only the commits between the previous tag `v0.7.0` and the current tag `v0.7.1`.
+In the following example, we use git log to generate a list of commits that for release notes. We pass the `--oneline` formatting flag to denote that we want a condensed version of each commit intended to fit one commit per line. We can limit the range of the log by using the `revision range` argument. In this case, we’ll display only the commits between the previous tag `v0.7.0` and the current tag `v0.7.1`.
 
 ```git
 $ git log --oneline v0.7.0...v0.7.1
@@ -82,4 +82,4 @@ dependabot[bot] (1):
 
 ## Outro
 
-I’ve found that this approach, when paired with meaningful commit messages, helps build consistent documentation for projects. It provides a clear path for collaborators (and you) to navigate the changes associated with a codebase in a given period. It’s also flexible in that the log output can be formatted in any number of ways. As a command-line tool, it integrates with many workflows, including continuous integration and deployment.
+I’ve found that this approach, when paired with meaningful commit messages, helps build consistent documentation for projects. It provides a clear path for collaborators (and you) to navigate the changes associated with a codebase in a given period. It’s also flexible in that the log output can be formatted in numerous ways. As a command-line tool, it integrates with many workflows, including continuous integration and deployment.
