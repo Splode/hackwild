@@ -4,6 +4,9 @@ title: Generating Project Documentation with Git Log
 description: Git's log command can be used to generate consistent project documentation, such as release notes and changelogs.
 tags: Git
 category: Git
+hero_image:
+  src: 'hackwild_git-log--825x464.jpg'
+  alt: The words git log on a dark background
 ---
 
 The git sub-command `log` shows the commits in a repository and is a useful tool for inspecting the history of a project. Its output can generate project documentation such as release notes and changelogs. Pairing `git log` with clear and [meaningful commit messages](article/semantic-git-commits/) can be a powerful tool in the project documentation toolkit.
@@ -77,6 +80,6 @@ dependabot[bot] (1):
       - d998c75 chore(deps): bump acorn from 6.4.0 to 6.4.1
 ```
 
-## Conclusion and Related Projects
+## Outro
 
 I’ve found that this approach, when paired with meaningful commit messages, helps build consistent documentation for projects. It provides a clear path for collaborators (and you) to navigate the changes associated with a codebase in a given period. It’s also flexible in that the log output can be formatted in any number of ways. As a command-line tool, it integrates with many workflows, including continuous integration and deployment.
