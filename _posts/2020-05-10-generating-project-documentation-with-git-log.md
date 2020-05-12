@@ -10,7 +10,7 @@ hero_image:
 og_image: '/static/images/hackwild_git-log--1200x600.jpg'
 ---
 
-The git sub-command `log` shows the commits in a repository and is a useful tool for inspecting the history of a project. Its output can generate project documentation such as release notes and changelogs. Pairing `git log` with clear and [meaningful commit messages](article/semantic-git-commits/) can be a powerful tool in the project documentation toolkit.
+The git sub-command `log` shows the commits in a repository and is a useful tool for inspecting the history of a project. Its output can generate project documentation such as release notes and changelogs. Pairing `git log` with clear and [meaningful commit messages](/article/semantic-git-commits/) can be a powerful tool in the project documentation toolkit.
 
 ## Generate Basic Release Notes
 
