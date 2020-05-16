@@ -2,6 +2,7 @@
 layout: post
 title: Creating a Reusable SVG Component with Vue.js
 description: Learn how to create a reusable, configurable and lightweight SVG component using Vue Single File Components.
+keywords: vue, vue.js, svg, single file component, svg component, Christopher Murphy
 tags: Vue
 category: Vue
 ---

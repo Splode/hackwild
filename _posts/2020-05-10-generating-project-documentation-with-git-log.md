@@ -2,6 +2,7 @@
 layout: post
 title: Generating Project Documentation with Git Log
 description: Git's log command can be used to generate consistent project documentation, such as release notes and changelogs.
+keywords: git, git log, project documentation, release notes, changelog, Christopher Murphy, tool, commit
 tags: Git
 category: Git
 hero_image:

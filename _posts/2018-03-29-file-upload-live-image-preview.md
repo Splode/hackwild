@@ -2,6 +2,7 @@
 layout: post
 title: Live Image Previews for File Uploads using the FileReader API
 description: Create live image previews for file uploads using the File API and the FileReader object in vanilla JavaScript.
+keywords: html, form, file upload, filereader, image preview, file api, Christopher Murphy, javascript, vanilla javascript
 tags: JavaScript
 category: JavaScript
 ---
