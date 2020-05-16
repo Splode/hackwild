@@ -15,10 +15,19 @@
     {% endif %}
   {% endcapture %}
 
+  {% capture keywords %}
+    {% if page.keywords %}
+      {{ page.keywords }}
+    {% else %}
+      {{ site.keywords }}
+    {% endif %}
+  {% endcapture %}
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="description" content="{{ description | strip }}">
+  <meta name="keywords" content="{{ keywords | strip }}">
 
   <title>{{ title | strip }}</title>
 

@@ -2,6 +2,7 @@
 layout: post
 title: Semantic Git Commit Messages for Clarity and Structure
 description: Using a semantic Git commit method can greatly improve the readability of Git logs and help to organize the scope of individual commits.
+keywords: git, semantic commit, git message, style guide, git log, Christopher Murphy
 tags: Git
 category: Git
 ---
