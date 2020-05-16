@@ -23,6 +23,7 @@ url: 'https://hackwild.com' # the base hostname & protocol for your site, e.g. h
 twitter_username: splode
 github_username: splode
 author: Christopher Murphy
+keywords: development, front-end development, web development, blog, Christopher Murphy, back-end development, vue, javascript, typescript, git, node
 
 # Build settings
 markdown: kramdown
