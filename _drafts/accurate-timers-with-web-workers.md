@@ -27,7 +27,30 @@ Moving the execution of the `Timer` to a web worker increased the accuracy and r
 
 ## Timers in Web Workers
 
-The [Web Worker API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API) allows you to execute code off the main thread in a background worker. Web workers have a
+The [Web Worker API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API) allows you to execute code in a separate thread from the main thread. Web workers have a limited API. For example, you won't have access to the DOM, but you're still able to access things like `setInterval` and `setTimeout`.
+
+Creating a web worker is simple. It involves creating a separate JavaScript file, which will run in the worker. In this file, we'll setup a simple `setTimeout` function that logs some information to the console when it completes.
+
+```js
+// timer-worker.js
+const start = performance.now()
+setTimeout(() => {
+  console.log(performance.now() - start)
+}, 1000 * 60 * 10)
+```
+
+Back in our main script, we'll instantiate a new worker, passing the location of the worker file. We'll also start another timer here for comparison.
+
+```js
+// main.js
+;(function() {
+  const worker = new worker('timer-worker.js')
+  const start = performance.now()
+  setTimeout(() => {
+    console.log(performance.now() - start)
+  }, 1000 * 60 * 10)
+})()
+```
 
 ## Main and Worker Thread Comparisons
 
