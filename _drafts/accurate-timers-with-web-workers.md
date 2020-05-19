@@ -5,6 +5,10 @@ description: Increase the accuracy and reliability of JavaScript timing function
 keywords: setinterval, settimeout, javascript, web worker, Christopher Murphy, accurate timer, multi-threading
 tags: JavaScript
 category: JavaScript
+hero_image:
+  src: 'hackwild_web-worker-timer--1200x600.jpg'
+  alt: "Illustration of a stopwatch with the the phrase 'Web Worker Timers'"
+og_image: '/static/images/hackwild_web-worker-timer--1200x600.jpg'
 ---
 
 Creating timers in JavaScript with `setTimeout` or `setInterval` is a simple and straightforward process. However, the accuracy and reliability of these timers varies. In certain contexts, such as when a browser tab or window loses focus, `setInterval` and `setTimeout` timing can drift, diminishing their accuracy. One reason for this drift is that the JavaScript is executed in a single _main_ thread, which shares CPU cycle time with many other processes.
