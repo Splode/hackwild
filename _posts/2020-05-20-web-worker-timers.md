@@ -13,11 +13,11 @@ og_image: '/static/images/hackwild_web-worker-timer--1200x600.jpg'
 
 Creating timers in JavaScript with `setTimeout` or `setInterval` is a simple and straightforward process. Yet, the accuracy and reliability of these timers vary. In certain contexts, as when a browser tab or window loses focus, `setInterval` and `setTimeout` timing can drift, diminishing their accuracy. One reason for this drift is that the JavaScript executes in a single _main_ thread, which shares CPU cycle time with many other processes.
 
-A technique for increasing the accuracy of timers created with `setTimeout` and `setInterval` is to execute them in a dedicated thread, separate from the main thread. Most browsers offer a Web Worker API, allowing _worker_ threads to run in the background.
+A technique for increasing the accuracy of `setTimeout` and `setInterval` is executing them in a dedicated thread, separate from the main thread. Most browsers offer a Web Worker API, allowing _worker_ threads to run in the background.
 
 ## The Problem with Timers
 
-Browsers execute JavaScript in a single thread. This thread has a lot of responsibilities, including listening and responding to user events, updating the UI, etc. Operations, including timing with `setTimeout` or `setInterval`, share CPU cycles with other tasks in this thread. If the main thread gets blocked or throttled, as when a browser tab loses focus, execution of `setTimeout` and `setInterval` can lag.
+Browsers execute JavaScript in a single thread. This thread has many responsibilities, including listening and responding to user events, updating the UI, etc. Operations, including timing with `setTimeout` or `setInterval`, share CPU cycles with other tasks in this thread. If the main thread gets blocked or throttled, as when a browser tab loses focus, execution of `setTimeout` and `setInterval` can lag.
 
 For most applications, a `setInterval` or `setTimeout` executed in the _main_ thread will suffice--the potential lag is often small and wouldn't impact the experience. Yet, some scenarios need greater reliability and accuracy.
 
