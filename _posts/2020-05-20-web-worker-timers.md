@@ -19,7 +19,7 @@ A technique for increasing the accuracy of timers created with `setTimeout` and 
 
 Browsers execute JavaScript in a single thread. This thread has a lot of responsibilities, including listening and responding to user events, updating the UI, etc. Operations, including timing with `setTimeout` or `setInterval`, share CPU cycles with other tasks in this thread. If the main thread gets blocked or throttled, as when a browser tab loses focus, execution of `setTimeout` and `setInterval` can lag.
 
-For most applications, a `setInterval` or `setTimeout` executed in the _main_ thread will suffice--the potential lag is often small and wouldn't impact the experience. Yet, some scenarios require greater reliability and accuracy.
+For most applications, a `setInterval` or `setTimeout` executed in the _main_ thread will suffice--the potential lag is often small and wouldn't impact the experience. Yet, some scenarios need greater reliability and accuracy.
 
 ### Case Study: Improving Pomodoro Timer Accuracy
 
