@@ -127,6 +127,12 @@ th {
   padding: 6px;
 }
 
+td code.highlighter-rouge {
+  background-color: unset;
+  border-radius: unset;
+  padding: 0;
+}
+
 tbody tr:nth-child(2n) {
   background-color: $colorBlueGrey;
 }
