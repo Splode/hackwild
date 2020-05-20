@@ -111,6 +111,26 @@ pre {
   padding: 1rem;
 }
 
+table {
+  border-collapse: collapse;
+  display: table;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+thead {
+  border-bottom: 1px solid $colorBlueGrey;
+}
+
+td,
+th {
+  padding: 6px;
+}
+
+tbody tr:nth-child(2n) {
+  background-color: $colorBlueGrey;
+}
+
 div.highlight {
   margin-bottom: 2rem;
 }
