@@ -5,6 +5,12 @@
   border-top-right-radius: $borderRadius;
   margin-bottom: 1.5rem;
   padding: 1rem 1.5rem 1.5rem 1.5rem;
+  @media screen and (min-width: $grid-sm) {
+    transition: $transitionSnappy;
+    &:hover {
+      transform: translateX(1rem);
+    }
+  }
 }
 
 .PostPreview--condensed {
