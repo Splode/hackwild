@@ -101,7 +101,6 @@ export default {
 
 .Search-query {
   color: #ee78bf;
-  font-weight: 300;
 }
 
 .Search-empty {

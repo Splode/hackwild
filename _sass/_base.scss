@@ -8,8 +8,9 @@ html {
 body {
   background-color: $colorDarkBlue;
   color: $colorWhite;
-  font-family: -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu,
-    Cantarell, “Fira Sans”, “Droid Sans”, “Helvetica Neue”, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxyen,
+    Ubuntu, Cantarell, 'Droid Sans', 'Fira Sans', 'Helvetica Neue', Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   min-height: 100vh;
   position: relative;
 }
@@ -28,7 +29,6 @@ img {
 }
 
 .BodyCopy {
-  font-weight: 300;
   letter-spacing: 0.025rem;
   line-height: 1.75rem;
 }

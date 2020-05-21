@@ -1,7 +1,7 @@
 <template>
   <aside class="col-lg-3 d-lg-block d-none">
     <div class="position-sticky">
-      <h3 class="font-weight-light">Contents</h3>
+      <h3 class="font-weight-normal">Contents</h3>
       <ul class="p-0">
         <li
           class="mb-2"
