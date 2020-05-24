@@ -7,7 +7,7 @@ tags: JavaScript
 category: JavaScript
 hero_image:
   src: 'hackwild_web-worker-timer--1200x600.jpg'
-  alt: "Illustration of a stopwatch with the the phrase 'Web Worker Timers'"
+  alt: "Illustration of a stopwatch with the phrase 'Web Worker Timers'"
 og_image: '/static/images/hackwild_web-worker-timer--1200x600.jpg'
 ---
 
@@ -23,7 +23,7 @@ For most applications, a `setInterval` or `setTimeout` executed in the _main_ th
 
 ### Case Study: Improving Pomodoro Timer Accuracy
 
-I encountered the issue of timer inaccuracy when working on a Pomodoro timer application. Pomodoro is a productivity technique that involves chunking time into segments of focussed effort and unfocussed downtime. I created a Pomodoro timer application, [Pomotroid](https://splode.github.io/pomotroid/), to help track and time these segments. Developed with Electron, it uses a `Timer` class powered by `setInterval`.
+I encountered the issue of timer inaccuracy when working on a Pomodoro timer application. Pomodoro is a productivity technique that involves chunking time into segments of focused effort and unfocused downtime. I created a Pomodoro timer application, [Pomotroid](https://splode.github.io/pomotroid/), to help track and time these segments. Developed with Electron, it uses a `Timer` class powered by `setInterval`.
 
 I noticed that when minimized or hidden, the application timer would lag behind the system clock. Sometimes this lag was only a few seconds, while at other times it could be up to 10 minutes! When a timer completed, it would kick off a new timer. So, a lag of a few milliseconds compounded over time, producing an inconsistent experience. This posed a serious problem as the application’s primary role is to help users keep track of their time.
 
@@ -45,7 +45,7 @@ setTimeout(() => {
 }, 1000 * 60 * 10) // 10 minutes
 ```
 
-We'll create another file to serve as our entrypoint. In this file, we'll instantiate a new worker, passing the location of the worker file. We'll also start another timer here for comparison. Now, when this script loads, a new worker will spawn and its code executed. The worker thread will continue running, even when the tab loses focus or the main thread slows.
+We'll create another file to serve as our entry point. In this file, we'll instantiate a new worker, passing the location of the worker file. We'll also start another timer here for comparison. Now, when this script loads, a new worker will spawn and its code executed. The worker thread will continue running, even when the tab loses focus or the main thread slows.
 
 ```js
 // main.js
