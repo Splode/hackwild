@@ -9,7 +9,7 @@ category: Vue
 
 Using Scalable Vector Graphics (SVG) images for vector-based assets can help to significantly shed page weight. SVG images can be sized up and down without sacrificing image quality. Individual elements, such as fill and stroke properties, can even be programmatically controlled and animated.
 
-SVG images can be referenced in `<img>` tags just like an other image format, but inlining SVG elements is the most robust approach because it allows the SVG properties to be dynamically edited and does not require an additional http request. However, for complex images inlining SVG code can be a messy tangle to work with and repeating this code for several images is not very DRY. Using inline SVGs in multiple places might require copy and pasting lengthy chunks of code, which can quickly become difficult to manage and might pollute an otherwise tidy code base.
+SVG images can be referenced in `<img>` tags just like any other image format, but in-lining SVG elements is the most robust approach because it allows the SVG properties to be dynamically edited and does not require an additional HTTP request. However, for complex images in-lining SVG code can be a messy tangle to work with and repeating this code for several images is not very DRY. Using inline SVG in multiple places might require copy and pasting lengthy chunks of code, which can quickly become difficult to manage and might pollute an otherwise tidy code base.
 
 A solution for this is to use Vue components to wrap the SVG inline code. This allows you to separate the inline SVG code from the rest of your application templates and have multiple instances of the same SVG image each with its own dynamic properties.
 
