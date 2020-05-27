@@ -73,16 +73,16 @@ article {
   }
   & ul > li {
     @extend .BodyCopy;
-    font-size: 1.25rem;
+    font-size: 1rem;
     list-style-type: none;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     position: relative;
     &::after {
       background-color: $colorGreen;
       border-radius: 100%;
       content: '';
       position: absolute;
-      top: 50%;
+      top: 38%;
       left: -2rem;
       width: 8px;
       height: 8px;
