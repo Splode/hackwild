@@ -8,7 +8,7 @@
   @media screen and (min-width: $grid-sm) {
     transition: $transitionSnappy;
     &:hover {
-      transform: translateX(1rem);
+      transform: translateX(10px);
     }
   }
 }
