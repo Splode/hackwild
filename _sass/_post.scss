@@ -37,7 +37,7 @@ article {
     margin-top: 3rem;
   }
   & h3 {
-    font-size: 1rem;
+    font-size: 1.125rem;
     letter-spacing: 0.025rem;
     text-transform: uppercase;
     & + p {
@@ -56,7 +56,7 @@ article {
   }
   & p {
     @extend .BodyCopy;
-    font-size: 1rem;
+    font-size: 1.125rem;
     line-height: 2;
     margin: 2rem 0;
     & a {
@@ -73,7 +73,7 @@ article {
   }
   & ul > li {
     @extend .BodyCopy;
-    font-size: 1rem;
+    font-size: 1.125rem;
     list-style-type: none;
     margin-bottom: 0.5rem;
     position: relative;
@@ -144,14 +144,14 @@ div.highlight {
 .Post-author {
   color: $colorLightBlue;
   display: inline-block;
-  font-size: 1rem;
+  font-size: 1.125rem;
   margin: 0 1rem 0 0;
 }
 
 .Post-date {
   color: $colorLightBlue;
   display: inline-block;
-  font-size: 1rem;
+  font-size: 1.125rem;
   margin: 0;
 }
 
