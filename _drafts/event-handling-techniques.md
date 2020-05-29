@@ -67,6 +67,34 @@ t.onComplete = () => {
 }
 ```
 
+To expose some data in the event handler, adjust the property signature with the expected argument type. Then when calling the method, pass in the data. In this example, the instance of the timer is exposed in the event callback. The consumer can use or ignore it.
+
+```ts
+// Timer.ts
+export default class Timer {
+  public onComplete?: (t: Timera) => void
+
+  public start(): void {
+    setTimeout(() => {
+      if (!this.onComplete) return
+      this.onComplete()
+    }, 7000)
+  }
+}
+```
+
+```ts
+// consumer.ts
+t.onComplete = (t: Timera) => {
+  console.log(t)
+  // access event data
+}
+t.onComplete = () => {
+  console.log('no data')
+  // the data argument is optional
+}
+```
+
 To remove an event handler, delete the property.
 
 ```ts
@@ -76,8 +104,36 @@ delete t.onComplete
 
 ## Event Listeners
 
-- Allows any number of different listeners per event.
-- Allows consumer to add and remove event listeners.
+Note that because our class now extends the `EventTarget` class, we need to call `super()` in the constructor.
+
+```ts
+// Timer.ts
+export default class Timer extends EventTarget {
+  constructor() {
+    super()
+  }
+
+  private _complete: Event = new Event('complete')
+
+  public start(): void {
+    setTimeout(() => {
+      this.dispatchEvent(this._complete)
+    }, 7000)
+  }
+}
+```
+
+```ts
+// consumer.ts
+import Timer from './Timer'
+
+const t = new Timer()
+t.addEventListener('complete', () => {
+  console.log('timer completed event')
+  // do some stuff
+})
+t.start()
+```
 
 ### Custom Events
 
@@ -101,3 +157,4 @@ Each of these event techniques has its pros and cons. Deciding on which one to u
 
 - Allows any number of handler per event.
 - Require inheriting from base event classes.
+- Allows consumer to add and remove event listeners.
