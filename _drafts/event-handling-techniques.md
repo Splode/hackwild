@@ -5,6 +5,10 @@ description: Exploring event handling and creating methods in JavaScript and Typ
 keywords: javascript, typescript, events, event handling, event emitter, event property, eventemitter, eventtarget, custom event
 tags: TypeScript
 category: TypeScript
+hero_image:
+  src: 'hackwild_event-techniques--825x464.jpg'
+  alt: "Illustration of the word 'Events'"
+og_image: '/static/images/hackwild_event-techniques--1200x600.jpg'
 ---
 
 A common problem you'll run into when writing software is communication between components. Something happens in some component over here and I want to notify some component over there. Furthermore, I want to reduce coupling between components to increase maintainability. We can solve this problem with events.
