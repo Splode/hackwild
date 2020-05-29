@@ -6,7 +6,7 @@ keywords: setinterval, settimeout, javascript, web worker, Christopher Murphy, a
 tags: JavaScript
 category: JavaScript
 hero_image:
-  src: 'hackwild_web-worker-timer--1200x600.jpg'
+  src: 'hackwild_web-worker-timer--825x464.jpg'
   alt: "Illustration of a stopwatch with the phrase 'Web Worker Timers'"
 og_image: '/static/images/hackwild_web-worker-timer--1200x600.jpg'
 ---
