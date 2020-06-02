@@ -5,12 +5,44 @@
   left: 0;
 }
 
-.Footer-wrapper {
-  border-top: 4px solid $colorBlueGrey;
+.Footer-iconList {
+  display: flex;
+  justify-content: flex-end;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  & li:not(:nth-last-child(1)) {
+    margin-right: 16px;
+  }
+}
+
+.Footer-iconList svg circle,
+.Footer-iconList svg path {
+  fill: $colorLightBlue;
+  transition: $transitionDefault;
+}
+
+.Footer-iconList a:hover {
+  & svg circle,
+  & svg path {
+    fill: $colorGreen;
+  }
 }
 
 .Footer-legal {
+  border-left: 1px solid $colorLightBlue;
   color: $colorLightBlue;
   font-size: 0.85rem;
   letter-spacing: 0.025rem;
+  margin: 0;
+  & a {
+    transition: $transitionDefault;
+    &:hover {
+      color: $colorGreen;
+    }
+  }
+}
+
+.Footer-wrapper {
+  border-top: 4px solid $colorBlueGrey;
 }
