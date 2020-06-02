@@ -1,10 +1,27 @@
 <head>
-  {% capture title %} {% if page.title %} {{ site.title }} - {{ page.title }} {%
-  else %} {{ site.title }} - {{ site.tagline }} {% endif %} {% endcapture %} {%
-  capture description %} {% if page.description %} {{ page.description }} {%
-  else %} {{ site.description }} {% endif %} {% endcapture %} {% capture
-  keywords %} {% if page.keywords %} {{ page.keywords }} {% else %} {{
-  site.keywords }} {% endif %} {% endcapture %}
+  {% capture title %}
+    {% if page.title %}
+    {{ site.title }} - {{ page.title }}
+    {% else %}
+    {{ site.title }} - {{ site.tagline }}
+    {% endif %}
+  {% endcapture %}
+  
+  {% capture description %}
+    {% if page.description %}
+    {{ page.description }}
+    {% else %}
+    {{ site.description }}
+    {% endif %}
+  {% endcapture %}
+  
+  {% capture keywords %}
+    {% if page.keywords %}
+    {{ page.keywords }}
+    {% else %}
+    {{ site.keywords }}
+    {% endif %}
+  {% endcapture %}
 
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,8 +37,13 @@
     href="{{ site.url }}{{ page.url | replace:'index.html',''}}"
   />
 
-  {% capture og_image %} {% if page.og_image %} {{ page.og_image }} {% else %}
-  /static/images/hackwild-logo.png {% endif %} {% endcapture %}
+  {% capture og_image %}
+    {% if page.og_image %}
+    {{ page.og_image }}
+    {% else %}
+    /static/images/hackwild-logo.png
+    {% endif %}
+  {% endcapture %}
 
   <meta property="og:title" content="{{ title | strip }}" />
   <meta property="og:image" content="{{ site.url }}{{ og_image | strip }}" />
@@ -29,9 +51,11 @@
   <meta property="og:description" content="{{ description | strip }}" />
   <meta property="og:site_name" content="{{ site.title }}" />
 
-  {% if page.layout == 'post' %} {% include open-graph-article.html %} {%
-  include structured-data-article.html %} {% else %}
-  <meta property="og:type" content="blog" />
+  {% if page.layout == 'post' %}
+    {% include open-graph-article.html %}
+    {% include structured-data-article.html %}
+  {% else %}
+    <meta property="og:type" content="blog" />
   {% endif %}
 
   <meta
