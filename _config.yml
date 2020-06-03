@@ -15,7 +15,7 @@
 # in the templates via {{ site.myvariable }}.
 title: HackWild
 tagline: Hacking through the Dense Jungle of Modern Development
-email: trainstationblues@gmail.com
+email: flyweight@pm.me
 description: > # this means to ignore newlines until "baseurl:"
   HackWild explores the world of modern web development with useful tips, tutorials and articles.
 baseurl: '' # the subpath of your site, e.g. /blog
