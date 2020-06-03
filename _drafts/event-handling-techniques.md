@@ -53,7 +53,9 @@ t.onComplete = () => {
 t.start()
 ```
 
-Event property handlers are a dead-simple way to create and handle events, but it does have a caveat. Attempting to define more than one handler will overwrite already-defined handlers. For example, in the following example, the first handler will be overwritten by the second.
+### Handler Limitations
+
+Event property handlers are a simple way to create and handle events, but it does have a caveat. Attempting to define more than one handler will overwrite already-defined handlers. For example, in the following example, the second handler overwrites the first.
 
 ```ts
 // consumer.ts
@@ -67,12 +69,14 @@ t.onComplete = () => {
 }
 ```
 
-To expose some data in the event handler, adjust the property signature with the expected argument type. Then when calling the method, pass in the data. In this example, the instance of the timer is exposed in the event callback. The consumer can use or ignore it.
+### Passing Event Data
+
+To expose some data in the event handler, adjust the property signature with the expected argument type. Then when calling the method, pass in the data. In this example, the event callback exposes the Timer instance. The consumer can use or ignore it.
 
 ```ts
 // Timer.ts
 export default class Timer {
-  public onComplete?: (t: Timera) => void
+  public onComplete?: (t: Timer) => void
 
   public start(): void {
     setTimeout(() => {
@@ -85,7 +89,7 @@ export default class Timer {
 
 ```ts
 // consumer.ts
-t.onComplete = (t: Timera) => {
+t.onComplete = (t: Timer) => {
   console.log(t)
   // access event data
 }
@@ -95,6 +99,8 @@ t.onComplete = () => {
 }
 ```
 
+### Removing an Event Handler
+
 To remove an event handler, delete the property.
 
 ```ts
@@ -102,9 +108,23 @@ To remove an event handler, delete the property.
 delete t.onComplete
 ```
 
-## Event Listeners
+## Event Listeners with EventTarget
 
-Note that because our class now extends the `EventTarget` class, we need to call `super()` in the constructor.
+You may be familiar with DOM element event listeners. For example, you may recognize the following bit of code, which attaches an event handler to a button when clicked:
+
+```js
+const btn = document
+  .getElementById('some-btn')
+  .addEventListener('click', () => {
+    // do some stuff
+  })
+```
+
+This pattern is available to DOM elements that implement the [EventTarget](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget) interface. The easiest way to gain access to this interface is through inheritance or composition. In this example, we'll look at inheritance.
+
+Using ES6 classes, we can have our `Timer` class implement this interface by extending the `EventTarget` class. Note that because our class extends the `EventTarget` class, we need to call `super()` in the constructor.
+
+We'll define the `'complete'` event as a property.
 
 ```ts
 // Timer.ts
@@ -123,29 +143,61 @@ export default class Timer extends EventTarget {
 }
 ```
 
+Now, in some other part of our application, we can instantiate the Timer and register a handler for the complete event using the `addEventListener` method.
+
 ```ts
 // consumer.ts
 import Timer from './Timer'
 
 const t = new Timer()
-t.addEventListener('complete', () => {
+const completeHandler = () => {
   console.log('timer completed event')
   // do some stuff
-})
+}
+t.addEventListener('complete', completeHandler)
+t.start()
+```
+
+Unlike event property handlers, you can attach many event handlers to a single event.
+
+```ts
+// consumer.ts
+import Timer from './Timer'
+
+const t = new Timer()
+const handlerOne = () => {
+  console.log('first handler definition')
+  // this will execute, too
+}
+const handlerTwo = () => {
+  console.log('second handler definition')
+  // this will execute
+}
+t.addEventListener('complete', handlerOne)
+t.addEventListener('complete', handlerTwo)
 t.start()
 ```
 
 ### Custom Events
 
-## Event Emitter
+### Removing Event Handlers
 
-If you're working in a server-side context, such as Node.js, you won't have access to the EventTarget class. Instead, Node.js has its own version, EventEmitter.
+You can remove an event handler with the `removeEventListener` method.
+
+```ts
+// consumer.ts
+t.removeEventListener('complete', completeHandler)
+```
+
+## Event Listeners with EventEmitter
+
+If you're working in a server-side context, such as with Node.js, you won't have access to the EventTarget class. Instead, Node.js has its own version, EventEmitter.
 
 Working with the EventEmitter class is like working with EventTarget.
 
 ## Closing Thoughts
 
-Each of these event techniques has its pros and cons. Deciding on which one to use will depend on the application requirements.
+Each technique has its pros and cons. Deciding on which one to use will depend on the application requirements.
 
 ### Event Property Handler
 
@@ -155,6 +207,6 @@ Each of these event techniques has its pros and cons. Deciding on which one to u
 
 ### EventTarget and EventEmitter
 
-- Allows any number of handler per event.
-- Require inheriting from base event classes.
+- Allows any number of handlers per event.
+- Must inherit from base event classes.
 - Allows consumer to add and remove event listeners.
