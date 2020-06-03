@@ -232,7 +232,7 @@ t.removeEventListener('complete', completeHandler)
 
 ## Event Listeners with EventEmitter
 
-If you're working in a server-side context, such as with Node.js, you won't have access to the EventTarget class. Instead, Node.js has its own version, EventEmitter.
+If you're working in a server-side context, such as with Node.js, you won't have access to the EventTarget class. Instead, Node.js has its own version, [EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter).
 
 Working with the EventEmitter class is like working with EventTarget. Instead of extending EventTarget, our class will extend `EventEmitter`. Events fire with the `emit` method, which takes the event name as a string. You can pass any number of optional arguments in as event data.
 
