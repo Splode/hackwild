@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Event Creation and Handling Techniques in JavaScript and TypeScript
-description: Exploring event handling and creating methods in JavaScript and TypeScript
+title: Event Creation and Handling Techniques in TypeScript
+description: Events provide a channel of communication between different parts of an application. There are several techniques for creating and handling events, each with its own advantages and disadvantages.
 keywords: javascript, typescript, events, event handling, event emitter, event property, eventemitter, eventtarget, custom event
 tags: TypeScript
 category: TypeScript
@@ -55,7 +55,7 @@ t.start()
 
 ### Handler Limitations
 
-Event property handlers are a simple way to create and handle events, but it does have a caveat. Attempting to define more than one handler will overwrite already-defined handlers. For example, in the following example, the second handler overwrites the first.
+Event property handlers are a simple way to create and handle events, but it does have a caveat. Attempting to define additional handlers will overwrite existing handlers. For example, in the following example, the second handler overwrites the first.
 
 ```ts
 // consumer.ts
@@ -71,17 +71,17 @@ t.onComplete = () => {
 
 ### Passing Event Data
 
-To expose some data in the event handler, adjust the property signature with the expected argument type. Then when calling the method, pass in the data. In this example, the event callback exposes the Timer instance. The consumer can use or ignore it.
+To expose some data in the event handler, adjust the property signature with the expected argument type. Then when calling the method, pass in the data. In this example, the event callback exposes the time of the event firing. The consumer can use or ignore it.
 
 ```ts
 // Timer.ts
 export default class Timer {
-  public onComplete?: (t: Timer) => void
+  public onComplete?: (time: number) => void
 
   public start(): void {
     setTimeout(() => {
       if (!this.onComplete) return
-      this.onComplete()
+      this.onComplete(Date.now())
     }, 7000)
   }
 }
@@ -89,8 +89,8 @@ export default class Timer {
 
 ```ts
 // consumer.ts
-t.onComplete = (t: Timer) => {
-  console.log(t)
+t.onComplete = (time: number) => {
+  console.log(time)
   // access event data
 }
 t.onComplete = () => {
@@ -124,7 +124,9 @@ This pattern is available to DOM elements that implement the [EventTarget](https
 
 Using ES6 classes, we can have our `Timer` class implement this interface by extending the `EventTarget` class. Note that because our class extends the `EventTarget` class, we need to call `super()` in the constructor.
 
-We'll define the `'complete'` event as a property.
+We'll define the `'complete'` event as a property. EventTarget works with the `Event` interface, so we'll initialize it as a new Event, passing in the event name.
+
+In the start method after the timeout completes, we'll fire the 'complete' event using the `dispatchEvent` method, passing in the `_complete` property. The `dispatchEvent` method is available on the `EventTarget` class and takes a single `Event` argument.
 
 ```ts
 // Timer.ts
@@ -143,7 +145,7 @@ export default class Timer extends EventTarget {
 }
 ```
 
-Now, in some other part of our application, we can instantiate the Timer and register a handler for the complete event using the `addEventListener` method.
+With our event emitter in place, we can instantiate the Timer and register a handler for the complete event using the `addEventListener` method. The `completeHandler` method fires when the `'complete'` event fires.
 
 ```ts
 // consumer.ts
@@ -180,6 +182,45 @@ t.start()
 
 ### Custom Events
 
+Passing data in events in this method involves using `CustomEvent` in place of the `Event` interface. Back in the Timer class, let's add a new event that exposes some event data.
+
+The `CustomEvent` constructor takes an optional 'detail' argument. We can use the 'detail' object to hold any data we want available on the event.
+
+Instead of declaring and initializing the event at construction, we'll create it at the time the event fires. This is useful if we want to pass time-sensitive data, such as a timestamp.
+
+> Note: the Event and CustomEvent interfaces include a timestamp property. We're creating a timestamp in the CustomEvent as a demonstration of time-sensitive event data.
+
+```ts
+// Timer.ts
+export default class Timer extends EventTarget {
+  constructor() {
+    super()
+  }
+
+  public start(): void {
+    setTimeout(() => {
+      this.dispatchEvent(
+        new CustomEvent('complete', { detail: { time: Date.now() } })
+      )
+    }, 7000)
+  }
+}
+```
+
+In the event handler, we now have access to the detail object on the event.
+
+```ts
+// consumer.ts
+import Timer from './Timer'
+
+const t = new Timer()
+const completeHandler = (e: CustomEvent) => {
+  console.log('timer completed event', e.detail.time)
+}
+t.addEventListener('complete', completeHandler)
+t.start()
+```
+
 ### Removing Event Handlers
 
 You can remove an event handler with the `removeEventListener` method.
@@ -193,11 +234,42 @@ t.removeEventListener('complete', completeHandler)
 
 If you're working in a server-side context, such as with Node.js, you won't have access to the EventTarget class. Instead, Node.js has its own version, EventEmitter.
 
-Working with the EventEmitter class is like working with EventTarget.
+Working with the EventEmitter class is like working with EventTarget. Instead of extending EventTarget, our class will extend `EventEmitter`. Events fire with the `emit` method, which takes the event name as a string. You can pass any number of optional arguments in as event data.
 
-## Closing Thoughts
+```ts
+// Timer.ts
+import { EventEmitter } from 'events'
+import { setTimeout } from 'timers'
 
-Each technique has its pros and cons. Deciding on which one to use will depend on the application requirements.
+export default class Timer extends EventEmitter {
+  constructor() {
+    super()
+  }
+
+  public start(): void {
+    setTimeout(() => {
+      this.emit('complete', { time: Date.now() })
+    }, 7000)
+  }
+}
+```
+
+```ts
+// consumer.ts
+import Timer from './Timer'
+
+const t = new Timer()
+t.on('complete', () => {
+  console.log('timer completed event')
+})
+t.start()
+```
+
+## Which to Use
+
+So, which event technique should you use? Each technique has its pros and cons. Deciding on which one to use will depend on the application requirements. Do you need a simple and lightweight approach? Use event property handlers? Do you need to register many handlers per event? Use the EventTarget or EventEmitter interface.
+
+To recap, here are some pros and cons to each approach:
 
 ### Event Property Handler
 
