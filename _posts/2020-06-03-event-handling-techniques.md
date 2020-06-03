@@ -21,9 +21,9 @@ We'll look at some techniques for creating events and event handlers in JavaScri
 
 A simple technique for event creation and handling is the _event property handler_. Event property handlers allow consumers to define a method called during an event.
 
-For example, let's say we have a class Timer, which performs some basic timing functions. We want to register a handler that executes when the timer completes. First, we define a property signature, `onComplete` on the Timer that returns a callback. This will be an optional property so that we don't call empty handlers.
+For example, let's say we have a class Timer, which performs some basic timing functions. We want to register a handler that executes when the timer completes. First, we define a property signature, `onComplete` on the Timer that returns a callback. This will be an optional property.
 
-Next, we'll define a `start` method that starts a timeout. After the timeout completes, we want to fire our onComplete event. We check to see if the handler has a definition and if it does, we call it.
+Next, we'll define a `start` method that begins a timeout. After the timeout completes, we fire our `onComplete` event. We check to see if the handler has a definition and if it does, we call it.
 
 ```ts
 // Timer.ts
@@ -39,7 +39,7 @@ export default class Timer {
 }
 ```
 
-Now, in some other part of our application, we can instantiate the Timer and register a handler for the complete event. We do this by assigning a handler function to the `onComplete` property of the Timer instance. It's as simple as that.
+Now, in some other part of our application, we can instantiate the Timer and register a handler for the complete event. We do this by assigning a handler function to the `onComplete` property of the Timer instance.
 
 ```ts
 // consumer.ts
@@ -124,9 +124,9 @@ This pattern is available to DOM elements that implement the [EventTarget](https
 
 Using ES6 classes, we can have our `Timer` class implement this interface by extending the `EventTarget` class. Note that because our class extends the `EventTarget` class, we need to call `super()` in the constructor.
 
-We'll define the `'complete'` event as a property. EventTarget works with the `Event` interface, so we'll initialize it as a new Event, passing in the event name.
+We'll define the `'complete'` event as a property. EventTarget works with the `Event` interface, so we'll initialize this property as a new Event, passing in the event name.
 
-In the start method after the timeout completes, we'll fire the 'complete' event using the `dispatchEvent` method, passing in the `_complete` property. The `dispatchEvent` method is available on the `EventTarget` class and takes a single `Event` argument.
+In the `start` method after the timeout completes, we'll fire the 'complete' event using the `dispatchEvent` method, passing in the `_complete` property. The `dispatchEvent` method is available on the `EventTarget` class and takes a single `Event` argument.
 
 ```ts
 // Timer.ts
@@ -182,7 +182,7 @@ t.start()
 
 ### Custom Events
 
-Passing data in events in this method involves using `CustomEvent` in place of the `Event` interface. Back in the Timer class, let's add a new event that exposes some event data.
+Passing event data in this method involves using `CustomEvent` in place of the `Event` interface. Back in the Timer class, let's change the 'complete' event so that it exposes some event data.
 
 The `CustomEvent` constructor takes an optional 'detail' argument. We can use the 'detail' object to hold any data we want available on the event.
 
@@ -234,7 +234,7 @@ t.removeEventListener('complete', completeHandler)
 
 If you're working in a server-side context, such as with Node.js, you won't have access to the EventTarget class. Instead, Node.js has its own version, [EventEmitter](https://nodejs.org/api/events.html#events_class_eventemitter).
 
-Working with the EventEmitter class is like working with EventTarget. Instead of extending EventTarget, our class will extend `EventEmitter`. Events fire with the `emit` method, which takes the event name as a string. You can pass any number of optional arguments in as event data.
+Working with the EventEmitter class is like working with EventTarget. Instead of extending EventTarget, our class will extend `EventEmitter`. Events fire with the `emit` method, which takes the event name as a string. You can pass any number of optional arguments as event data.
 
 ```ts
 // Timer.ts
@@ -267,7 +267,7 @@ t.start()
 
 ## Which to Use
 
-So, which event technique should you use? Each technique has its pros and cons. Deciding on which one to use will depend on the application requirements. Do you need a simple and lightweight approach? Use event property handlers? Do you need to register many handlers per event? Use the EventTarget or EventEmitter interface.
+So, which event technique should you use? Each technique has its pros and cons. Deciding on which to use depends on the application requirements. Do you need a simple and lightweight approach? Use event property handlers. Do you need to register many handlers per event? Use the EventTarget or EventEmitter interface.
 
 To recap, here are some pros and cons to each approach:
 
