@@ -9,6 +9,7 @@ hero_image:
   src: 'hackwild_event-techniques--825x464.jpg'
   alt: "Illustration of the word 'Events'"
 og_image: '/static/images/hackwild_event-techniques--1200x600.jpg'
+date: 2020-06-03T13:33:43-6:00
 ---
 
 A common problem you'll run into when writing software is communication between components. Something happens in some component over here and I want to notify some component over there. Furthermore, I want to reduce coupling between components to increase maintainability. We can solve this problem with events.
