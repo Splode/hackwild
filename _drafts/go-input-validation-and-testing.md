@@ -123,7 +123,30 @@ type Lead struct {
 
 ### Validate Method
 
-Validating our lead struct involves adding a `Validate` method to it. The Validate method is a convenience wrapper for the validator package.
+Validating our lead struct involves adding a `Validate` method to it. The Validate method is a convenience wrapper for the validator package. 
+
+```go
+package lead
+
+import "github.com/go-playground/validator/v10"
+
+var validate *validator.Validate
+
+func init() {
+  validate = validator.New()
+}
+
+// Validate attempts to validate the lead's values.
+func (lead *Lead) Validate() error {
+  if err := validate.Struct(lead); err != nil {
+    if _, ok := err.(*validator.InvalidValidationError); ok {
+      return err
+    }
+    return err
+  }
+  return nil
+}
+```
 
 ### Basic Validation Tests
 
@@ -137,4 +160,4 @@ Validating our lead struct involves adding a `Validate` method to it. The Valida
 
 ## Custom Validation Rules
 
-### Testing Custom Validation 
+### Testing Custom Validation
