@@ -12,6 +12,7 @@ Intro
 ## Lead Input Struct
 
 ```go
+// lead.go
 package lead
 
 // Lead represents the lead form POST data.
@@ -29,6 +30,7 @@ type Lead struct {
 We're going to create a basic test, which ensures that our JSON to Lead workflow produces what we expect. We unmarshal a JSON string representing the POST data from a lead form into a Lead struct. We also manually create a struct literal with the same values and compare the two.
 
 ```go
+// lead_test.go
 package lead_test
 
 import (
@@ -101,6 +103,7 @@ go get github.com/go-playground/validator/v10
 Then in our lead package, we'll import it:
 
 ```go
+// lead.go
 package lead
 
 import "github.com/go-playground/validator/v10"
@@ -121,6 +124,7 @@ Using the `validate` tag, we specify the validation rules for each field we want
 > Note: in reality, you may want to allow for more than just ASCII characters in a name field, especially if names like 'X Æ A-12' increase in popularity. For demonstration, we're going to limit the character type.
 
 ```go
+// lead.go
 // Lead represents the lead form POST data.
 type Lead struct {
   Name         string   `json:"name" validate:"required,ascii,max=128"`
@@ -146,6 +150,7 @@ The Validate method takes no arguments and returns a single error or `nil`. With
 If a call to the Validate method returns no error, we assume the lead has passed validation.
 
 ```go
+// lead.go
 package lead
 
 import "github.com/go-playground/validator/v10"
@@ -172,11 +177,10 @@ func (lead *Lead) Validate() error {
 
 ### Basic Validation Tests
 
-Now that we have our lead definition, validation rules, and validation method in place we can test validation. First, we'll test that our validation method passes when our lead field values are valid.
+Now that we have our lead definition, validation rules, and validation method in place we can test validation. First, we'll test that our validation method passes when our lead field values are valid. We call the `Validate` method on the lead and fail the test if it returns an error.
 
 ```go
 // lead_test.go
-
 func TestLeadPassesValidation(t *testing.T) {
   js := `{"name": "Joe", "email": "joe@example.com", "organization": "Example, Inc.", "message": "I'm interested in learning more about your project.", "phone": "555-555-5555", "newsletter": false, "products": ["hardware"]}`
 
@@ -197,9 +201,53 @@ Our test passes, as expected:
 ok      github.com/splode/go-input-validation-demo/lead 0.183s
 ```
 
+We also want to ensure that the validation fails if we pass invalid data. In the following test, we'll create a test where we expect validation to fail and to receive an error. We'll omit the "name" field, which is required. When the lead JSON is unmarshaled, the zero-value for the name field will be an empty string.
+
+We expect the Validate method to return an error in this case, so we fail the test if the Validate method _does not_ return an error.
+
+```go
+// lead_test.go
+func TestLeadNameRequired(t *testing.T) {
+  js := `{"email": "joe@example.com", "organization": "Example, Inc.", "message": "I'm interested in learning more about your project.", "phone": "555-555-5555", "newsletter": false}`
+
+  var l lead.Lead
+  if err := json.Unmarshal([]byte(js), &l); err != nil {
+    t.Errorf("failed to unmarshal lead to JSON: %v", err.Error())
+  }
+  if err := l.Validate(); err == nil {
+    t.Errorf("expected validation error, none received")
+  }
+}
+```
+
+The test for validation failure passes as expected:
+
+```sh
+λ go test ./lead -run TestLeadNameRequired
+ok      github.com/splode/go-input-validation-demo/lead 0.193s
+```
+
 ## Injecting Random Test Data
 
+To stress test our validation, we can test creating leads using random data.
+
 ### Testing Random Input
+
+```go
+// lead_test.go
+func TestRandomLead(t *testing.T) {
+  gofakeit.Seed(time.Now().Unix())
+  js := fmt.Sprintf(`{"name": "%s", "email": "%s", "organization": "%s", "message": "%s", "phone": "%s", "newsletter": %t}`, gofakeit.Name(), gofakeit.Email(), gofakeit.Company(), gofakeit.HackerPhrase(), gofakeit.Phone(), gofakeit.Bool())
+
+  var l lead.Lead
+  if err := json.Unmarshal([]byte(js), &l); err != nil {
+    t.Errorf("failed to unmarshal lead to JSON: %v", err.Error())
+  }
+  if err := l.Validate(); err != nil {
+    t.Errorf("expected validation on %v, got %v", l, err)
+  }
+}
+```
 
 ## Validating Nested Data and Arrays
 
