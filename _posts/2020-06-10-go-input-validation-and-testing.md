@@ -1,29 +1,30 @@
 ---
 layout: post
 title: Testing and Validating Input in Go
-description: Data validation is a defensive strategy, helping to ensure the data that you're working with has the type and shape that you expect.
-keywords: go, golang, input, validation, struct, json, development, backend, input validation, testing
+description: Data validation is a defensive strategy, which helps to ensure the data you're working with has the type and structure that you expect.
+keywords: go, golang, input, validation, struct, json, development, backend, input validation, data validation, testing, REST
 tags: Go
 category: Go
 hero_image:
   src: 'hackwild_go-input-validation_hero--825x464.png'
   alt: "Illustration of the phrase 'Validation, testing and validating input in Go'"
 og_image: '/static/images/hackwild_go-input-validation_hero--1200x600.png'
+date: 2020-06-10T14:50:11-6:00
 ---
 
 In a perfect world, before client-submitted data ever made its way to a backend application, it is sanitized, valid, pristine. Yet, in my experience, you should not assume the validity of user-submitted data.
 
 You could be working with invalid data for many reasons: Client-side validation might provide a false positive. A bot bypassed submission guards. Someone simply made a mistake.
 
-Regardless of the reasons for receiving invalid data, and even if you are working with valid data, it is still a good idea to validate on the backend. It is a defensive practice that can save time and headaches in the future.
+Regardless of the reasons for receiving invalid data—and even if you are working with valid data—it is still a good idea to validate on the backend. It is a defensive practice that can save time and headaches.
 
-This exercise will explore the process of validating input. We will work with a JSON string, like what is often encountered in a REST API client request. We will define validation rules for different input fields and write tests for different input scenarios.
+This exercise will explore the process of validating input in Go. We will work with a JSON string, like what is often encountered in a REST API client request. We will define validation rules for different input fields and write tests for different input scenarios.
 
 ## Lead Input Struct
 
 We are going to use a common scenario in this exercise: processing a lead form submission from a client. Lead forms are often simple, but because they are open and accessed without authentication, they need thorough validation.
 
-We receive the lead form data as a JSON string, so we create a definition for a Lead struct with corresponding JSON tags.
+We receive the lead form data as a JSON string, so we create a definition for a Lead struct with corresponding JSON tags for unmarshaling.
 
 ```go
 // lead.go
@@ -76,7 +77,7 @@ We'll handle validation for the remaining fields shortly.
 
 ### Validate Method
 
-Validating a lead struct involves passing the struct to the `validate.Struct` method. We want the lead package to handle its validation, so we add a `Validate` method that wraps the validation. This way, we can call the Validate method on an instance of lead without having to manage the validator package or pass any arguments.
+Validating a struct involves passing the struct to the `validate.Struct` method. We want the lead package to handle its validation, so we add a `Validate` method that wraps the validation. This way, we can call the Validate method on an instance of lead without having to manage the validator package or pass any arguments.
 
 We define a package-level variable `validate` to hold an instance of the validator. In the package `init` function, we construct a new instance of `validator`.
 
@@ -195,10 +196,6 @@ ok      github.com/splode/go-input-validation-demo/lead 0.010s
 
 ## Validating Nested Data and Arrays
 
-Validator can validate nested structs, slices, and maps.
-
-### Testing Slices
-
 The "products" field of the lead corresponds with a `<select>` form input. A user would be able to select many options from a predefined list, such as "cloud storage" or "cloud functions". The JSON representation of this is an array of strings. Our validation needs to assert that the values in the "products" array fall within a predefined list.
 
 In the Lead definition, we'll add a "dive" rule to the validate tag. The "dive" rule instructs validator to inspect values within a collection, such as a slice. With the "oneof" rule, we state that the following strings are acceptable values.
@@ -239,7 +236,7 @@ Validator doesn’t include rules for validating phone numbers. This makes sense
 
 To validate phone numbers, we need to create a custom validation function for use with the validator package. Creating a custom validator function involves defining a handler function and registering it with the validator. The validation function gets the tested field as an argument and should return a boolean value. Within the handler function, we can test the field against our own validation rules.
 
-Using the phonenumbers package, we'll first parse the value of the field with the "US" as the default region. If parsing fails, our validation also fails and we return false. If parsing succeeds, we return the value of the `IsPossibleNumber` method, which returns true if the phone number is _likely_ valid. For stricter validation, use the `IsValidNumber` method.
+Using the `phonenumbers` package, we'll first parse the value of the field with the "US" as the default region. If parsing fails, our validation also fails and we return false. If parsing succeeds, we return the value of the `IsPossibleNumber` method, which returns true if the phone number is _likely_ valid. For stricter validation, use the `IsValidNumber` method.
 
 ```go
 // lead.go
@@ -273,7 +270,7 @@ Phone string `json:"phone" validate:"phone"`
 
 ### Testing Custom Validation
 
-Re-running our TestRandomLead test, which already uses a random phone number, illustrates that our validation passes as expected.
+Re-running our `TestRandomLead` test, which already uses a random phone number, illustrates that our validation passes as expected.
 
 To be sure our custom validation is working as intended, we can create a new test with an invalid phone number. In this test, we expect validation to fail.
 
@@ -304,6 +301,6 @@ In this exercise, we validated and tested input data for a lead form. Validation
 
 This process can be used to validate and test many types of data, as well. Maybe you are working with complex mapping or a public health datasets.
 
-Validating data, even if you are confident the data is in good shape, is a smart and defensive strategy. It increases the chances that the data you are working with has the type and structure that you expect.
+Validating data, even if you are confident the data is in good shape, is a smart and defensive strategy. It increases the chances the data you are working with has the type and structure that you expect.
 
 The [repo for this exercise](https://github.com/splode/go-input-validation-demo) is available on GitHub.
