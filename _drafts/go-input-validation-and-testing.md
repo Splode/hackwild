@@ -33,67 +33,6 @@ type Lead struct {
 }
 ```
 
-We're going to create a basic test, which ensures that our JSON to Lead workflow produces what we expect. We unmarshal a JSON string representing the POST data from a lead form into a Lead struct. We also manually create a struct literal with the same values and compare the two.
-
-```go
-// lead_test.go
-package lead_test
-
-import (
-  "encoding/json"
-  "github.com/splode/go-input-validation-demo/lead"
-  "testing"
-)
-
-func TestJSONToLead(t *testing.T) {
-  js := `{"name": "Joe", "email": "joe@example.com", "organization": "Example, Inc.", "message": "I'm interested in learning more about your project.", "phone": "555-555-5555", "newsletter": false, "products": ["hardware"]}`
-
-  var l lead.Lead
-  if err := json.Unmarshal([]byte(js), &l); err != nil {
-    t.Errorf("failed to unmarshal lead to JSON: %v", err.Error())
-  }
-
-  expected := &lead.Lead{
-    Name:         "Joe",
-    Email:        "joe@example.com",
-    Organization: "Example, Inc.",
-    Message:      "I'm interested in learning more about your project.",
-    Phone:        "555-555-5555",
-    Newsletter:   false,
-    Products:     []string{"hardware"},
-  }
-
-  if expected.Name != l.Name {
-    t.Errorf("expected %v, got %v", expected.Name, l.Name)
-  }
-  if expected.Email != l.Email {
-    t.Errorf("expected %v, got %v", expected.Email, l.Email)
-  }
-  if expected.Organization != l.Organization {
-    t.Errorf("expected %v, got %v", expected.Organization, l.Organization)
-  }
-  if expected.Message != l.Message {
-    t.Errorf("expected %v, got %v", expected.Message, l.Message)
-  }
-  if expected.Phone != l.Phone {
-    t.Errorf("expected %v, got %v", expected.Phone, l.Phone)
-  }
-  if expected.Newsletter != l.Newsletter {
-    t.Errorf("expected %v, got %v", expected.Newsletter, l.Newsletter)
-  }
-  if expected.Products[0] != l.Products[0] {
-    t.Errorf("expected %v, got %v", expected.Products[0], l.Products[0])
-  }
-}
-```
-
-This test passes, as expected:
-
-```sh
-λ go test ./lead -run TestJSONToLead
-ok      github.com/splode/go-input-validation-demo/lead 0.178s
-```
-
 ## Basic Validation
 
 ### Setup Validator
