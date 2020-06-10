@@ -1,10 +1,14 @@
 ---
 layout: post
-title: Validating Input in Go
-description: Validate input and 
+title: Testing and Validating Input in Go
+description: Validate input and
 keywords: go, golang, input, validation, struct, json, development, backend, input validation, testing
 tags: Go
 category: Go
+hero_image:
+  src: 'hackwild_go-input-validation_hero--825x464.png'
+  alt: "Illustration of the phrase 'Validation, testing and validating input in Go'"
+og_image: '/static/images/hackwild_go-input-validation_hero--1200x600.png'
 ---
 
 In a perfect world, before client-submitted data ever made its way to a backend application, it would be fully sanitized, valid, pristine. That doesn't happen
