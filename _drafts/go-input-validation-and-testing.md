@@ -1,13 +1,15 @@
 ---
 layout: post
-title: Input Validation and Testing in Go
-description: Validate and test input for a REST API
+title: Validating Input in Go
+description: Validate input and 
 keywords: go, golang, input, validation, struct, json, development, backend, input validation, testing
 tags: Go
 category: Go
 ---
 
-Intro
+In a perfect world, before client-submitted data ever made its way to a backend application, it would be fully sanitized, valid, pristine. That doesn't happen
+
+This exercise will explore the process of validating input. We'll be working with a JSON string, similar to what we might encounter in a REST API client request. We'll create validation rules for different input fields and write tests for different input scenarios.
 
 ## Lead Input Struct
 
@@ -177,7 +179,7 @@ func (lead *Lead) Validate() error {
 
 ### Basic Validation Tests
 
-Now that we have our lead definition, validation rules, and validation method in place we can test validation. First, we'll test that our validation method passes when our lead field values are valid. We call the `Validate` method on the lead and fail the test if it returns an error.
+With a lead definition, validation rules, and validation method in place we can test validation. First, we'll test that our validation method passes when our lead field values are valid. We call the `Validate` method on the lead and fail the test if it returns an error.
 
 ```go
 // lead_test.go
@@ -194,11 +196,11 @@ func TestLeadPassesValidation(t *testing.T) {
 }
 ```
 
-Our test passes, as expected:
+Testing validation success passes as expected:
 
 ```sh
 λ go test ./lead -run TestLeadPassesValidation
-ok      github.com/splode/go-input-validation-demo/lead 0.183s
+ok      github.com/splode/go-input-validation-demo/lead 0.011s
 ```
 
 We also want to ensure that the validation fails if we pass invalid data. In the following test, we'll create a test where we expect validation to fail and to receive an error. We'll omit the "name" field, which is required. When the lead JSON is unmarshaled, the zero-value for the name field will be an empty string.
@@ -220,18 +222,20 @@ func TestLeadNameRequired(t *testing.T) {
 }
 ```
 
-The test for validation failure passes as expected:
+Testing validation failure passes as expected:
 
 ```sh
 λ go test ./lead -run TestLeadNameRequired
-ok      github.com/splode/go-input-validation-demo/lead 0.193s
+ok      github.com/splode/go-input-validation-demo/lead 0.012s
 ```
 
 ## Injecting Random Test Data
 
-To stress test our validation, we can test creating leads using random data.
+So far, our tests are only working with a single set of static lead inputs. Using a generation library, such as [brianvoe/gofakeit](https://github.com/brianvoe/gofakeit), we can randomize inputs.
 
 ### Testing Random Input
+
+Before calling gofakeit, we'll seed it by passing in the current time. Then, we'll replace each field value in our lead string with a template and corresponding generated value. For the name field, we'll use gofakeit's `Phone` method. For the email field, we'll use the `Email` method, and so on. Be sure to check out gofakeit's documentation for a full list of methods.
 
 ```go
 // lead_test.go
@@ -249,6 +253,13 @@ func TestRandomLead(t *testing.T) {
 }
 ```
 
+Testing a randomly generated lead passes as expected:
+
+```sh
+λ go test ./lead -run TestRandomLead
+ok      github.com/splode/go-input-validation-demo/lead 0.010s
+```
+
 ## Validating Nested Data and Arrays
 
 ### Testing Slices
@@ -256,3 +267,7 @@ func TestRandomLead(t *testing.T) {
 ## Custom Validation Rules
 
 ### Testing Custom Validation
+
+## Outro
+
+In this exercise, we worked with data. This process can be used to validate
