@@ -26,7 +26,8 @@ article {
   & h1 {
     color: $colorGreen;
     font-size: 2rem;
-    margin-bottom: 2rem;
+    line-height: 1.25;
+    margin: 1rem 0;
     @media screen and (min-width: $grid-md) {
       font-size: 2.5rem;
     }
@@ -139,6 +140,13 @@ tbody tr:nth-child(2n) {
 
 div.highlight {
   margin-bottom: 2rem;
+}
+
+.article-byline {
+  color: $colorPink;
+  font-size: 1.25rem;
+  line-height: 1.25;
+  margin: 1rem 0 2rem 0;
 }
 
 .Post-author {
