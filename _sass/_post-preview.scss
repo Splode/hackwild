@@ -1,6 +1,5 @@
 .PostPreview {
   background-color: $colorBlueGrey;
-  border-left: $borderRadius solid $colorPink;
   border-bottom-right-radius: $borderRadius;
   border-top-right-radius: $borderRadius;
   margin-bottom: 1.5rem;
@@ -11,6 +10,14 @@
       transform: translateX(10px);
     }
   }
+}
+
+.border-left {
+  border-left: $borderRadius solid $colorPink;
+}
+
+.border-top {
+  border-top: $borderRadius solid $colorPink;
 }
 
 .PostPreview--condensed {
@@ -34,9 +41,10 @@
   @extend .BodyCopy;
   color: $colorWhite;
   font-size: 1rem;
-  margin: 0;
+  margin: 0 0 1rem 0;
+  max-width: 36rem;
   @media screen and (min-width: $grid-md) {
-    padding-right: 2rem;
+    // padding-right: 2rem;
   }
 }
 
@@ -45,13 +53,17 @@
   font-size: 0.9rem;
 }
 
+.PostPreview-body--single {
+  margin: 0;
+}
+
 .PostPreview-footer {
   align-items: flex-end;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
   @media screen and (min-width: $grid-md) {
-    flex-wrap: nowrap;
+    // flex-wrap: nowrap;
     justify-content: space-between;
   }
 }

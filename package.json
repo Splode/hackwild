@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
+    "serve": "bundle exec jekyll s",
     "watch": "cross-env NODE_ENV=development webpack --watch"
   },
   "author": "Christopher Murphy",
