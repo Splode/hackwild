@@ -23,13 +23,13 @@
         cx="11"
         cy="11"
         r="8"
-      ></circle>
+      />
       <line
         x1="21"
         y1="21"
         x2="16.65"
         y2="16.65"
-      ></line>
+      />
     </svg>
   </div>
 </template>
@@ -40,19 +40,19 @@ import { Bus } from './../../lib/bus'
 export default {
   name: 'TheSearchInput',
 
-  data() {
+  data () {
     return {
       query: ''
     }
   },
 
   methods: {
-    emitQuerySearch(e) {
+    emitQuerySearch (e) {
       Bus.$emit('query-updated', { query: e.target.value })
     }
   },
 
-  mounted() {
+  mounted () {
     Bus.$on('query-cleared', () => {
       this.query = ''
     })
