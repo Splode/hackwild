@@ -6,7 +6,7 @@ keywords: git, git log, project documentation, release notes, changelog, Christo
 tags: Git
 category: Git
 hero_image:
-  src: 'hackwild_git-log--825x464.jpg'
+  src: '/static/images/hackwild_git-log--825x464.jpg'
   alt: The words git log on a dark background
 og_image: '/static/images/hackwild_git-log--1200x600.jpg'
 ---

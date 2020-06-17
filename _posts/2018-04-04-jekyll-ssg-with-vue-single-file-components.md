@@ -6,7 +6,7 @@ keywords: jekyll, vue, vue.js, template, single file components, sfc, ssg, stati
 tags: Jekyll
 category: Jekyll
 hero_image:
-  src: 'jekyll-vue--lg.png'
+  src: '/static/images/jekyll-vue--lg.png'
   alt: Jekyll-Vue template project logo
 ---
 
