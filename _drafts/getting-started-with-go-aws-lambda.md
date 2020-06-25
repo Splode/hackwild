@@ -1,8 +1,8 @@
 ---
 layout: post
 title: Getting Started with Go AWS Lambda
-description: Creating serverless functions with Go using the AWS SDK.
-keywords: go, golang, AWS, lambda, aws-sdk-go, serverless, serverless function, REST, sdk
+description: A guide to creating serverless functions with Go using the AWS SDK and the AWS CLI.
+keywords: go, golang, AWS, cli, aws cli, api, api gateway, cloudwatch, logs, lambda, aws-sdk-go, serverless, serverless function, sdk
 tags: Go
 category: Go
 hero_image:
@@ -28,7 +28,7 @@ Several providers support creating serverless functions using Go, including Goog
 Apart from Go itself, there are several components in the serverless workflow:
 
 - **aws-sdk-go** - Official AWS SDK for Go.
-- **AWS CLI** - Used to create and deploy lambda functions from the command line.
+- **AWS CLI** - Used to manage AWS from the command line.
 - **AWS Lambda** - Service that executes serverless functions.
 - **API Gateway** - Used to map HTTP REST endpoints to lambda functions.
 - **CloudWatch** - Used to log information from lambda functions.
@@ -63,8 +63,6 @@ The handler function, `handleLead`, accepts an API Gateway request event as its 
 Within the handler function, we'll log the request body. The lambda function uses CloudWatchLogs as its standard logger.
 
 If the lead request can be unmarshaled and we encounter no errors, we return a response with the lead data, timestamp, and a successful status code. Otherwise, we log an error and respond with a server error status code.
-
-And that's a super basic lambda function. To invoke it, we need to build and deploy it.
 
 ```go
 // main.go
@@ -125,13 +123,15 @@ func main() {
 
 ```
 
+And that's a super basic lambda function. To invoke it, we need to build and deploy it.
+
 ## Deploying Lambda Functions
 
 ### IAM and Policies
 
 Lambda function needs permission to access other AWS resources. Permissions in AWS are defined by IAM roles and policies. For example, if we wanted to send an email from our lambda function via AWS' Simple Email Service (SES), we'd need to give our Lambda access to the SES service.
 
-This example accesses a trust policy via a local file, but it can also be inlined with the `--cli-input-json` flag.
+The following example accesses a trust policy via a local file, but it can also be inlined with the `--cli-input-json` flag.
 
 > Note: there are several places where `{iam}` is used as a placeholder for the IAM user ID. Use the appropriate IAM user ID instead.
 
@@ -177,7 +177,7 @@ $ aws iam create-role --role-name lambda-simple \
 }
 ```
 
-These commands don't return output if the operation was succesful.
+> Note: these commands don't return output if the operation was succesful.
 
 Attach a policy allowing the function to execute:
 
@@ -237,7 +237,7 @@ go build -o main main.go
 
 Keep a note of the `FunctionArn` value returned. It's going to be used when creating the API Gateway.
 
-To update an already deployed Lambda function, first build and zip the function. Then use the `update-function-code` command. Only the lambda function name and a path to the zip file are required.
+To update an already deployed Lambda function, build and zip the function as previously described. Then use the `update-function-code` command. Only the lambda function name and a path to the zip file are required.
 
 ```sh
 aws lambda update-function-code --function-name lambda-lead --zip-file fileb://main.zip
@@ -264,16 +264,19 @@ aws apigatewayv2 create-api --name lambda-lead \
 
 Keep a note of the `ApiEndpoint` and `ApiId` values returned. They identify the API and endpoints for requests.
 
+Finally, the API Gateway needs permission to invoke its associated lambda function. We give it permission by updating the lambda's resource policy:
+
 ```sh
 aws lambda add-permission --statement-id lamba-lead-api-gateway-permission \
 --action lambda:InvokeFunction \
 --function-name arn:aws:lambda:us-west-2:{iam}:function:lambda-lead \
 --principal apigateway.amazonaws.com \
 --source-arn "arn:aws:execute-api:us-west-2:{iam}:k4sdfh89l/*/$default"
-{
-    "Statement": "{\"Sid\":\"63766042-f879-59ea-8460-3a8dd794eb31\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"apigateway.amazonaws.com\"},\"Action\":\"lambda:InvokeFunction\",\"Resource\":\"arn:aws:lambda:us-west-2:{iam}:function:lambda-lead\",\"Condition\":{\"ArnLike\":{\"AWS:SourceArn\":\"arn:aws:execute-api:us-west-2:{iam}:k4sdfh89l/*/$default\"}}}"
-}
 ```
+
+### Test
+
+Now that the lambda function is fully deployed, we can test accessing it via HTTP. We'll make a `curl` request to the API endpoint, passing in test lead data. Our endpoint returns the lead along with a timestamp. Success!
 
 ```sh
 λ curl -H "Content-Type: application/json" \
@@ -288,14 +291,14 @@ You can verify that your lambda invocation was logged to Cloudwatch by listing t
 aws logs describe-log-streams --log-group-name "/aws/lambda/lambda-lead"
 ```
 
-
-
 ```sh
 aws logs get-log-events --log-group-name "/aws/lambda/lambda-lead" \
 --log-stream-name 2020/06/25/[$LATEST]3c93779ddb224i6982fg4e3cb928c2f5
 ```
 
 ## Next Steps
+
+In this guide, we created a simple serverless function using Go. We deployed our function and set up an API endpoint to access it via HTTP. This covers a lot of ground, yet it's only a start. There's plenty of room for improvement, especially in AWS configurations. For example, trying to invoke the function from a client (browser) will likely fail due to no CORS policy set.
 
 Form validation
 SES email
