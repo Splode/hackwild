@@ -35,31 +35,265 @@ Apart from Go itself, there are several components in the serverless workflow:
 
 ## Creating an AWS Lambda Function in Go
 
-Writing AWS Lambda functions in Go involves using the [AWS SDK for Go](https://github.com/aws/aws-sdk-go).
+Writing lambda functions is simple. Creating a lambda entrypoint involves calling the `Start` function from the `lambda` package in the [AWS SDK for Go](https://github.com/aws/aws-sdk-go). The `Start` method takes a handler function as its single argument.
 
-- HandlerFunc
-  - Context
-  - Event (API gateway)
+There are several valid function signatures for the handler function. With a context argument, the handler function has access to the invocation context, which includes information on the environment, client, etc. With an events argument, the handler has access to information specific to the request, or event, that triggered the function.
+
+The basic structure for a lambda function:
+
+```go
+// main.go
+package main
+
+import "github.com/aws/aws-lambda-go/lambda"
+
+func handler() {}
+
+func main() {
+  lamdba.Start(handler)
+}
+```
+
+### An Example Lambda Function
+
+In the following example, we process a basic lead form submission from an HTTP request. Our request body has a `lead` as a `json` encoded string. Our response will return the `lead` and a timestamp as a `json` encoded string.
+
+The handler function, `handleLead`, accepts an API Gateway request event as its only argument and returns an API Gateway response and error. The API Gateway **request** has typical HTTP request data, such as headers, query params, a body, etc. The API Gateway **response** can accept typical HTTP response data, such as a status code, headers, a body, etc. This function is going to be invoked via the API Gateway. If we were expecting a different service to invoke the function, such as a database, we might use the `DynamoDBEvent`, also from the `events` package.
+
+Within the handler function, we'll log the request body. The lambda function uses CloudWatchLogs as its standard logger.
+
+If the lead request can be unmarshaled and we encounter no errors, we return a response with the lead data, timestamp, and a successful status code. Otherwise, we log an error and respond with a server error status code.
+
+And that's a super basic lambda function. To invoke it, we need to build and deploy it.
+
+```go
+// main.go
+package main
+
+import (
+  "encoding/json"
+  "github.com/aws/aws-lambda-go/events"
+  "github.com/aws/aws-lambda-go/lambda"
+  "log"
+  "net/http"
+  "time"
+)
+
+type lead struct {
+  Name  string `json:"name"`
+  Email string `json:"email"`
+}
+
+type response struct {
+  Lead      lead      `json:"lead"`
+  Timestamp time.Time `json:"timestamp"`
+}
+
+func handleLead(request events.APIGatewayProxyRequest) (
+  res events.APIGatewayProxyResponse, err error) {
+  log.Printf("INFO: body: %s", request.Body)
+  var l lead
+  // unmarshal the request body into a lead struct and
+  // log and return an error code if it fails
+  if err := json.Unmarshal([]byte(request.Body), &l); err != nil {
+    log.Printf("ERROR: unable to unmarshal request: %s", err.Error())
+    res.StatusCode = http.StatusInternalServerError
+    return res, err
+  }
+
+  // form a response using the lead request data and the current time
+  resp := &response{
+    Lead:      l,
+    Timestamp: time.Now().UTC(),
+  }
+  body, err := json.Marshal(resp)
+  if err != nil {
+    log.Printf("ERROR: unable to marshal request: %s", err.Error())
+    res.StatusCode = http.StatusInternalServerError
+    return res, err
+  }
+
+  // finally return the response with a 200 status code
+  res.Body = string(body)
+  res.StatusCode = http.StatusOK
+  return res, nil
+}
+
+func main() {
+  lambda.Start(handleLead)
+}
+
+```
 
 ## Deploying Lambda Functions
 
 ### IAM and Policies
 
-The lambda function needs permission to access other AWS resources. Permissions in AWS are defined by IAM roles and policies.
+Lambda function needs permission to access other AWS resources. Permissions in AWS are defined by IAM roles and policies. For example, if we wanted to send an email from our lambda function via AWS' Simple Email Service (SES), we'd need to give our Lambda access to the SES service.
 
-- AWS Lambda
-- SES (optional)
+This example accesses a trust policy via a local file, but it can also be inlined with the `--cli-input-json` flag.
+
+> Note: there are several places where `{iam}` is used as a placeholder for the IAM user ID. Use the appropriate IAM user ID instead.
+
+```sh
+$ aws iam create-role --role-name lambda-simple \
+--assume-role-policy-document file://trust-policy.json
+{
+    "Role": {
+        "Path": "/",
+        "RoleName": "lambda-simple",
+        "RoleId": "AROA3FQMJ0I5QSHLOZXN5",
+        "Arn": "arn:aws:iam::{iam}:role/lambda-simple",
+        "CreateDate": "2020-06-25T02:00:07Z",
+        "AssumeRolePolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [
+                {
+                    "Effect": "Allow",
+                    "Principal": {
+                        "Service": "lambda.amazonaws.com"
+                    },
+                    "Action": "sts:AssumeRole"
+                }
+            ]
+        }
+    }
+}
+```
+
+```jsonc
+// trust-policy.json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+```
+
+These commands don't return output if the operation was succesful.
+
+Attach a policy allowing the function to execute:
+
+```sh
+aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AWSLambdaExecute \
+--role-name lambda-simple
+```
+
+Attach a policy allowing the function to access CloudWatch logs:
+
+```sh
+aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/CloudWatchLogsFullAccess \
+--role-name lambda-simple
+```
+
+With these policies in place, we'll next build it and upload it.
 
 ### Build Lambda and Upload
 
 Zip tool
 CLI
 
-## Accessing Lambda using HTTP REST
+```sh
+go get -u github.com/aws/aws-lambda-go/cmd/build-lambda-zip
+set GOOS=linux
+go build -o main main.go
+%userprofile%/Go/bin/build-lambda-zip.exe -o main.zip main
+```
 
-API Gateway
-HTTP methods
-CORS
+```sh
+λ aws lambda create-function --function-name lambda-lead \
+--runtime go1.x \
+--zip-file fileb://main.zip \
+--handler main \
+--role arn:aws:iam::{iam}:role/lambda-simple
+{
+    "FunctionName": "lambda-lead",
+    "FunctionArn": "arn:aws:lambda:us-west-2:{iam}:function:lambda-lead",
+    "Runtime": "go1.x",
+    "Role": "arn:aws:iam::{iam}:role/lambda-simple",
+    "Handler": "main",
+    "CodeSize": 5158043,
+    "Description": "",
+    "Timeout": 3,
+    "MemorySize": 128,
+    "LastModified": "2020-06-23T02:11:54.120+0000",
+    "CodeSha256": "B6tVYAT+GFuA1QhvGB7k+FHQqZzSzkFSd1p2yypvM5U=",
+    "Version": "$LATEST",
+    "TracingConfig": {
+        "Mode": "PassThrough"
+    },
+    "RevisionId": "9f3af20e-f1g2-4271-a4f1-3gh850bfa7ac",
+    "State": "Active",
+    "LastUpdateStatus": "Successful"
+}
+```
+
+Keep a note of the `FunctionArn` value returned. It's going to be used when creating the API Gateway.
+
+To update an already deployed Lambda function, first build and zip the function. Then use the `update-function-code` command. Only the lambda function name and a path to the zip file are required.
+
+```sh
+aws lambda update-function-code --function-name lambda-lead --zip-file fileb://main.zip
+```
+
+## Invoking Lambda with HTTP
+
+The `--target` is the ARN of the function created in the previous section (the value for `FunctionArn`).
+
+```sh
+aws apigatewayv2 create-api --name lambda-lead \
+--protocol-type HTTP \
+--target arn:aws:lambda:us-west-2:{iam}:function:lambda-lead
+{
+    "ApiEndpoint": "https://k4sdfh89l.execute-api.us-west-2.amazonaws.com",
+    "ApiId": "k4sdfh89l",
+    "ApiKeySelectionExpression": "$request.header.x-api-key",
+    "CreatedDate": "2020-06-25T02:14:41Z",
+    "Name": "lambda-lead",
+    "ProtocolType": "HTTP",
+    "RouteSelectionExpression": "$request.method $request.path"
+}
+```
+
+Keep a note of the `ApiEndpoint` and `ApiId` values returned. They identify the API and endpoints for requests.
+
+```sh
+aws lambda add-permission --statement-id lamba-lead-api-gateway-permission \
+--action lambda:InvokeFunction \
+--function-name arn:aws:lambda:us-west-2:{iam}:function:lambda-lead \
+--principal apigateway.amazonaws.com \
+--source-arn "arn:aws:execute-api:us-west-2:{iam}:k4sdfh89l/*/$default"
+{
+    "Statement": "{\"Sid\":\"63766042-f879-59ea-8460-3a8dd794eb31\",\"Effect\":\"Allow\",\"Principal\":{\"Service\":\"apigateway.amazonaws.com\"},\"Action\":\"lambda:InvokeFunction\",\"Resource\":\"arn:aws:lambda:us-west-2:{iam}:function:lambda-lead\",\"Condition\":{\"ArnLike\":{\"AWS:SourceArn\":\"arn:aws:execute-api:us-west-2:{iam}:k4sdfh89l/*/$default\"}}}"
+}
+```
+
+```sh
+λ curl -H "Content-Type: application/json" \
+-d "{\"name\": \"Testy\", \"email\": \"test@test.com\"}" \
+https://k4sdfh89l.execute-api.us-west-2.amazonaws.com
+{"lead":{"name":"Testy","email":"test@test.com"},"timestamp":"2020-06-19T03:40:29.451817088Z"}
+```
+
+You can verify that your lambda invocation was logged to Cloudwatch by listing the log streams for the log group name:
+
+```sh
+aws logs describe-log-streams --log-group-name "/aws/lambda/lambda-lead"
+```
+
+
+
+```sh
+aws logs get-log-events --log-group-name "/aws/lambda/lambda-lead" \
+--log-stream-name 2020/06/25/[$LATEST]3c93779ddb224i6982fg4e3cb928c2f5
+```
 
 ## Next Steps
 
