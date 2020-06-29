@@ -11,19 +11,21 @@ hero_image:
 og_image: '/static/images/getting-started-with-go-aws-lambda/go-aws-lambda_hero--1200x600.png'
 ---
 
-Severless functions, or Functions as a Service (FaaS), are functions deployed individually and executed on a server managed by a cloud provider. They're part of a broader model called _serverless architecture_ or _serverless computing_ and can offer significant benefits in certain scenarios.
+Serverless functions, or Functions as a Service (FaaS), are functions deployed individually and executed on a server managed by a cloud provider. They're part of a broader model called _serverless architecture_ or _serverless computing_ and can offer significant benefits in certain scenarios.
 
 I recently used a serverless function to process a lead form submission for a marketing site. For this common task, I would usually create a VPS (virtual private server) to host the marketing site and handle the form submission in the same VPS on the backend. But spooling up a dedicated VPS for a simple marketing site, which is mostly static, is wasteful. It's the type of site that could easily be deployed statically, using something like a CDN. It's an ideal scenario for serverless functions.
 
-There are several benefits to the serverless model applicable in this scenario. One of the biggest advantages—and something that makes this a compelling sale to stakeholders—is a significant cost reduction. The price model for AWS's VPS, EC2, is complex and multidimensional. Cost is determined by several parameters, including resource size, run time, CPU utilization, etc. At a simple level, it boils down to a VPC instance running 24/7. You encur charges the entire time, even if the server is idle.
+There are several benefits to the serverless model applicable in this scenario. One of the biggest advantages—and something that makes this a compelling sale to stakeholders—is a significant cost reduction. The price model for AWS's VPS, EC2, is complex and multidimensional. Cost is determined by several parameters, including resource size, run time, CPU utilization, etc. At a simple level, it boils down to a VPC instance running 24/7. You incur charges the entire time, even if the server is idle.
 
-Serverless functions have a simpler cost structure where price is determined by the number of invocations, run time, and memory use. When a serverless function is invoked, you encur a single charge. It's a _per request_ model versus a _per hour_ model, like a 'pay-as-you-go' model. Idle time is basically free.
+Serverless functions have a simpler cost structure where the price is determined by the number of invocations, run time, and memory use. When a serverless function is invoked, you incur a single charge. It's a _per-request_ model versus a _per hour_ model, like a 'pay-as-you-go' model. Idle time is basically free.
 
 There are more benefits (and drawbacks) to the serverless model that I won't cover here. For more information, I recommend Mike Roberts' comprehensive [article on serverless architectures](https://www.martinfowler.com/articles/serverless.html).
 
+In this guide I cover the basics of getting started with serverless functions using Go and AWS.
+
 ## Go AWS Lambda Workflow
 
-Several providers support creating serverless functions using Go, including Google, IBM, and AWS. I use AWS Lambda (their brandname for FaaS) in this example because we have a lot of existing infrastructure through AWS.
+Several providers support creating serverless functions using Go, including Google, IBM, and AWS. I use AWS Lambda (their brand name for FaaS) in this example because we have a lot of existing infrastructure through AWS.
 
 Apart from Go itself, there are several components in the serverless workflow:
 
@@ -35,7 +37,7 @@ Apart from Go itself, there are several components in the serverless workflow:
 
 ## Creating an AWS Lambda Function in Go
 
-Writing lambda functions is simple. Creating a lambda entrypoint involves calling the `Start` function from the `lambda` package in the [AWS SDK for Go](https://github.com/aws/aws-sdk-go). The `Start` method takes a handler function as its single argument.
+Writing Lambda functions is simple. Creating a lambda entry point involves calling the `Start` function from the `lambda` package in the [AWS SDK for Go](https://github.com/aws/aws-sdk-go). The `Start` method takes a handler function as its single argument.
 
 There are several valid function signatures for the handler function. With a context argument, the handler function has access to the invocation context, which includes information on the environment, client, etc. With an events argument, the handler has access to information specific to the request, or event, that triggered the function.
 
@@ -56,7 +58,7 @@ func main() {
 
 ### An Example Lambda Function
 
-In the following example, we process a basic lead form submission from an HTTP request. Our request body has a `lead` as a `json` encoded string. Our response will return the `lead` and a timestamp as a `json` encoded string.
+In the following example, we process a basic lead form submission from an HTTP request. Our request body has a `lead` as a `JSON` encoded string. Our response will return the `lead` and a timestamp as a `JSON` encoded string.
 
 The handler function, `handleLead`, accepts an API Gateway request event as its only argument and returns an API Gateway response and error. The API Gateway **request** has typical HTTP request data, such as headers, query params, a body, etc. The API Gateway **response** can accept typical HTTP response data, such as a status code, headers, a body, etc. This function is going to be invoked via the API Gateway. If we were expecting a different service to invoke the function, such as a database, we might use the `DynamoDBEvent`, also from the `events` package.
 
@@ -129,9 +131,11 @@ And that's a super basic lambda function. To invoke it, we need to build and dep
 
 ### IAM and Policies
 
-Lambda function needs permission to access other AWS resources. Permissions in AWS are defined by IAM roles and policies. For example, if we wanted to send an email from our lambda function via AWS' Simple Email Service (SES), we'd need to give our Lambda access to the SES service.
+Before running, Lambda functions need to have permissions set. Permissions in AWS are defined by IAM roles and policies. A function assumes a role, which has policies attached. For example, if we wanted to send an email from our lambda function via AWS' Simple Email Service (SES), we'd need to give our Lambda access to the SES service.
 
-The following example accesses a trust policy via a local file, but it can also be inlined with the `--cli-input-json` flag.
+We're going to create a simple role for executing lambda functions and attach policies to the role allowing it to access resources.
+
+The following example passes a trust policy via a local file, but it can also be inlined with the `--cli-input-json` flag.
 
 > Note: there are several places where `{iam}` is used as a placeholder for the IAM user ID. Use the appropriate IAM user ID instead.
 
@@ -161,6 +165,8 @@ $ aws iam create-role --role-name lambda-simple \
 }
 ```
 
+A simple trust policy for AWS Lambda:
+
 ```jsonc
 // trust-policy.json
 {
@@ -177,7 +183,9 @@ $ aws iam create-role --role-name lambda-simple \
 }
 ```
 
-> Note: these commands don't return output if the operation was succesful.
+After the role has been created, we can attach any number of policies to it. We'll attach policies allowing the function to execute and access CloudWatch Logs.
+
+> Note: these commands don't return output if the operation was successful.
 
 Attach a policy allowing the function to execute:
 
@@ -186,29 +194,48 @@ aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AWSLambdaExecute
 --role-name lambda-simple
 ```
 
-Attach a policy allowing the function to access CloudWatch logs:
+Attach a policy allowing the function to access CloudWatch Logs:
 
 ```sh
 aws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/CloudWatchLogsFullAccess \
 --role-name lambda-simple
 ```
 
-With these policies in place, we'll next build it and upload it.
+With these policies in place, we'll next build and upload the function.
 
 ### Build Lambda and Upload
 
-Zip tool
-CLI
+Go Lambda functions are run from a binary compiled for Linux. The binary must be included in a zip file along with any dependent assets. In this example, there's a single _main_ binary, but if we needed to include other files such as templates, we'd add them to the zip archive as well.
+
+Building on Linux is straightforward: we build a binary from our main.go file and zip it.
+
+#### Build On Linux
 
 ```sh
+go build main main.go
+zip main.zip main
+```
+
+Building on Windows is more involved because of the way Windows handles file permissions. The Lambda function is executed on Linux and needs open execution permissions.
+
+To get around this, use the zip tool included in the aws-lambda-go package. The zip tool adds the appropriate permissions to the binary before zipping.
+
+#### Build On Windows
+
+```sh
+# get the zip tool
 go get -u github.com/aws/aws-lambda-go/cmd/build-lambda-zip
+# build for linux
 set GOOS=linux
 go build -o main main.go
+# create a zip file with the zip tool
 %userprofile%/Go/bin/build-lambda-zip.exe -o main.zip main
 ```
 
+With the zip containing the built application, we can create the AWS Lambda function with the zip file.
+
 ```sh
-λ aws lambda create-function --function-name lambda-lead \
+$ aws lambda create-function --function-name lambda-lead \
 --runtime go1.x \
 --zip-file fileb://main.zip \
 --handler main \
@@ -248,7 +275,7 @@ aws lambda update-function-code --function-name lambda-lead --zip-file fileb://m
 The `--target` is the ARN of the function created in the previous section (the value for `FunctionArn`).
 
 ```sh
-aws apigatewayv2 create-api --name lambda-lead \
+$ aws apigatewayv2 create-api --name lambda-lead \
 --protocol-type HTTP \
 --target arn:aws:lambda:us-west-2:{iam}:function:lambda-lead
 {
@@ -276,20 +303,22 @@ aws lambda add-permission --statement-id lamba-lead-api-gateway-permission \
 
 ### Test
 
-Now that the lambda function is fully deployed, we can test accessing it via HTTP. We'll make a `curl` request to the API endpoint, passing in test lead data. Our endpoint returns the lead along with a timestamp. Success!
+Now that the lambda function is fully deployed, we can test accessing it via HTTP. We'll make a `curl` request to the API endpoint with test lead data. Our endpoint returns the lead along with a timestamp. Success!
 
 ```sh
-λ curl -H "Content-Type: application/json" \
+$ curl -H "Content-Type: application/json" \
 -d "{\"name\": \"Testy\", \"email\": \"test@test.com\"}" \
 https://k4sdfh89l.execute-api.us-west-2.amazonaws.com
 {"lead":{"name":"Testy","email":"test@test.com"},"timestamp":"2020-06-19T03:40:29.451817088Z"}
 ```
 
-You can verify that your lambda invocation was logged to Cloudwatch by listing the log streams for the log group name:
+You can verify that your lambda invocation was logged to CloudWatch by listing the log streams for the log group, named for the lambda function:
 
 ```sh
 aws logs describe-log-streams --log-group-name "/aws/lambda/lambda-lead"
 ```
+
+You can see the request body that we submitted by inspecting a particular log stream:
 
 ```sh
 aws logs get-log-events --log-group-name "/aws/lambda/lambda-lead" \
@@ -298,7 +327,6 @@ aws logs get-log-events --log-group-name "/aws/lambda/lambda-lead" \
 
 ## Next Steps
 
-In this guide, we created a simple serverless function using Go. We deployed our function and set up an API endpoint to access it via HTTP. This covers a lot of ground, yet it's only a start. There's plenty of room for improvement, especially in AWS configurations. For example, trying to invoke the function from a client (browser) will likely fail due to no CORS policy set.
+In this guide, we created a simple serverless function using Go. We deployed our function and set up an API endpoint to access it via HTTP. This covers a lot of ground, yet it's only a start. There's plenty of room for improvement.
 
-Form validation
-SES email
+You can [validate the request](/article/go-input-validation-and-testing) as part of the request processing.
