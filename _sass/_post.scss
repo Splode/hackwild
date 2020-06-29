@@ -1,4 +1,9 @@
 article {
+  a {
+    @extend .green;
+    @extend .hover\:green;
+    @extend .hover\:underline-pink;
+  }
   padding-bottom: 2rem;
   & blockquote {
     background-color: $colorBlueGrey;
@@ -60,11 +65,6 @@ article {
     font-size: 1.125rem;
     line-height: 2;
     margin: 2rem 0;
-    & a {
-      @extend .green;
-      @extend .hover\:green;
-      @extend .hover\:underline-pink;
-    }
   }
   & strong {
     font-weight: 500;
