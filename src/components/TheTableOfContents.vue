@@ -4,9 +4,9 @@
       <h3 class="font-weight-normal">
         Contents
       </h3>
-      <ul class="p-0">
+      <ul class="p-0 toc">
         <li
-          class="mb-2"
+          class="mb-2 toc-item"
           @click="jumpToIntro"
         >
           Intro
@@ -14,7 +14,7 @@
         <li
           v-for="(heading, i) in headings"
           :key="`heading-${i}`"
-          class="mb-2"
+          class="mb-2 toc-item"
           @click="jumpToSection(i)"
         >
           {{ heading.innerText }}

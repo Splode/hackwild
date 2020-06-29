@@ -142,6 +142,7 @@ tbody tr:nth-child(2n) {
 }
 
 div.highlight {
+  border-radius: $borderRadius;
   margin-bottom: 2rem;
 }
 
@@ -172,4 +173,11 @@ code.highlighter-rouge {
   border-radius: $borderRadius;
   color: #f8f8f2;
   padding: 0.075rem 0.5rem;
+}
+
+.toc-item {
+  transition: $transitionDefault;
+  &:hover {
+    color: $colorGreen;
+  }
 }
