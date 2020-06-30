@@ -9,6 +9,7 @@ hero_image:
   src: '/static/images/getting-started-with-go-aws-lambda/go-aws-lambda_hero--825x464.png'
   alt: "Illustration of the phrase 'Go Lambda'"
 og_image: '/static/images/getting-started-with-go-aws-lambda/go-aws-lambda_hero--1200x600.png'
+date: 2020-06-29T20:02:08-6:00
 ---
 
 Serverless functions, or Functions as a Service (FaaS), are functions deployed individually and executed on a server managed by a cloud provider. They're part of a broader model called _serverless architecture_ or _serverless computing_ and can offer significant benefits in certain scenarios.
@@ -21,7 +22,7 @@ Serverless functions have a simpler cost structure where the price is determined
 
 There are more benefits (and drawbacks) to the serverless model that I won't cover here. For more information, I recommend Mike Roberts' comprehensive [article on serverless architectures](https://www.martinfowler.com/articles/serverless.html).
 
-In this guide I cover the basics of getting started with serverless functions using Go and AWS.
+In this guide, I cover the basics of getting started with serverless functions using Go and AWS.
 
 ## Go AWS Lambda Workflow
 
@@ -33,13 +34,11 @@ Apart from Go itself, there are several components in the serverless workflow:
 - **AWS CLI** - Used to manage AWS from the command line.
 - **AWS Lambda** - Service that executes serverless functions.
 - **API Gateway** - Used to map HTTP REST endpoints to lambda functions.
-- **CloudWatch** - Used to log information from lambda functions.
+- **CloudWatch Logs** - Used to log information from lambda functions.
 
 ## Creating an AWS Lambda Function in Go
 
-Writing Lambda functions is simple. Creating a lambda entry point involves calling the `Start` function from the `lambda` package in the [AWS SDK for Go](https://github.com/aws/aws-sdk-go). The `Start` method takes a handler function as its single argument.
-
-There are several valid function signatures for the handler function. With a context argument, the handler function has access to the invocation context, which includes information on the environment, client, etc. With an events argument, the handler has access to information specific to the request, or event, that triggered the function.
+Writing Lambda functions is simple. At a basic level, each Lambda function consists of an entrypoint and a handler function. Creating a lambda entry point involves calling the `Start` function from the `lambda` package in the [AWS SDK for Go](https://github.com/aws/aws-sdk-go), which takes a handler function as its single argument.
 
 The basic structure for a lambda function:
 
@@ -56,13 +55,23 @@ func main() {
 }
 ```
 
+There are several valid function signatures for the handler function. With a context argument, the handler function has access to the invocation context, which includes information on the environment, client, etc. With an events argument, the handler has access to information specific to the request, or event, that triggered the function.
+
+```go
+// these are all valid handler function signatures
+func handler() {}
+func handler(ctx context.Context) {}
+func handler(req events.APIGatewayProxyResponse) {}
+func handler(ctx context.Context, req events.APIGatewayProxyRequest) {}
+```
+
 ### An Example Lambda Function
 
-In the following example, we process a basic lead form submission from an HTTP request. Our request body has a `lead` as a `JSON` encoded string. Our response will return the `lead` and a timestamp as a `JSON` encoded string.
+In the following example, we process a contact, or lead form submission from an HTTP request. Our request body has a `lead` as a `JSON` encoded string. Our response will return the `lead` and a timestamp as a `JSON` encoded string.
 
 The handler function, `handleLead`, accepts an API Gateway request event as its only argument and returns an API Gateway response and error. The API Gateway **request** has typical HTTP request data, such as headers, query params, a body, etc. The API Gateway **response** can accept typical HTTP response data, such as a status code, headers, a body, etc. This function is going to be invoked via the API Gateway. If we were expecting a different service to invoke the function, such as a database, we might use the `DynamoDBEvent`, also from the `events` package.
 
-Within the handler function, we'll log the request body. The lambda function uses CloudWatchLogs as its standard logger.
+Within the handler function, we'll log the request body. The lambda function uses CloudWatch Logs as its standard logger by default.
 
 If the lead request can be unmarshaled and we encounter no errors, we return a response with the lead data, timestamp, and a successful status code. Otherwise, we log an error and respond with a server error status code.
 
@@ -165,6 +174,8 @@ $ aws iam create-role --role-name lambda-simple \
 }
 ```
 
+🎗 Keep a note of the `Arn` value returned. It's going to be used when deploying the Lambda.
+
 A simple trust policy for AWS Lambda:
 
 ```jsonc
@@ -205,22 +216,22 @@ With these policies in place, we'll next build and upload the function.
 
 ### Build Lambda and Upload
 
-Go Lambda functions are run from a binary compiled for Linux. The binary must be included in a zip file along with any dependent assets. In this example, there's a single _main_ binary, but if we needed to include other files such as templates, we'd add them to the zip archive as well.
-
-Building on Linux is straightforward: we build a binary from our main.go file and zip it.
+Go Lambda functions are run from a binary compiled for Linux. The binary must be included in a zip file along with any dependent assets. In this example, there's a single _main_ binary. If we needed to include other files such as templates, we'd add them to the zip archive as well.
 
 #### Build On Linux
+
+Building on Linux is straightforward: we build a binary from our main.go file and zip it.
 
 ```sh
 go build main main.go
 zip main.zip main
 ```
 
+#### Build On Windows
+
 Building on Windows is more involved because of the way Windows handles file permissions. The Lambda function is executed on Linux and needs open execution permissions.
 
 To get around this, use the zip tool included in the aws-lambda-go package. The zip tool adds the appropriate permissions to the binary before zipping.
-
-#### Build On Windows
 
 ```sh
 # get the zip tool
@@ -232,7 +243,7 @@ go build -o main main.go
 %userprofile%/Go/bin/build-lambda-zip.exe -o main.zip main
 ```
 
-With the zip containing the built application, we can create the AWS Lambda function with the zip file.
+With the zip containing the built application, we can create and upload the AWS Lambda with the `create-function` subcommand. The value of the `--role` flag is the `Arn` of the role we previously created.
 
 ```sh
 $ aws lambda create-function --function-name lambda-lead \
@@ -262,15 +273,19 @@ $ aws lambda create-function --function-name lambda-lead \
 }
 ```
 
-Keep a note of the `FunctionArn` value returned. It's going to be used when creating the API Gateway.
+🎗 Keep a note of the `FunctionArn` value returned. It's going to be used when creating the API Gateway.
 
-To update an already deployed Lambda function, build and zip the function as previously described. Then use the `update-function-code` command. Only the lambda function name and a path to the zip file are required.
+### Update Lamba
+
+To update an already deployed Lambda function, build and zip the function as in the previous steps. Then use the `update-function-code` subcommand, which requires the lambda function name and a path to the zip file.
 
 ```sh
 aws lambda update-function-code --function-name lambda-lead --zip-file fileb://main.zip
 ```
 
 ## Invoking Lambda with HTTP
+
+The Lambda is going to be accessed via HTTP. We're going to use API Gateway to map a dedicated HTTP endpoint to our lambda function using the `create-api` subcommand.
 
 The `--target` is the ARN of the function created in the previous section (the value for `FunctionArn`).
 
@@ -283,15 +298,15 @@ $ aws apigatewayv2 create-api --name lambda-lead \
     "ApiId": "k4sdfh89l",
     "ApiKeySelectionExpression": "$request.header.x-api-key",
     "CreatedDate": "2020-06-25T02:14:41Z",
-    "Name": "lambda-lead",
+    "Name": "lambda-lead",s
     "ProtocolType": "HTTP",
     "RouteSelectionExpression": "$request.method $request.path"
 }
 ```
 
-Keep a note of the `ApiEndpoint` and `ApiId` values returned. They identify the API and endpoints for requests.
+🎗 Keep a note of the `ApiEndpoint` and `ApiId` values returned. They identify the API and endpoints for requests.
 
-Finally, the API Gateway needs permission to invoke its associated lambda function. We give it permission by updating the lambda's resource policy:
+Finally, the API Gateway needs permission to invoke its associated lambda function. We give it permission by updating the lambda's resource policy with the newly created API Gateway ARN:
 
 ```sh
 aws lambda add-permission --statement-id lamba-lead-api-gateway-permission \
@@ -301,9 +316,11 @@ aws lambda add-permission --statement-id lamba-lead-api-gateway-permission \
 --source-arn "arn:aws:execute-api:us-west-2:{iam}:k4sdfh89l/*/$default"
 ```
 
-### Test
+### Test from End to End
 
-Now that the lambda function is fully deployed, we can test accessing it via HTTP. We'll make a `curl` request to the API endpoint with test lead data. Our endpoint returns the lead along with a timestamp. Success!
+Now that the lambda function is fully deployed, we can test accessing it via HTTP. We'll make a `curl` request to the API endpoint with test lead data.
+
+Our endpoint returns the lead along with a timestamp. Success!
 
 ```sh
 $ curl -H "Content-Type: application/json" \
@@ -329,4 +346,8 @@ aws logs get-log-events --log-group-name "/aws/lambda/lambda-lead" \
 
 In this guide, we created a simple serverless function using Go. We deployed our function and set up an API endpoint to access it via HTTP. This covers a lot of ground, yet it's only a start. There's plenty of room for improvement.
 
-You can [validate the request](/article/go-input-validation-and-testing) as part of the request processing.
+Here's a short list of possible next steps:
+
+- [Validate the request](/article/go-input-validation-and-testing) as part of the request processing.
+- Configure a CORS policy and API throttling in the API Gateway.
+- Send emails using AWS SES as part of the request processing.
