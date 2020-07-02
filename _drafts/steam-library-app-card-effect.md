@@ -13,9 +13,14 @@ og_image: '/static/images/steam-card-effect/steam-card-effect_hero--1200x600.png
 
 test
 
-<p class="codepen" data-height="464" data-theme-id="dark" data-default-tab="result" data-user="Splode" data-slug-hash="wvMPgdq" data-preview="true" style="height: 464px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; margin: 1em 0; padding: 1em;" data-pen-title="Steam Library App Portrait Cards">
-  <span>See the Pen <a href="https://codepen.io/Splode/pen/wvMPgdq">
-  Steam Library App Portrait Cards</a> by Christopher Murphy (<a href="https://codepen.io/Splode">@Splode</a>)
-  on <a href="https://codepen.io">CodePen</a>.</span>
-</p>
-<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+{% include video.html
+  webm="/static/images/steam-card-effect/steam-card-effect-original.webm"
+  mp4="/static/images/steam-card-effect/steam-card-effect-original.mp4"
+%}
+
+{% include video.html
+  webm="/static/images/steam-card-effect/steam-card-effect.webm"
+  mp4="/static/images/steam-card-effect/steam-card-effect.mp4"
+%}
+
+Check out the effect [live on Codepen](https://codepen.io/Splode/pen/wvMPgdq).
