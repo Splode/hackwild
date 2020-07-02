@@ -1,17 +1,23 @@
 <template>
   <div class="row">
     <div class="col-lg-8 mx-auto text-center">
-      <h2 class="Search-title">Search Results for: <span class="Search-query">{{ query }}</span></h2>
+      <h2 class="Search-title">
+        Search Results for: <span class="Search-query">{{ query }}</span>
+      </h2>
       <p
         class="Button--inline Button--inline--blue"
         @click="emitQueryClear"
-      >Clear</p>
+      >
+        Clear
+      </p>
     </div>
     <div
       class="col-lg-8 mx-auto Search-empty"
       v-if="filteredPosts.length === 0 && query !== ''"
     >
-      <h3 class="Search-empty-title">Nothing Found</h3>
+      <h3 class="Search-empty-title">
+        Nothing Found
+      </h3>
     </div>
     <div class="col-lg-8 mx-auto">
       <div
@@ -36,7 +42,6 @@
   </div>
 </template>
 
-
 <script>
 import axios from 'axios'
 import { Bus } from './../../lib/bus'
@@ -44,7 +49,7 @@ import { Bus } from './../../lib/bus'
 export default {
   name: 'TheSearchResults',
 
-  data() {
+  data () {
     return {
       posts: [],
       query: ''
@@ -52,7 +57,7 @@ export default {
   },
 
   computed: {
-    filteredPosts() {
+    filteredPosts () {
       if (this.query === '') {
         return []
       }
@@ -68,13 +73,13 @@ export default {
   },
 
   methods: {
-    emitQueryClear() {
+    emitQueryClear () {
       this.query = ''
       Bus.$emit('query-cleared')
     }
   },
 
-  created() {
+  created () {
     axios
       .get('/data/posts.json')
       .then(response => {
@@ -85,7 +90,7 @@ export default {
       })
   },
 
-  mounted() {
+  mounted () {
     Bus.$on('query-updated', payload => {
       this.query = payload.query
     })

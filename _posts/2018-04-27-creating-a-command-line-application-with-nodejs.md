@@ -5,6 +5,10 @@ description: Learn the basics of creating command-line applications using Node a
 keywords: cli, node, commander.js, note, command-line, npm, Christopher Murphy
 tags: JavaScript
 category: JavaScript
+hero_image:
+  src: '/static/images/node-cli-apps--825x464.png'
+  alt: The words 'Creating Node CLI Apps' on a dark background.
+og_image: '/static/images/node-cli-apps--1200x600.png'
 ---
 
 Having a working knowledge of the command-line interface (CLI) can be incredibly valuable. The CLI is the historical bedrock of programming and still proves to be an essential part of the modern development ecosystem. This is due in no small part to the fact that command-line apps tend to be efficient, fast, and powerful.
@@ -142,7 +146,11 @@ const program = require('commander')
 
 program.version(pckg.version)
 
-program.command().alias().description().action()
+program
+  .command()
+  .alias()
+  .description()
+  .action()
 
 program.parse(process.argv)
 ```
@@ -173,7 +181,7 @@ program
   .command('add <note>')
   .alias('a')
   .description('Add a new note.')
-  .action((note) => {
+  .action(note => {
     console.log(note)
   })
 
@@ -210,10 +218,10 @@ We don't want to overwrite our notes everytime we add a new note, so we also nee
 const fs = require('fs')
 const path = require('path')
 
-const read = (filePath) => {}
+const read = filePath => {}
 const write = (filePath, data) => {}
 
-module.exports = function (note) {}
+module.exports = function(note) {}
 ```
 
 ### Building the Read and Write functions
@@ -235,7 +243,7 @@ const path = require('path')
 
 const notesPath = path.resolve(os.homedir(), 'notes.json')
 
-const read = (filePath) => {
+const read = filePath => {
   try {
     return JSON.parse(fs.readFileSync(filePath))
   } catch (error) {
@@ -245,7 +253,7 @@ const read = (filePath) => {
 }
 
 const write = (filePath, data) => {
-  fs.writeFileSync(filePath, JSON.stringify(data), (error) => {
+  fs.writeFileSync(filePath, JSON.stringify(data), error => {
     if (error) {
       console.log(error)
       process.exit(1)
@@ -253,7 +261,7 @@ const write = (filePath, data) => {
   })
 }
 
-module.exports = function (note) {}
+module.exports = function(note) {}
 ```
 
 ### Creating the Add Function
@@ -273,7 +281,7 @@ const path = require('path')
 
 const notesPath = path.resolve(os.homedir(), 'notes.json')
 
-const read = (filePath) => {
+const read = filePath => {
   try {
     return JSON.parse(fs.readFileSync(filePath))
   } catch (error) {
@@ -283,7 +291,7 @@ const read = (filePath) => {
 }
 
 const write = (filePath, data) => {
-  fs.writeFileSync(filePath, JSON.stringify(data), (error) => {
+  fs.writeFileSync(filePath, JSON.stringify(data), error => {
     if (error) {
       console.log(error)
       process.exit(1)
@@ -291,7 +299,7 @@ const write = (filePath, data) => {
   })
 }
 
-module.exports = function (note) {
+module.exports = function(note) {
   let collection
   if (fs.existsSync(notesPath)) {
     collection = read(notesPath)
@@ -327,7 +335,7 @@ program
   .command('add <note>')
   .alias('a')
   .description('Add a new note.')
-  .action((note) => {
+  .action(note => {
     add(note)
   })
 

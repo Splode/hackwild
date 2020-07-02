@@ -6,7 +6,7 @@ keywords: javascript, typescript, events, event handling, event emitter, event p
 tags: TypeScript
 category: TypeScript
 hero_image:
-  src: 'hackwild_event-techniques--825x464.jpg'
+  src: '/static/images/hackwild_event-techniques--825x464.jpg'
   alt: "Illustration of the word 'Events'"
 og_image: '/static/images/hackwild_event-techniques--1200x600.jpg'
 date: 2020-06-03T13:33:43-6:00

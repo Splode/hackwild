@@ -5,6 +5,10 @@ description: Using a semantic Git commit method can greatly improve the readabil
 keywords: git, semantic commit, git message, style guide, git log, Christopher Murphy
 tags: Git
 category: Git
+hero_image:
+  src: '/static/images/semantic-git-commits--825x464.png'
+  alt: The words 'Semantic Git Commit Messages' on a dark background
+og_image: '/static/images/semantic-git-commits--1200x600.png'
 ---
 
 I recently found out about semantic Git commit messages—a method for structuring Git commits into logical chunks by using semantic labels. Inspired by <a href="http://karma-runner.github.io/2.0/dev/git-commit-msg.html" target="_blank" rel="noopener">Karma's style guide</a> for Git commit messages, the following semantic Git commits can greatly improve your Git log readability at a glance. They help to clarify the record of changes to a project and help focus commits into scoped segments.
