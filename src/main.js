@@ -5,6 +5,7 @@ import TheTableOfContents from './components/TheTableOfContents'
 import TheMobileMenu from './components/TheMobileMenu'
 import TheSearchInput from './components/search/TheSearchInput'
 import TheSearchResults from './components/search/TheSearchResults'
+import 'lazysizes'
 
 Vue.component('logo', Logo)
 Vue.component('TheTableOfContents', TheTableOfContents)
