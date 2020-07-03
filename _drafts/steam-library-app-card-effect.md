@@ -7,6 +7,7 @@ tags: CSS
 category: CSS
 hero_image:
   src: '/static/images/steam-card-effect/steam-card-effect_hero--825x464.png'
+  feature: '/static/images/steam-card-effect/steam-card-effect_hero--960x540.png'
   alt: "Illustration of cards with Steam logo, accompanied by the phrase 'Steam Card Effect'"
 og_image: '/static/images/steam-card-effect/steam-card-effect_hero--1200x600.png'
 ---

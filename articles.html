@@ -14,11 +14,11 @@ layout: default
     {% for post in site.posts %}
     {% assign topic = post.tags | first %}
       <a href="{{ post.url }}">
-        <div class="border-left PostPreview PostPreview--condensed">
-          <h2 class="PostPreview-title PostPreview-title--condensed">{{ post.title }}</h2>
-          <div class="PostPreview-footer PostPreview-footer--condensed">
-            <p class="PostPreview-body PostPreview-body--condensed PostPreview-body--single">{{ post.date | date: "%B %d, %Y" }}</p>
-            <a href="/topic/{{ topic | downcase }}"><p class="PostPreview-tag PostPreview-tag--condensed">{{ topic }}</p></a>
+        <div class="border-left PostPreviewList PostPreviewList--condensed">
+          <h2 class="PostPreviewList-title PostPreviewList-title--condensed">{{ post.title }}</h2>
+          <div class="PostPreviewList-footer PostPreviewList-footer--condensed">
+            <p class="PostPreviewList-body PostPreviewList-body--condensed PostPreviewList-body--single">{{ post.date | date: "%B %d, %Y" }}</p>
+            <a href="/topic/{{ topic | downcase }}"><p class="PostPreviewList-tag PostPreviewList-tag--condensed">{{ topic }}</p></a>
           </div>
         </div>
       </a>

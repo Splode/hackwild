@@ -1,18 +1,45 @@
 {% assign topic = post.tags | first %}
 <a href="{{ post.url }}" aria-label="View {{ post.title }} article">
   {% if post.hero_image %}
-  <img
-    src="/static/images/{{ post.hero_image.src }}"
-    alt="{{ post.hero_image.alt }}"
-  />
+    {% if post.hero_image.feature %}
+    <img
+      data-src="{{ post.hero_image.feature }}"
+      alt="{{ post.hero_image.alt }}"
+      class="lazyload"
+    />
+  {% else %}
+    <img
+      data-src="{{ post.hero_image.src }}"
+      alt="{{ post.hero_image.alt }}"
+      class="lazyload"
+    />
+    {% endif %}
   {% endif %}
-  <div class="border-top PostPreview">
-    <h2 class="PostPreview-title">{{ post.title }}</h2>
-    <div class="PostPreview-footer">
-      <p class="PostPreview-body">{{ post.description }}</p>
-      <a href="/topic/{{ topic | downcase }}"
-        ><p class="PostPreview-tag">{{ topic }}</p></a
-      >
+</a>
+<div class="PostPreview">
+  <h2
+    class="PostPreviewFeature-title my-3 {% if include.feature %}PostPreview-title--lg{% else %}PostPreview-title--med{% endif %}"
+  >
+    <a
+      href="{{ post.url }}"
+      aria-label="View {{ post.title }} article"
+      class="hover:underline-pink"
+      >{{ post.title }}</a
+    >
+  </h2>
+  <p
+    class="PostPreview-body PostPreview-body--single measure {% if include.feature %}PostPreview-body--lg{% endif %}"
+  >
+    {{ post.description }}
+  </p>
+  <div class="PostPreview-footer d-flex">
+    <p class="PostPreview-date">
+      {{ post.date | date_to_string: "ordinal", "US" }}
+    </p>
+    <div>
+      <a href="/topic/{{ topic | downcase }}">
+        <p class="PostPreview-tag mx-3">{{ topic }}</p>
+      </a>
     </div>
   </div>
-</a>
+</div>

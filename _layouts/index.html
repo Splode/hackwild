@@ -5,27 +5,31 @@ layout: default
 <div class="row Intro-wrapper">
   <div class="col-lg-8 d-flex align-items-center mx-auto">
     <logo color="green--outline" :stroke-width="8" :width="150"></logo>
-    <h2 class="Intro-title ml-3 ml-md-4 ml-lg-5">Hacking through the dense jungle of the modern web.</h2>
+    <h2 class="Intro-title ml-3 ml-md-4 ml-lg-5">
+      Hacking through the dense jungle of the modern web.
+    </h2>
   </div>
 </div>
 
 <div class="row">
-  {% for post in site.posts limit:7 %}
-    {% if post.hero_image %}
-      {% if forloop.first == true %}
-        <div class="col-12">{% include post-preview-image--feature.html %}</div>
-      {% else %}
-        {% if forloop.index == 2 or forloop.index == 3 %}
-          <div class="col-6">{% include post-preview-image.html %}</div>
+  <div class="col col-lg-10 mx-auto">
+    <div class="row">
+      {% for post in site.posts limit:7 %}
+        {% if post.hero_image %}
+          {% if forloop.first == true %}
+            <div class="col-12 mb-4">{% include post-preview-image.html feature=true %}</div>
+          {% else %}
+            <div class="col-12 col-md-6 mb-4">{% include post-preview-image.html feature=false %}</div>
+          {% endif %}
         {% else %}
-          <div class="col-6">{% include post-preview.html %}</div>
+          <div class="col-6 mb-4">{% include post-preview.html %}</div>
         {% endif %}
-      {% endif %}
-    {% else %}
-      <div class="col-6">{% include post-preview.html %}</div>
-    {% endif %}
-  {% endfor %}
-  <a href="/articles/">
-    <button class="Button Button--blueGrey" aria-label="View list of all articles">More Articles</button>
-  </a>
+      {% endfor %}
+      <div class="col-12 col-md-6 mx-auto">
+        <a href="/articles/" class="Button Button--blueGrey align-items-center d-flex justify-content-center py-3 text-center" aria-label="View list of all articles">
+          More Articles
+        </a>
+      </div>
+    </div>
+  </div>
 </div>

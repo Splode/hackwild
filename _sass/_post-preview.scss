@@ -1,4 +1,33 @@
-.PostPreview {
+.PostPreview-body--lg {
+  @media screen and (min-width: $grid-md) {
+    font-size: 1.25rem;
+  }
+}
+
+.PostPreview-date {
+  color: $colorLightBlue;
+}
+
+.PostPreview-title--med {
+  font-size: 1.25rem;
+}
+
+.PostPreview-title--lg {
+  @media screen and (min-width: $grid-md) {
+    font-size: 1.75rem;
+  }
+}
+
+.PostPreview-title {
+  color: $colorGreen;
+  font-weight: 400;
+}
+
+.PostPreviewFeature-title {
+  @extend .PostPreview-title;
+}
+
+.PostPreviewList {
   background-color: $colorBlueGrey;
   border-bottom-right-radius: $borderRadius;
   border-top-right-radius: $borderRadius;
@@ -20,72 +49,69 @@
   border-top: $borderRadius solid $colorPink;
 }
 
-.PostPreview--condensed {
+.PostPreviewList--condensed {
   margin-bottom: 0.5rem;
   padding: 0.5rem 0.75rem;
 }
 
-.PostPreview-title {
-  color: $colorGreen;
+.PostPreviewList-title {
+  @extend .PostPreview-title;
   font-size: 1.66rem;
   font-weight: 500;
   letter-spacing: 0.025rem;
 }
 
-.PostPreview-title--condensed {
+.PostPreviewList-title--condensed {
   font-size: 1rem;
   margin: 0;
 }
 
-.PostPreview-body {
+.PostPreviewList-body {
   @extend .BodyCopy;
   color: $colorWhite;
   font-size: 1rem;
   margin: 0 0 1rem 0;
   max-width: 36rem;
-  @media screen and (min-width: $grid-md) {
-    // padding-right: 2rem;
-  }
 }
 
-.PostPreview-body--condensed {
+.PostPreviewList-body--condensed {
   color: $colorLightBlue;
   font-size: 0.9rem;
 }
 
-.PostPreview-body--single {
+.PostPreviewList-body--single {
   margin: 0;
 }
 
-.PostPreview-footer {
+.PostPreviewList-footer {
   align-items: flex-end;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
   @media screen and (min-width: $grid-md) {
-    // flex-wrap: nowrap;
     justify-content: space-between;
   }
 }
 
-.PostPreview-footer--condensed {
+.PostPreviewList-footer--condensed {
   align-items: center;
   justify-content: space-between;
 }
 
 .PostPreview-tag {
-  background-color: $colorDarkBlue;
+  background-color: #282a36;
   border-radius: $borderRadius;
   color: $colorPink;
+  display: inline-block;
   margin: 0;
   padding: 0.075rem 1rem;
 }
 
-.PostPreview-tag--article {
+.PostPreviewList-tag--article {
   background-color: #282a36;
   font-size: 1rem;
 }
 
-.PostPreview-tag--condensed {
+.PostPreviewList-tag--condensed {
   padding: 0.005rem 0.75rem;
 }
