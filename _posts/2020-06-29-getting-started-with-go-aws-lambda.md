@@ -6,7 +6,7 @@ keywords: go, golang, AWS, cli, aws cli, api, api gateway, cloudwatch, logs, lam
 tags: Go
 category: Go
 hero_image:
-  src: '/static/images/getting-started-with-go-aws-lambda/go-aws-lambda_hero--825x464.png'
+  src: '/static/images/getting-started-with-go-aws-lambda/go-aws-lambda_hero.svg'
   alt: "Illustration of the phrase 'Go Lambda'"
 og_image: '/static/images/getting-started-with-go-aws-lambda/go-aws-lambda_hero--1200x600.png'
 date: 2020-06-29T20:02:08-6:00
