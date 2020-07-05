@@ -21,7 +21,7 @@
     </div>
     <div class="col-lg-8 mx-auto">
       <div
-        class="PostPreview"
+        class="PostPreview mb-4"
         v-for="(post, i) in filteredPosts"
         :key="i"
       >
