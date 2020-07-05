@@ -6,7 +6,7 @@ keywords: git, semantic commit, git message, style guide, git log, Christopher M
 tags: Git
 category: Git
 hero_image:
-  src: '/static/images/semantic-git-commits--825x464.png'
+  src: '/static/images/semantic-git-commits.svg'
   alt: The words 'Semantic Git Commit Messages' on a dark background
 og_image: '/static/images/semantic-git-commits--1200x600.png'
 ---

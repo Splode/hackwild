@@ -6,7 +6,7 @@ keywords: go, golang, input, validation, struct, json, development, backend, inp
 tags: Go
 category: Go
 hero_image:
-  src: '/static/images/hackwild_go-input-validation_hero--825x464.png'
+  src: '/static/images/hackwild_go-input-validation_hero.svg'
   alt: "Illustration of the phrase 'Validation, testing and validating input in Go'"
 og_image: '/static/images/hackwild_go-input-validation_hero--1200x600.png'
 date: 2020-06-10T14:50:11-6:00
