@@ -6,7 +6,7 @@ keywords: cli, node, commander.js, note, command-line, npm, Christopher Murphy
 tags: JavaScript
 category: JavaScript
 hero_image:
-  src: '/static/images/node-cli-apps--825x464.png'
+  src: '/static/images/node-cli-apps.svg'
   alt: The words 'Creating Node CLI Apps' on a dark background.
 og_image: '/static/images/node-cli-apps--1200x600.png'
 ---
