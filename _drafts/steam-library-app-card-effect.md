@@ -15,12 +15,10 @@ og_image: '/static/images/steam-card-effect/steam-card-effect_hero--1200x600.png
 test
 
 {% include video.html
-  webm="/static/images/steam-card-effect/steam-card-effect-original.webm"
   mp4="/static/images/steam-card-effect/steam-card-effect-original.mp4"
 %}
 
 {% include video.html
-  webm="/static/images/steam-card-effect/steam-card-effect.webm"
   mp4="/static/images/steam-card-effect/steam-card-effect.mp4"
 %}
 

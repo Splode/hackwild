@@ -11,15 +11,21 @@ layout: default
 
 {% for tag in site.tags %}
 <div class="row">
-  <div class="col-lg-8 mx-auto">
-    <h2 class="Topic-title"><a href="/topic/{{ tag[0] | downcase }}">{{ tag[0] }}</a></h2>
-    {% for post in tag[1] limit:3 %}
+  <div class="col-lg-10 mx-auto">
+    <h2 class="Topic-title">
+      <a href="/topic/{{ tag[0] | downcase }}" class="hover:underline-pink">
+        {{ tag[0] }}
+      </a>
+    </h2>
+    <div class="my-5 row">
+      {% for post in tag[1] limit:4 %}
+        <div class="col-12 col-md-6 mb-4 mx-auto">
+          {% include post-preview-image.html feature=false %}
+        </div>
+      {% endfor %}
+    </div>
 
-      {% include post-preview.html %}
-
-    {% endfor %}
-
-    {% if tag[1].size > 3 %}
+    {% if tag[1].size > 4 %}
       <a href="/topic/{{ tag[0] | downcase }}">
         <button class="Button Button--blueGrey">More</button>
       </a>
