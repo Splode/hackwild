@@ -89,6 +89,9 @@ article {
       height: 8px;
     }
   }
+  footer {
+    border-top: $borderRadius solid $colorBlueGrey;
+  }
 }
 
 hr {

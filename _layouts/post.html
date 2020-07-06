@@ -32,6 +32,9 @@ page-type: post
     </div>
     <hr />
     {{ content }}
+    <footer class="pt-4">
+      <p class="Post-date">Last updated: {% last_modified_at %B %d, %Y %H:%M %}</p>
+    </footer>
   </article>
   <the-table-of-contents></the-table-of-contents>
 </div>
