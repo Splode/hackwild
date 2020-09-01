@@ -14,7 +14,7 @@
   "author": "Christopher Murphy",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.20.0",
     "jump.js": "^1.0.2",
     "lazysizes": "^5.2.2",
     "vue": "^2.6.12"
