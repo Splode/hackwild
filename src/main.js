@@ -7,11 +7,11 @@ import TheSearchInput from './components/search/TheSearchInput'
 import TheSearchResults from './components/search/TheSearchResults'
 import 'lazysizes'
 
-Vue.component('logo', Logo)
+Vue.component('Logo', Logo)
 Vue.component('TheTableOfContents', TheTableOfContents)
-Vue.component('theMobileMenu', TheMobileMenu)
-Vue.component('theSearchInput', TheSearchInput)
-Vue.component('theSearchResults', TheSearchResults)
+Vue.component('TheMobileMenu', TheMobileMenu)
+Vue.component('TheSearchInput', TheSearchInput)
+Vue.component('TheSearchResults', TheSearchResults)
 
 /* eslint-disable no-new */
 new Vue({
